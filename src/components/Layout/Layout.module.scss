@@ -1,0 +1,58 @@
+@use "../../global-styles/variables.scss" as *;
+
+
+.root {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.head {
+  margin-top: calc(2 * $ru);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  nav {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: calc(10 * $ru);
+    padding-bottom: calc(3 * $ru);
+
+		@media (max-width: 700px) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			height: calc(3 * $ru);
+			width: 100%;
+			min-height: calc(10 * $tru);
+		}
+
+    a {
+      font-size: calc(3.5 * $tru);
+      font-weight: 500;
+      color: $cyan;
+			text-decoration: none;
+			text-align: center;
+      transition: color 0.2s ease-out;
+    }
+    a:hover {
+      color: $darkCyan;
+    }
+    a.selectedTab {
+      color: $darkCyan;
+      cursor: default;
+    }
+  }
+}
+
+.logo {
+  width: calc($ru * 60);
+  padding: calc($ru * 3);
+}
+
+.decoration {
+  width: calc(90 * $ru);
+}

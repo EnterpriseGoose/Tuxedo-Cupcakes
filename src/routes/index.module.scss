@@ -1,0 +1,42 @@
+@use "../global-styles/variables.scss" as *;
+
+.sections {
+    display: flex;
+    flex-direction: column;
+    row-gap: calc(7 * $ru);
+    align-items: center;
+}
+
+.section{
+    &.one {
+        padding-top: calc(5 * $ru);
+	    width: calc(100 * $ru);
+    }
+    &.two {
+        width: calc(100 * $wru);
+        .cards {
+            display: flex;
+            flex-direction: row;
+            column-gap: calc(10 * $ru);
+        }
+    }
+    &.three {
+        text-align: center;
+        a {
+            text-decoration: none;
+            color: $cyan;
+            transition: color 0.2s ease-out;
+        }
+        a:hover {
+            color: $darkCyan;
+        }
+    }
+    
+	h2 {
+		text-align: center;
+	}
+}
+
+.divider {
+    width: calc(10 * $ru)
+}
