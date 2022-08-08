@@ -1,1 +1,0 @@
-import{c as e,g as t,t as o}from"./entry-client.efed5cb3.js";import{L as r}from"./Layout.08c58ce9.js";import"./index.module.1cc18e98.js";const n=o("<h2>Coming Soon...</h2>",2);function c(){return e(r,{get children(){return t(n)}})}export{c as default};

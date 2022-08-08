@@ -1,4 +1,4 @@
-import {Link} from 'solid-app-router'
+import {Link} from '@solidjs/router'
 import styles from "./Card.module.scss";
 
 export default function Footer(props?: {children?: any, title?: string}) {

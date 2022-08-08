@@ -1,71 +1,218 @@
-import { renderToStringAsync, isServer, createComponent, mergeProps, ssr, ssrHydrationKey, ssrSpread, ssrAttribute, escape, Assets, HydrationScript, NoHydration } from 'solid-js/web';
-import { createContext, createSignal, onMount, onCleanup, getOwner, runWithOwner, createMemo, useContext, createComponent as createComponent$1, useTransition, createRenderEffect, untrack, on, resetErrorBoundaries, mergeProps as mergeProps$1, splitProps, children, createRoot, Show, lazy, ErrorBoundary as ErrorBoundary$1, Suspense, sharedConfig } from 'solid-js';
+import { renderToStringAsync, isServer, createComponent, spread as spread$1, mergeProps, ssr, ssrHydrationKey, ssrSpread, ssrAttribute, escape, Assets, HydrationScript, NoHydration, resolveSSRNode } from 'solid-js/web';
+import { createContext, createUniqueId, useContext, createRenderEffect, onCleanup, createSignal, getOwner, runWithOwner, createMemo, useTransition, untrack, createComponent as createComponent$1, on, resetErrorBoundaries, mergeProps as mergeProps$1, splitProps, children, createRoot, Show, ErrorBoundary as ErrorBoundary$1, lazy, Suspense, sharedConfig } from 'solid-js';
+
+const FETCH_EVENT = "$FETCH";
+
+function getRouteMatches$1(routes, path, method) {
+  const segments = path.split("/").filter(Boolean);
+  routeLoop:
+    for (const route of routes) {
+      const matchSegments = route.matchSegments;
+      if (segments.length < matchSegments.length || !route.wildcard && segments.length > matchSegments.length) {
+        continue;
+      }
+      for (let index = 0; index < matchSegments.length; index++) {
+        const match = matchSegments[index];
+        if (!match) {
+          continue;
+        }
+        if (segments[index] !== match) {
+          continue routeLoop;
+        }
+      }
+      const handler = route[method];
+      if (handler === "skip" || handler === void 0) {
+        return;
+      }
+      const params = {};
+      for (const { type, name, index } of route.params) {
+        if (type === ":") {
+          params[name] = segments[index];
+        } else {
+          params[name] = segments.slice(index).join("/");
+        }
+      }
+      return { handler, params };
+    }
+}
+
+let apiRoutes$1;
+const registerApiRoutes = (routes) => {
+  apiRoutes$1 = routes;
+};
+async function internalFetch(route, init) {
+  if (route.startsWith("http")) {
+    return await fetch(route, init);
+  }
+  let url = new URL(route, "http://internal");
+  const request = new Request(url.href, init);
+  const handler = getRouteMatches$1(apiRoutes$1, url.pathname, request.method.toLowerCase());
+  let apiEvent = Object.freeze({
+    request,
+    params: handler.params,
+    env: {},
+    $type: FETCH_EVENT,
+    fetch: internalFetch
+  });
+  const response = await handler.handler(apiEvent);
+  return response;
+}
 
 function renderAsync(fn, options) {
-  return () => async (context) => {
-    let markup = await renderToStringAsync(() => fn(context), options);
-    if (context.routerContext.url) {
-      return Response.redirect(new URL(context.routerContext.url, context.request.url), 302);
+  return () => async (event) => {
+    let pageEvent = createPageEvent(event);
+    let markup = await renderToStringAsync(() => fn(pageEvent), options);
+    if (pageEvent.routerContext.url) {
+      return Response.redirect(new URL(pageEvent.routerContext.url, pageEvent.request.url), 302);
     }
-    context.responseHeaders.set("Content-Type", "text/html");
     return new Response(markup, {
-      status: 200,
-      headers: context.responseHeaders
+      status: pageEvent.getStatusCode(),
+      headers: pageEvent.responseHeaders
     });
   };
+}
+function createPageEvent(event) {
+  let responseHeaders = new Headers({
+    "Content-Type": "text/html"
+  });
+  const prevPath = event.request.headers.get("x-solid-referrer");
+  let statusCode = 200;
+  function setStatusCode(code) {
+    statusCode = code;
+  }
+  function getStatusCode() {
+    return statusCode;
+  }
+  const pageEvent = Object.freeze({
+    request: event.request,
+    prevUrl: prevPath,
+    routerContext: {},
+    tags: [],
+    env: event.env,
+    $type: FETCH_EVENT,
+    responseHeaders,
+    setStatusCode,
+    getStatusCode,
+    fetch: internalFetch
+  });
+  return pageEvent;
 }
 
 const MetaContext = createContext();
 const cascadingTags = ["title", "meta"];
 
+const getTagType = tag => tag.tag + (tag.name ? `.${tag.name}"` : "");
+
 const MetaProvider = props => {
-  const indices = new Map(),
-        [tags, setTags] = createSignal({});
-  onMount(() => {
-    const ssrTags = document.head.querySelectorAll(`[data-sm=""]`); // `forEach` on `NodeList` is not supported in Googlebot, so use a workaround
+  const cascadedTagInstances = new Map(); // TODO: use one element for all tags of the same type, just swap out
+  // where the props get applied
 
-    Array.prototype.forEach.call(ssrTags, ssrTag => ssrTag.parentNode.removeChild(ssrTag));
-  });
+  function getElement(tag) {
+    if (tag.ref) {
+      return tag.ref;
+    }
+
+    let el = document.querySelector(`[data-sm="${tag.id}"]`);
+
+    if (el) {
+      if (el.tagName.toLowerCase() !== tag.tag) {
+        if (el.parentNode) {
+          // remove the old tag
+          el.parentNode.removeChild(el);
+        } // add the new tag
+
+
+        el = document.createElement(tag.tag);
+      } // use the old tag
+
+
+      el.removeAttribute("data-sm");
+    } else {
+      // create a new tag
+      el = document.createElement(tag.tag);
+    }
+
+    return el;
+  }
+
   const actions = {
-    addClientTag: (tag, name) => {
-      // consider only cascading tags
-      if (cascadingTags.indexOf(tag) !== -1) {
-        setTags(tags => {
-          const names = tags[tag] || [];
-          return { ...tags,
-            [tag]: [...names, name]
-          };
-        }); // track indices synchronously
+    addClientTag: tag => {
+      let tagType = getTagType(tag);
 
-        const index = indices.has(tag) ? indices.get(tag) + 1 : 0;
-        indices.set(tag, index);
+      if (cascadingTags.indexOf(tag.tag) !== -1) {
+        //  only cascading tags need to be kept as singletons
+        if (!cascadedTagInstances.has(tagType)) {
+          cascadedTagInstances.set(tagType, []);
+        }
+
+        let instances = cascadedTagInstances.get(tagType);
+        let index = instances.length;
+        instances = [...instances, tag]; // track indices synchronously
+
+        cascadedTagInstances.set(tagType, instances);
+
+        if (!isServer) {
+          let element = getElement(tag);
+          tag.ref = element;
+          spread$1(element, () => tag.props);
+          let lastVisited = null;
+
+          for (var i = index - 1; i >= 0; i--) {
+            if (instances[i] != null) {
+              lastVisited = instances[i];
+              break;
+            }
+          }
+
+          if (element.parentNode != document.head) {
+            document.head.appendChild(element);
+          }
+
+          if (lastVisited && lastVisited.ref) {
+            document.head.removeChild(lastVisited.ref);
+          }
+        }
+
         return index;
+      }
+
+      if (!isServer) {
+        let element = getElement(tag);
+        tag.ref = element;
+        spread$1(element, () => tag.props);
+
+        if (element.parentNode != document.head) {
+          document.head.appendChild(element);
+        }
       }
 
       return -1;
     },
-    shouldRenderTag: (tag, index) => {
-      if (cascadingTags.indexOf(tag) !== -1) {
-        const names = tags()[tag]; // check if the tag is the last one of similar
-
-        return names && names.lastIndexOf(names[index]) === index;
-      }
-
-      return true;
-    },
     removeClientTag: (tag, index) => {
-      setTags(tags => {
-        const names = tags[tag];
+      const tagName = getTagType(tag);
 
-        if (names) {
-          names[index] = null;
-          return { ...tags,
-            [tag]: names
-          };
+      if (tag.ref) {
+        const t = cascadedTagInstances.get(tagName);
+
+        if (t) {
+          if (tag.ref.parentNode) {
+            tag.ref.parentNode.removeChild(tag.ref);
+
+            for (let i = index - 1; i >= 0; i--) {
+              if (t[i] != null) {
+                document.head.appendChild(t[i].ref);
+              }
+            }
+          }
+
+          t[index] = null;
+          cascadedTagInstances.set(tagName, t);
+        } else {
+          if (tag.ref.parentNode) {
+            tag.ref.parentNode.removeChild(tag.ref);
+          }
         }
-
-        return tags;
-      });
+      }
     }
   };
 
@@ -104,15 +251,51 @@ const MetaProvider = props => {
 
   });
 };
+
+const MetaTag = (tag, props) => {
+  const id = createUniqueId();
+  const c = useContext(MetaContext);
+  if (!c) throw new Error("<MetaProvider /> should be in the tree");
+  useHead({
+    tag,
+    props,
+    id,
+
+    get name() {
+      return props.name || props.property;
+    }
+
+  });
+  return null;
+};
+function useHead(tagDesc) {
+  const {
+    addClientTag,
+    removeClientTag,
+    addServerTag
+  } = useContext(MetaContext);
+  createRenderEffect(() => {
+    if (!isServer) {
+      let index = addClientTag(tagDesc);
+      onCleanup(() => removeClientTag(tagDesc, index));
+    }
+  });
+
+  if (isServer) {
+    addServerTag(tagDesc);
+    return null;
+  }
+}
 function renderTags(tags) {
   return tags.map(tag => {
     const keys = Object.keys(tag.props);
     const props = keys.map(k => k === "children" ? "" : ` ${k}="${tag.props[k]}"`).join("");
-    return tag.props.children ? `<${tag.tag} data-sm=""${props}>${// Tags might contain multiple text children:
+    return tag.props.children ? `<${tag.tag} data-sm="${tag.id}"${props}>${// Tags might contain multiple text children:
     //   <Title>example - {myCompany}</Title>
-    Array.isArray(tag.props.children) ? tag.props.children.join("") : tag.props.children}</${tag.tag}>` : `<${tag.tag} data-sm=""${props}/>`;
+    Array.isArray(tag.props.children) ? tag.props.children.join("") : tag.props.children}</${tag.tag}>` : `<${tag.tag} data-sm="${tag.id}"${props}/>`;
   }).join("");
 }
+const Meta$1 = props => MetaTag("meta", props);
 
 function bindEvent(target, type, handler) {
     target.addEventListener(type, handler);
@@ -407,7 +590,7 @@ function createBranches(routeDef, base = "", fallback, stack = [], branches = []
     // Stack will be empty on final return
     return stack.length ? branches : branches.sort((a, b) => b.score - a.score);
 }
-function getRouteMatches$1(branches, location) {
+function getRouteMatches(branches, location) {
     for (let i = 0, len = branches.length; i < len; i++) {
         const match = branches[i].matcher(location);
         if (match) {
@@ -692,7 +875,7 @@ const Routes$1 = props => {
   const parentRoute = useRoute();
   const routeDefs = children(() => props.children);
   const branches = createMemo(() => createBranches(routeDefs(), joinPaths(parentRoute.pattern, props.base || ""), Outlet));
-  const matches = createMemo(() => getRouteMatches$1(branches(), router.location.pathname));
+  const matches = createMemo(() => getRouteMatches(branches(), router.location.pathname));
 
   if (router.out) {
     router.out.matches.push(matches().map(({
@@ -757,12 +940,6 @@ const Routes$1 = props => {
     })
   });
 };
-const useRoutes = (routes, base) => {
-  return () => createComponent(Routes$1, {
-    base: base,
-    children: routes
-  });
-};
 const Outlet = () => {
   const route = useRoute();
   return createComponent(Show, {
@@ -823,7 +1000,8 @@ function NavLink(props) {
     get classList() {
       return {
         [props.inactiveClass]: !isActive(),
-        [props.activeClass]: isActive()
+        [props.activeClass]: isActive(),
+        ...rest.classList
       };
     },
 
@@ -834,295 +1012,33 @@ function NavLink(props) {
   }));
 }
 
-const StartContext = createContext({});
-function StartProvider(props) {
-  const [request, setRequest] = createSignal(new Request(isServer ? props.context.request.url : window.location.pathname)); // TODO: throw error if values are used on client for anything more than stubbing
-  // OR replace with actual request that updates with the current URL
+class ServerError extends Error {
+  constructor(message, {
+    stack
+  } = {}) {
+    super(message);
+    this.name = "ServerError";
 
-  return createComponent(StartContext.Provider, {
-    get value() {
-      return props.context || {
-        get request() {
-          return request();
-        },
-
-        get responseHeaders() {
-          return new Headers();
-        },
-
-        get tags() {
-          return [];
-        },
-
-        get manifest() {
-          return {};
-        },
-
-        get routerContext() {
-          return {};
-        },
-
-        setStatusCode(code) {},
-
-        setHeader(name, value) {}
-
-      };
-    },
-
-    get children() {
-      return props.children;
-    }
-
-  });
-}
-
-const _tmpl$$9 = ["<link", " rel=\"stylesheet\"", ">"],
-      _tmpl$2$1 = ["<link", " rel=\"modulepreload\"", ">"];
-
-function getAssetsFromManifest(manifest, routerContext) {
-  const match = routerContext.matches.reduce((memo, m) => {
-    memo.push(...(manifest[mapRouteToFile(m)] || []));
-    return memo;
-  }, []);
-  const links = match.reduce((r, src) => {
-    r[src.href] = src.type === "style" ? ssr(_tmpl$$9, ssrHydrationKey(), ssrAttribute("href", escape(src.href, true), false)) : ssr(_tmpl$2$1, ssrHydrationKey(), ssrAttribute("href", escape(src.href, true), false));
-    return r;
-  }, {});
-  return Object.values(links);
-}
-
-function mapRouteToFile(matches) {
-  return matches.map(h => h.originalPath.replace(/:(\w+)/, (f, g) => `[${g}]`).replace(/\*(\w+)/, (f, g) => `[...${g}]`)).join("");
-}
-/**
- * Links are used to load assets for the server.
- * @returns {JSXElement}
- */
-
-
-function Links() {
-  const context = useContext(StartContext);
-  return createComponent(Assets, {
-    get children() {
-      return getAssetsFromManifest(context.manifest, context.routerContext);
-    }
-
-  });
-}
-
-function Meta() {
-  const context = useContext(StartContext); // @ts-expect-error The ssr() types do not match the Assets child types
-
-  return createComponent(Assets, {
-    get children() {
-      return ssr(renderTags(context.tags));
-    }
-
-  });
-}
-
-/// <reference path="../server/types.tsx" />
-const routes = [{
-  component: lazy(() => Promise.resolve().then(function () { return catering; })),
-  path: "/catering"
-}, {
-  component: lazy(() => Promise.resolve().then(function () { return contact; })),
-  path: "/contact"
-}, {
-  component: lazy(() => Promise.resolve().then(function () { return farmersMarket; })),
-  path: "/farmers-market"
-}, {
-  component: lazy(() => Promise.resolve().then(function () { return index; })),
-  path: "/"
-}]; // console.log(routes);
-
-/**
- * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.
- */
-
-const Routes = useRoutes(routes);
-
-const _tmpl$$8 = ["<script", " type=\"module\" async", "></script>"];
-
-function getFromManifest(manifest) {
-  const match = manifest["*"];
-  const entry = match.find(src => src.type === "script");
-  return ssr(_tmpl$$8, ssrHydrationKey(), ssrAttribute("src", escape(entry.href, true), false));
-}
-
-function Scripts() {
-  const context = useContext(StartContext);
-  return [createComponent(HydrationScript, {}), createComponent(NoHydration, {
-    get children() {
-      return isServer && (getFromManifest(context.manifest));
-    }
-
-  })];
-}
-
-const _tmpl$$7 = ["<div", " style=\"", "\"><div style=\"", "\"><p style=\"", "\" id=\"error-message\">", "</p><button id=\"reset-errors\" style=\"", "\">Clear errors and retry</button><pre style=\"", "\">", "</pre></div></div>"];
-function ErrorBoundary(props) {
-  return createComponent(ErrorBoundary$1, {
-    fallback: e => {
-      return createComponent(Show, {
-        get when() {
-          return !props.fallback;
-        },
-
-        get fallback() {
-          return props.fallback(e);
-        },
-
-        get children() {
-          return createComponent(ErrorMessage, {
-            error: e
-          });
-        }
-
-      });
-    },
-
-    get children() {
-      return props.children;
-    }
-
-  });
-}
-
-function ErrorMessage(props) {
-  return ssr(_tmpl$$7, ssrHydrationKey(), "padding:" + "16px", "background-color:" + "rgba(252, 165, 165)" + (";color:" + "rgb(153, 27, 27)") + (";border-radius:" + "5px") + (";overflow:" + "scroll") + (";padding:" + "16px") + (";margin-bottom:" + "8px"), "font-weight:" + "bold", escape(props.error.message), "color:" + "rgba(252, 165, 165)" + (";background-color:" + "rgb(153, 27, 27)") + (";border-radius:" + "5px") + (";padding:" + "4px 8px"), "margin-top:" + "8px" + (";width:" + "100%"), escape(props.error.stack));
-}
-
-var global = '';
-
-const _tmpl$$6 = ["<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon/favicon.svg\"><link rel=\"icon\" type=\"image/png\" href=\"/favicon/favicon.png\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\"><link href=\"https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap\" rel=\"stylesheet\">", "", "</head>"],
-      _tmpl$2 = ["<html", " lang=\"en\">", "<body><!--#-->", "<!--/--><!--#-->", "<!--/--></body></html>"];
-function Root() {
-  return ssr(_tmpl$2, ssrHydrationKey(), NoHydration({
-    get children() {
-      return ssr(_tmpl$$6, escape(createComponent(Meta, {})), escape(createComponent(Links, {})));
-    }
-
-  }), escape(createComponent(ErrorBoundary, {
-    get children() {
-      return createComponent(Suspense, {
-        get children() {
-          return createComponent(Routes, {});
-        }
-
-      });
-    }
-
-  })), escape(createComponent(Scripts, {})));
-}
-
-const api = [
-  {
-    get: "skip",
-    path: "/catering"
-  },
-  {
-    get: "skip",
-    path: "/contact"
-  },
-  {
-    get: "skip",
-    path: "/farmers-market"
-  },
-  {
-    get: "skip",
-    path: "/"
-  }
-];
-function routeToMatchRoute(route) {
-  const segments = route.path.split("/").filter(Boolean);
-  const params = [];
-  const matchSegments = [];
-  let score = route.path.endsWith("/") ? 4 : 0;
-  let wildcard = false;
-  for (const [index, segment] of segments.entries()) {
-    if (segment[0] === ":") {
-      const name = segment.slice(1);
-      score += 3;
-      params.push({
-        type: ":",
-        name,
-        index
-      });
-      matchSegments.push(null);
-    } else if (segment[0] === "*") {
-      params.push({
-        type: "*",
-        name: segment.slice(1),
-        index
-      });
-      wildcard = true;
-    } else {
-      score += 4;
-      matchSegments.push(segment);
+    if (stack) {
+      this.stack = stack;
     }
   }
-  return {
-    ...route,
-    score,
-    params,
-    matchSegments,
-    wildcard
-  };
-}
-function getRouteMatches(routes, path, method) {
-  const segments = path.split("/").filter(Boolean);
-  routeLoop:
-    for (const route of routes) {
-      const matchSegments = route.matchSegments;
-      if (segments.length < matchSegments.length || !route.wildcard && segments.length > matchSegments.length) {
-        continue;
-      }
-      for (let index = 0; index < matchSegments.length; index++) {
-        const match = matchSegments[index];
-        if (!match) {
-          continue;
-        }
-        if (segments[index] !== match) {
-          continue routeLoop;
-        }
-      }
-      const handler = route[method];
-      if (handler === "skip" || handler === void 0) {
-        return;
-      }
-      const params = {};
-      for (const { type, name, index } of route.params) {
-        if (type === ":") {
-          params[name] = segments[index];
-        } else {
-          params[name] = segments.slice(index).join("/");
-        }
-      }
-      return { handler, params };
-    }
-}
-const allRoutes = api.map(routeToMatchRoute).sort((a, b) => b.score - a.score);
-function getApiHandler(url, method) {
-  return getRouteMatches(allRoutes, url.pathname, method.toLowerCase());
-}
 
-class FormError extends Error {
+}
+class FormError extends ServerError {
   constructor(message, {
     fieldErrors = {},
     form,
     fields,
     stack
   } = {}) {
-    super(message);
+    super(message, {
+      stack
+    });
     this.formError = message;
     this.name = "FormError";
     this.fields = fields || Object.fromEntries(typeof form !== "undefined" ? form.entries() : []) || {};
     this.fieldErrors = fieldErrors;
-
-    if (stack) {
-      this.stack = stack;
-    }
   }
 
 }
@@ -1180,80 +1096,327 @@ class ResponseError extends Error {
     return await this.response().json();
   }
 }
-function respondWith(request, data, responseType) {
-  if (data instanceof ResponseError) {
-    data = data.clone();
-  }
-  if (data instanceof Response) {
-    if (isRedirectResponse(data) && request.headers.get(XSolidStartOrigin) === "client") {
-      let headers = new Headers(data.headers);
-      headers.set(XSolidStartOrigin, "server");
-      headers.set(XSolidStartLocationHeader, data.headers.get(LocationHeader));
-      headers.set(XSolidStartResponseTypeHeader, responseType);
-      headers.set(XSolidStartContentTypeHeader, "response");
-      return new Response(null, {
-        status: 204,
-        headers
+
+const ServerContext = createContext({});
+
+const _tmpl$$9 = ["<div", " style=\"", "\"><div style=\"", "\"><p style=\"", "\" id=\"error-message\">", "</p><button id=\"reset-errors\" style=\"", "\">Clear errors and retry</button><pre style=\"", "\">", "</pre></div></div>"];
+function ErrorBoundary(props) {
+  return createComponent(ErrorBoundary$1, {
+    fallback: e => {
+      return createComponent(Show, {
+        get when() {
+          return !props.fallback;
+        },
+
+        get fallback() {
+          return props.fallback(e);
+        },
+
+        get children() {
+          return createComponent(ErrorMessage, {
+            error: e
+          });
+        }
+
       });
-    } else {
-      data.headers.set(XSolidStartResponseTypeHeader, responseType);
-      data.headers.set(XSolidStartContentTypeHeader, "response");
-      return data;
+    },
+
+    get children() {
+      return props.children;
     }
-  } else if (data instanceof FormError) {
-    return new Response(JSON.stringify({
-      error: {
-        message: data.message,
-        stack: data.stack,
-        formError: data.formError,
-        fields: data.fields,
-        fieldErrors: data.fieldErrors
-      }
-    }), {
-      status: 400,
-      headers: {
-        [XSolidStartResponseTypeHeader]: responseType,
-        [XSolidStartContentTypeHeader]: "form-error"
-      }
-    });
-  } else if (data instanceof Error) {
-    return new Response(JSON.stringify({
-      error: {
-        message: data.message,
-        stack: data.stack,
-        status: data.status
-      }
-    }), {
-      status: data.status || 500,
-      headers: {
-        [XSolidStartResponseTypeHeader]: responseType,
-        [XSolidStartContentTypeHeader]: "error"
-      }
-    });
-  } else if (typeof data === "object" || typeof data === "string" || typeof data === "number" || typeof data === "boolean") {
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: {
-        [ContentTypeHeader]: "application/json",
-        [XSolidStartResponseTypeHeader]: responseType,
-        [XSolidStartContentTypeHeader]: "json"
-      }
-    });
-  }
-  return new Response("null", {
-    status: 200,
-    headers: {
-      [ContentTypeHeader]: "application/json",
-      [XSolidStartContentTypeHeader]: "json",
-      [XSolidStartResponseTypeHeader]: responseType
-    }
+
   });
 }
+
+function ErrorMessage(props) {
+
+  return ssr(_tmpl$$9, ssrHydrationKey(), "padding:" + "16px", "background-color:" + "rgba(252, 165, 165)" + (";color:" + "rgb(153, 27, 27)") + (";border-radius:" + "5px") + (";overflow:" + "scroll") + (";padding:" + "16px") + (";margin-bottom:" + "8px"), "font-weight:" + "bold", escape(props.error.message), "color:" + "rgba(252, 165, 165)" + (";background-color:" + "rgb(153, 27, 27)") + (";border-radius:" + "5px") + (";padding:" + "4px 8px"), "margin-top:" + "8px" + (";width:" + "100%"), escape(props.error.stack));
+}
+
+/// <reference path="../server/types.tsx" />
+const routesConfig = {
+  routes: [{
+    component: lazy(() => Promise.resolve().then(() => catering)),
+    path: "/catering"
+  }, {
+    component: lazy(() => Promise.resolve().then(() => contact)),
+    path: "/contact"
+  }, {
+    component: lazy(() => Promise.resolve().then(() => farmersMarket)),
+    path: "/farmers-market"
+  }, {
+    component: lazy(() => Promise.resolve().then(() => index)),
+    path: "/"
+  }],
+  routeLayouts: {
+    "/catering": {
+      "id": "/catering",
+      "layouts": []
+    },
+    "/contact": {
+      "id": "/contact",
+      "layouts": []
+    },
+    "/farmers-market": {
+      "id": "/farmers-market",
+      "layouts": []
+    },
+    "/": {
+      "id": "/",
+      "layouts": []
+    }
+  }
+};
+const fileRoutes = routesConfig.routes;
+const routeLayouts = routesConfig.routeLayouts;
+/**
+ * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.
+ */
+
+const FileRoutes = () => {
+  return fileRoutes;
+};
+
+const _tmpl$$8 = ["<link", " rel=\"stylesheet\"", ">"],
+      _tmpl$2$1 = ["<link", " rel=\"modulepreload\"", ">"];
+
+function getAssetsFromManifest(manifest, routerContext) {
+  const match = routerContext.matches.reduce((memo, m) => {
+    if (m.length) {
+      const fullPath = m.reduce((previous, match) => previous + match.originalPath, "");
+      const route = routeLayouts[fullPath];
+
+      if (route) {
+        memo.push(...(manifest[route.id] || []));
+        const layoutsManifestEntries = route.layouts.flatMap(manifestKey => manifest[manifestKey] || []);
+        memo.push(...layoutsManifestEntries);
+      }
+    }
+
+    return memo;
+  }, []);
+  match.push(...(manifest["entry-client"] || []));
+  const links = match.reduce((r, src) => {
+    r[src.href] = src.type === "style" ? ssr(_tmpl$$8, ssrHydrationKey(), ssrAttribute("href", escape(src.href, true), false)) : src.type === "script" ? ssr(_tmpl$2$1, ssrHydrationKey(), ssrAttribute("href", escape(src.href, true), false)) : undefined;
+    return r;
+  }, {});
+  return Object.values(links);
+}
+/**
+ * Links are used to load assets for the server rendered HTML
+ * @returns {JSXElement}
+ */
+
+
+function Links() {
+  const context = useContext(ServerContext);
+  return createComponent(Assets, {
+    get children() {
+      return getAssetsFromManifest(context.env.manifest, context.routerContext);
+    }
+
+  });
+}
+
+function Meta() {
+  const context = useContext(ServerContext); // @ts-expect-error The ssr() types do not match the Assets child types
+
+  return createComponent(Assets, {
+    get children() {
+      return ssr(renderTags(context.tags));
+    }
+
+  });
+}
+
+const _tmpl$$7 = ["<script", " type=\"module\" async", "></script>"];
+const isDev = "production" === "development";
+const isIslands = false;
+
+function getEntryClient(manifest) {
+  const entry = manifest["entry-client"][0];
+  return ssr(_tmpl$$7, ssrHydrationKey(), ssrAttribute("src", escape(entry.href, true), false));
+}
+
+function Scripts() {
+  const context = useContext(ServerContext);
+  return [createComponent(HydrationScript, {}), isIslands , createComponent(NoHydration, {
+    get children() {
+      return isServer && (getEntryClient(context.env.manifest) );
+    }
+
+  }), isDev ];
+}
+
+let spread = (props, isSvg, skipChildren) => // @ts-ignore
+ssrSpread(props, isSvg, skipChildren);
+
+function Html(props) {
+
+  {
+    return `<html ${spread(props, false, true)}>
+        ${resolveSSRNode(children(() => props.children))}
+      </html>
+    `;
+  }
+}
+function Head(props) {
+  {
+    return `<head ${spread(props, false, true)}>
+        ${resolveSSRNode(children(() => [props.children, createComponent(Meta, {}), createComponent(Links, {})]))}
+      </head>
+    `;
+  }
+}
+function Body(props) {
+  {
+    return `<body ${spread(props, false, true)}>${resolveSSRNode(children(() => props.children)) }</body>`;
+  }
+}
+
+createContext();
+createContext();
+
+function Routes(props) {
+
+  return createComponent(Routes$1, {
+    get children() {
+      return props.children;
+    }
+
+  });
+}
+
+const global = '';
+
+const _tmpl$$6 = ["<link", " rel=\"icon\" type=\"image/svg+xml\" href=\"/favicon/favicon.svg\">"],
+      _tmpl$2 = ["<link", " rel=\"icon\" type=\"image/png\" href=\"/favicon/favicon.png\">"],
+      _tmpl$3 = ["<link", " rel=\"preconnect\" href=\"https://fonts.googleapis.com\">"],
+      _tmpl$4 = ["<link", " rel=\"preconnect\" href=\"https://fonts.gstatic.com\">"],
+      _tmpl$5 = ["<link", " href=\"https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap\" rel=\"stylesheet\">"];
+function Root() {
+  return createComponent(Html, {
+    lang: "en",
+
+    get children() {
+      return [createComponent(Head, {
+        get children() {
+          return [createComponent(Meta$1, {
+            charset: "utf-8"
+          }), createComponent(Meta$1, {
+            name: "viewport",
+            content: "width=device-width, initial-scale=1"
+          }), ssr(_tmpl$$6, ssrHydrationKey()), ssr(_tmpl$2, ssrHydrationKey()), ssr(_tmpl$3, ssrHydrationKey()), ssr(_tmpl$4, ssrHydrationKey()), ssr(_tmpl$5, ssrHydrationKey())];
+        }
+
+      }), createComponent(Body, {
+        get children() {
+          return [createComponent(Suspense, {
+            get children() {
+              return createComponent(ErrorBoundary, {
+                get children() {
+                  return createComponent(Routes, {
+                    get children() {
+                      return createComponent(FileRoutes, {});
+                    }
+
+                  });
+                }
+
+              });
+            }
+
+          }), createComponent(Scripts, {})];
+        }
+
+      })];
+    }
+
+  });
+}
+
+const api = [
+  {
+    get: "skip",
+    path: "/catering"
+  },
+  {
+    get: "skip",
+    path: "/contact"
+  },
+  {
+    get: "skip",
+    path: "/farmers-market"
+  },
+  {
+    get: "skip",
+    path: "/"
+  }
+];
+function routeToMatchRoute(route) {
+  const segments = route.path.split("/").filter(Boolean);
+  const params = [];
+  const matchSegments = [];
+  let score = route.path.endsWith("/") ? 4 : 0;
+  let wildcard = false;
+  for (const [index, segment] of segments.entries()) {
+    if (segment[0] === ":") {
+      const name = segment.slice(1);
+      score += 3;
+      params.push({
+        type: ":",
+        name,
+        index
+      });
+      matchSegments.push(null);
+    } else if (segment[0] === "*") {
+      params.push({
+        type: "*",
+        name: segment.slice(1),
+        index
+      });
+      wildcard = true;
+    } else {
+      score += 4;
+      matchSegments.push(segment);
+    }
+  }
+  return {
+    ...route,
+    score,
+    params,
+    matchSegments,
+    wildcard
+  };
+}
+const allRoutes = api.map(routeToMatchRoute).sort((a, b) => b.score - a.score);
+registerApiRoutes(allRoutes);
+function getApiHandler(url, method) {
+  return getRouteMatches$1(allRoutes, url.pathname, method.toLowerCase());
+}
+
+const apiRoutes = ({ forward }) => {
+  return async (event) => {
+    let apiHandler = getApiHandler(new URL(event.request.url), event.request.method);
+    if (apiHandler) {
+      let apiEvent = Object.freeze({
+        request: event.request,
+        params: apiHandler.params,
+        env: event.env,
+        $type: FETCH_EVENT,
+        fetch: internalFetch
+      });
+      return await apiHandler.handler(apiEvent);
+    }
+    return await forward(event);
+  };
+};
 
 const server = (fn) => {
   throw new Error("Should be compiled away");
 };
-async function parseRequest(request) {
+async function parseRequest(event) {
+  let request = event.request;
   let contentType = request.headers.get(ContentTypeHeader);
   let name = new URL(request.url).pathname, args = [];
   if (contentType) {
@@ -1263,6 +1426,9 @@ async function parseRequest(request) {
         args = JSON.parse(text, (key, value) => {
           if (!value) {
             return value;
+          }
+          if (value.$type === "fetch_event") {
+            return event;
           }
           if (value.$type === "headers") {
             let headers = new Headers();
@@ -1283,16 +1449,116 @@ async function parseRequest(request) {
       }
     } else if (contentType.includes("form")) {
       let formData = await request.formData();
-      args = [formData];
+      args = [formData, event];
     }
   }
   return [name, args];
 }
-async function handleServerRequest(ctx) {
-  const url = new URL(ctx.request.url);
+function respondWith(request, data, responseType) {
+  if (data instanceof ResponseError) {
+    data = data.clone();
+  }
+  if (data instanceof Response) {
+    if (isRedirectResponse(data) && request.headers.get(XSolidStartOrigin) === "client") {
+      let headers = new Headers(data.headers);
+      headers.set(XSolidStartOrigin, "server");
+      headers.set(XSolidStartLocationHeader, data.headers.get(LocationHeader));
+      headers.set(XSolidStartResponseTypeHeader, responseType);
+      headers.set(XSolidStartContentTypeHeader, "response");
+      return new Response(null, {
+        status: 204,
+        statusText: "Redirected",
+        headers
+      });
+    } else if (data.status === 101) {
+      return data;
+    } else {
+      let headers = new Headers(data.headers);
+      headers.set(XSolidStartOrigin, "server");
+      headers.set(XSolidStartResponseTypeHeader, responseType);
+      headers.set(XSolidStartContentTypeHeader, "response");
+      return new Response(data.body, {
+        status: data.status,
+        statusText: data.statusText,
+        headers
+      });
+    }
+  } else if (data instanceof FormError) {
+    return new Response(
+      JSON.stringify({
+        error: {
+          message: data.message,
+          stack: "",
+          formError: data.formError,
+          fields: data.fields,
+          fieldErrors: data.fieldErrors
+        }
+      }),
+      {
+        status: 400,
+        headers: {
+          [XSolidStartResponseTypeHeader]: responseType,
+          [XSolidStartContentTypeHeader]: "form-error"
+        }
+      }
+    );
+  } else if (data instanceof ServerError) {
+    return new Response(
+      JSON.stringify({
+        error: {
+          message: data.message,
+          stack: ""
+        }
+      }),
+      {
+        status: 400,
+        headers: {
+          [XSolidStartResponseTypeHeader]: responseType,
+          [XSolidStartContentTypeHeader]: "server-error"
+        }
+      }
+    );
+  } else if (data instanceof Error) {
+    return new Response(
+      JSON.stringify({
+        error: {
+          message: "Internal Server Error",
+          stack: "",
+          status: data.status
+        }
+      }),
+      {
+        status: data.status || 500,
+        headers: {
+          [XSolidStartResponseTypeHeader]: responseType,
+          [XSolidStartContentTypeHeader]: "error"
+        }
+      }
+    );
+  } else if (typeof data === "object" || typeof data === "string" || typeof data === "number" || typeof data === "boolean") {
+    return new Response(JSON.stringify(data), {
+      status: 200,
+      headers: {
+        [ContentTypeHeader]: "application/json",
+        [XSolidStartResponseTypeHeader]: responseType,
+        [XSolidStartContentTypeHeader]: "json"
+      }
+    });
+  }
+  return new Response("null", {
+    status: 200,
+    headers: {
+      [ContentTypeHeader]: "application/json",
+      [XSolidStartContentTypeHeader]: "json",
+      [XSolidStartResponseTypeHeader]: responseType
+    }
+  });
+}
+async function handleServerRequest(event) {
+  const url = new URL(event.request.url);
   if (server.hasHandler(url.pathname)) {
     try {
-      let [name, args] = await parseRequest(ctx.request);
+      let [name, args] = await parseRequest(event);
       let handler = server.getHandler(name);
       if (!handler) {
         throw {
@@ -1300,10 +1566,10 @@ async function handleServerRequest(ctx) {
           message: "Handler Not Found for " + name
         };
       }
-      const data = await handler.call(ctx, ...Array.isArray(args) ? args : [args]);
-      return respondWith(ctx.request, data, "return");
+      const data = await handler.call(event, ...Array.isArray(args) ? args : [args]);
+      return respondWith(event.request, data, "return");
     } catch (error) {
-      return respondWith(ctx.request, error, "throw");
+      return respondWith(event.request, error, "throw");
     }
   }
   return null;
@@ -1328,7 +1594,9 @@ server.createHandler = (_fn, hash) => {
         return e;
       } catch (e) {
         if (/[A-Za-z]+ is not defined/.test(e.message)) {
-          const error = new Error(e.message + "\n You probably are using a variable defined in a closure in your server function.");
+          const error = new Error(
+            e.message + "\n You probably are using a variable defined in a closure in your server function."
+          );
           error.stack = e.stack;
           throw error;
         }
@@ -1352,139 +1620,116 @@ server.getHandler = function(route) {
 server.hasHandler = function(route) {
   return handlers.has(route);
 };
-server.fetch = async function(route, init) {
-  let url = new URL(route, "http://localhost:3000");
-  const request = new Request(url.href, init);
-  const handler = getApiHandler(url, request.method);
-  const response = await handler.handler({ request }, handler.params);
-  return response;
-};
+server.fetch = internalFetch;
 
 const inlineServerFunctions = ({ forward }) => {
-  return async (ctx) => {
-    const url = new URL(ctx.request.url);
+  return async (event) => {
+    const url = new URL(event.request.url);
     if (server.hasHandler(url.pathname)) {
-      let contentType = ctx.request.headers.get("content-type");
-      let origin = ctx.request.headers.get("x-solidstart-origin");
+      let contentType = event.request.headers.get(ContentTypeHeader);
+      let origin = event.request.headers.get(XSolidStartOrigin);
       let formRequestBody;
       if (contentType != null && contentType.includes("form") && !(origin != null && origin.includes("client"))) {
-        let [read1, read2] = ctx.request.body.tee();
-        formRequestBody = new Request(ctx.request.url, {
+        let [read1, read2] = event.request.body.tee();
+        formRequestBody = new Request(event.request.url, {
           body: read2,
-          headers: ctx.request.headers,
-          method: ctx.request.method
+          headers: event.request.headers,
+          method: event.request.method
         });
-        ctx.request = new Request(ctx.request.url, {
+        event.request = new Request(event.request.url, {
           body: read1,
-          headers: ctx.request.headers,
-          method: ctx.request.method
+          headers: event.request.headers,
+          method: event.request.method
         });
       }
-      const serverResponse = await handleServerRequest(ctx);
-      let responseContentType = serverResponse.headers.get("x-solidstart-content-type");
+      let serverFunctionEvent = Object.freeze({
+        request: event.request,
+        fetch: internalFetch,
+        $type: FETCH_EVENT,
+        env: event.env
+      });
+      const serverResponse = await handleServerRequest(serverFunctionEvent);
+      let responseContentType = serverResponse.headers.get(XSolidStartContentTypeHeader);
       if (formRequestBody && responseContentType !== null && responseContentType.includes("error")) {
         const formData = await formRequestBody.formData();
         let entries = [...formData.entries()];
         return new Response(null, {
           status: 302,
           headers: {
-            Location: new URL(ctx.request.headers.get("referer")).pathname + "?form=" + encodeURIComponent(JSON.stringify({
-              url: url.pathname,
-              entries,
-              ...await serverResponse.json()
-            }))
+            Location: new URL(event.request.headers.get("referer")).pathname + "?form=" + encodeURIComponent(
+              JSON.stringify({
+                url: url.pathname,
+                entries,
+                ...await serverResponse.json()
+              })
+            )
           }
         });
       }
       return serverResponse;
     }
-    const response = await forward(ctx);
-    if (ctx.responseHeaders.get("x-solidstart-status-code")) {
-      return new Response(response.body, {
-        status: parseInt(ctx.responseHeaders.get("x-solidstart-status-code")),
-        headers: response.headers
-      });
-    }
+    const response = await forward(event);
     return response;
   };
 };
 
-const apiRoutes = ({ forward }) => {
-  return async (ctx) => {
-    let apiHandler = getApiHandler(new URL(ctx.request.url), ctx.request.method);
-    if (apiHandler) {
-      return await apiHandler.handler(ctx, apiHandler.params);
-    }
-    return await forward(ctx);
-  };
-};
-
-const rootData = Object.values({})[0];
+const rootData = Object.values(Object.assign({}))[0];
 const dataFn = rootData ? rootData.default : undefined;
 /** Function responsible for listening for streamed [operations]{@link Operation}. */
 
 /** This composes an array of Exchanges into a single ExchangeIO function */
 const composeMiddleware = exchanges => ({
-  ctx,
   forward
 }) => exchanges.reduceRight((forward, exchange) => exchange({
-  ctx: ctx,
   forward
 }), forward);
 function createHandler(...exchanges) {
   const exchange = composeMiddleware([apiRoutes, inlineServerFunctions, ...exchanges]);
-  return async request => {
+  return async event => {
     return await exchange({
-      ctx: {
-        request
-      },
-      // fallbackExchange
       forward: async op => {
         return new Response(null, {
           status: 404
         });
       }
-    })(request);
+    })(event);
   };
 }
+function StartRouter(props) {
+
+  return createComponent(Router, props);
+}
 const docType = ssr("<!DOCTYPE html>");
-var StartServer = (({
-  context
+const StartServer = (({
+  event
 }) => {
-  let pageContext = context;
-  pageContext.routerContext = {};
-  pageContext.tags = [];
-
-  pageContext.setStatusCode = code => {
-    pageContext.responseHeaders.set("x-solidstart-status-code", code.toString());
-  };
-
-  pageContext.setHeader = (name, value) => {
-    pageContext.responseHeaders.set(name, value.toString());
-  }; // @ts-expect-error
-
-
-  sharedConfig.context.requestContext = context;
-  const parsed = new URL(context.request.url);
+  const parsed = new URL(event.request.url);
   const path = parsed.pathname + parsed.search;
-  return createComponent(StartProvider, {
-    context: pageContext,
+  return createComponent(ServerContext.Provider, {
+    value: event,
 
     get children() {
       return createComponent(MetaProvider, {
         get tags() {
-          return pageContext.tags;
+          return event.tags;
         },
 
         get children() {
-          return createComponent(Router, {
+          return createComponent(StartRouter, {
             url: path,
 
             get out() {
-              return pageContext.routerContext;
+              return event.routerContext;
+            },
+
+            location: path,
+
+            get prevLocation() {
+              return event.prevUrl;
             },
 
             data: dataFn,
+            routes: fileRoutes,
 
             get children() {
               return [docType, createComponent(Root, {})];
@@ -1499,8 +1744,8 @@ var StartServer = (({
   });
 });
 
-var entryServer = createHandler(renderAsync(context => createComponent(StartServer, {
-  context: context
+const entryServer = createHandler(renderAsync(event => createComponent(StartServer, {
+  event: event
 })));
 
 const root = "_root_1qiqm_1";
@@ -1508,7 +1753,7 @@ const head = "_head_1qiqm_9";
 const selectedTab = "_selectedTab_1qiqm_42";
 const logo = "_logo_1qiqm_47";
 const decoration = "_decoration_1qiqm_52";
-var styles$3 = {
+const styles$3 = {
 	root: root,
 	head: head,
 	selectedTab: selectedTab,
@@ -1561,7 +1806,7 @@ const two$1 = "_two_19dvc_12";
 const cards$1 = "_cards_19dvc_15";
 const three$1 = "_three_19dvc_20";
 const divider$1 = "_divider_19dvc_35";
-var index_module = {
+const index_module = {
 	sections: sections$1,
 	section: section$1,
 	one: one$1,
@@ -1581,13 +1826,13 @@ function Home$3() {
   });
 }
 
-var catering = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const catering = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  'default': Home$3
+  default: Home$3
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const contact$1 = "_contact_1d9rk_1";
-var styles$2 = {
+const styles$2 = {
 	contact: contact$1
 };
 
@@ -1601,9 +1846,9 @@ function Home$2() {
   });
 }
 
-var contact = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const contact = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  'default': Home$2
+  default: Home$2
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const _tmpl$$2 = ["<h2", ">Coming Soon...</h2>"];
@@ -1616,9 +1861,9 @@ function Home$1() {
   });
 }
 
-var farmersMarket = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const farmersMarket = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  'default': Home$1
+  default: Home$1
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const cardLink = "_cardLink_1q6o1_1";
@@ -1626,7 +1871,7 @@ const card = "_card_1q6o1_1";
 const outline = "_outline_1q6o1_31";
 const top = "_top_1q6o1_36";
 const bottom = "_bottom_1q6o1_39";
-var styles$1 = {
+const styles$1 = {
 	cardLink: cardLink,
 	card: card,
 	outline: outline,
@@ -1659,7 +1904,7 @@ const two = "_two_19dvc_12";
 const cards = "_cards_19dvc_15";
 const three = "_three_19dvc_20";
 const divider = "_divider_19dvc_35";
-var styles = {
+const styles = {
 	sections: sections,
 	section: section,
 	one: one,
@@ -1687,9 +1932,9 @@ function Home() {
   });
 }
 
-var index = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const index = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  'default': Home
+  default: Home
 }, Symbol.toStringTag, { value: 'Module' }));
 
 export { entryServer as default };
