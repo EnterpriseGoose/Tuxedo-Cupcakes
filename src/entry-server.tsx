@@ -4,6 +4,4 @@ import {
   renderAsync,
 } from "solid-start/entry-server";
 
-export default createHandler(
-  renderAsync((context) => <StartServer context={context} />)
-);
+export default createHandler(renderAsync(event => <StartServer event={event} />));

@@ -1,4 +1,4 @@
-import {NavLink} from 'solid-app-router'
+import {NavLink} from '@solidjs/router'
 import styles from "./Layout.module.scss";
 
 export default function Layout(props?: {children?: any;}) {
