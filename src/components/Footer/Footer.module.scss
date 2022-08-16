@@ -1,0 +1,72 @@
+@use "../../global-styles/variables.scss" as *;
+
+
+.footer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: $darkCyan;
+	align-items: center;
+	position: relative;
+	margin-top: auto;
+	padding: calc(2.5 * $ru) 0 calc(1.5 * $ru) 0;
+	user-select: none;
+
+	.decoration {
+		width: calc(50 * $ru);
+		position: absolute;
+		top: calc(-2.3 * $ru);
+	}
+
+	.links {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		position: relative;
+
+		a {
+			color: white;
+			font-size: calc(3 * $ru);
+			font-weight: 500;
+			transition: color 0.2s ease-in;
+		
+			&.selectedTab {
+				color: $cyan;
+			}
+		
+			&:hover {
+				color: $cyan;
+			}
+		}
+
+		.left {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: calc(10 * $ru);
+			position: absolute;
+			right: calc(20 * $ru)
+		}
+
+		img {
+			width: calc(10 * $ru);
+		}
+
+		.right {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: calc(10 * $ru);
+			position: absolute;
+			left: calc(20 * $ru);
+
+			a {
+				width: max-content;
+				@media (max-width: 1400px) {
+					width: min-content;
+				}
+			}
+		}
+	}
+}
+
