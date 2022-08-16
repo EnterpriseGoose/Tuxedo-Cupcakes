@@ -24,11 +24,11 @@
         text-align: center;
         a {
             text-decoration: none;
-            color: $cyan;
+            color: $darkCyan;
             transition: color 0.2s ease-out;
         }
         a:hover {
-            color: $darkCyan;
+            color: $cyan;
         }
     }
     
