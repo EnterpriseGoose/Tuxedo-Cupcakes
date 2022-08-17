@@ -1,0 +1,39 @@
+@use '../global-styles/variables.scss' as *;
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(7 * $ru);
+  align-items: center;
+}
+
+.section {
+  &.one {
+    padding-top: calc(5 * $ru);
+    width: calc(100 * $ru);
+  }
+  &.two {
+    padding-top: calc(2 * $ru);
+    width: calc(85 * $ru);
+  }
+
+  &.three {
+    padding-top: calc(2 * $ru);
+    width: calc(60 * $ru);
+  }
+
+  &.four {
+    h4 {
+      text-align: center;
+    }
+  }
+
+  h2,
+  h3 {
+    text-align: center;
+  }
+}
+
+.divider {
+  width: calc(10 * $ru);
+}

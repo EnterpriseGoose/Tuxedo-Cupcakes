@@ -104,7 +104,7 @@ export default function Home() {
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.six}`}>
-          <h2>Order</h2>
+          <h3>Order</h3>
           <h4>
             Contact me about catering at
             <br />
