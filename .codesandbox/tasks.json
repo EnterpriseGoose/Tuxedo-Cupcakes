@@ -3,7 +3,7 @@
   "setupTasks": [
     {
       "name": "pnpm install",
-      "command": "pnpm install"
+      "command": "pnpm install -f"
     }
   ],
 
@@ -11,7 +11,7 @@
   "tasks": {
     "Install Packages": {
       "name": "Install Packages",
-      "command": "pnpm install",
+      "command": "pnpm install -f",
       "runAtStart": true
     },
     "Dev Server": {
