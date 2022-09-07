@@ -26,7 +26,7 @@ export default function Home() {
             </Card>
             <Card title="Farmers' Market" link="/farmers-market">
               I attend the Chatham Farmers’ Market on Saturdays, where you can
-              choose from a selection of cupcakes I have avaliable that day
+              choose from a selection of cupcakes I have available that day
             </Card>
           </div>
         </div>
