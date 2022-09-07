@@ -9,7 +9,10 @@ export default function Home() {
     [new Date(2022, 7, 13), 'Mint Chocolate Chip & Salted Caramel'],
     [new Date(2022, 7, 20), 'Cinnamon Peach & Chocolate Peanut Butter'],
     [new Date(2022, 7, 27), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 8, 10), ''],
+    [
+      new Date(2022, 8, 10),
+      'Red Bean, Chocolate Black Sesame & Pineapple Cake',
+    ],
     [new Date(2022, 8, 17), ''],
     [new Date(2022, 9, 1), ''],
     [new Date(2022, 9, 8), ''],
