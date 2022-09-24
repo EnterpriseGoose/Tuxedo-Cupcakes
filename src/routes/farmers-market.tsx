@@ -51,11 +51,6 @@ export default function Home() {
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
-            Classic Cupcakes <br />
-            Regular - $3.50 <br />
-            Mini - $2 <br />
-            <br />
-            Special Cupcakes <br />
             Regular - $4 <br />
             Mini - $2 <br />
             <br />
