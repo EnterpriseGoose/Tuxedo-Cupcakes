@@ -8,16 +8,16 @@ export default function Home() {
     [new Date(2022, 7, 6), 'Chocolate Raspberry & Caramel Cashew'],
     [new Date(2022, 7, 13), 'Mint Chocolate Chip & Salted Caramel'],
     [new Date(2022, 7, 20), 'Cinnamon Peach & Chocolate Peanut Butter'],
-    [new Date(2022, 7, 27), 'Chocolate Orange & Strawberry'],
+    [new Date(2022, 7, 27), 'Chocolate Raspberry & Strawberry'],
     [
       new Date(2022, 8, 10),
       'Red Bean, Chocolate Black Sesame & Pineapple Cake',
     ],
-    [new Date(2022, 8, 17), ''],
-    [new Date(2022, 9, 1), ''],
-    [new Date(2022, 9, 8), ''],
-    [new Date(2022, 9, 15), ''],
-    [new Date(2022, 9, 29), ''],
+    [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
+    [new Date(2022, 9, 1), 'Matcha & Yuzu'],
+    [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
+    [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
+    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Cinnamon Pumpkin'],
   ]);
   return (
     <Layout>
@@ -51,11 +51,6 @@ export default function Home() {
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
-            Classic Cupcakes <br />
-            Regular - $3.50 <br />
-            Mini - $2 <br />
-            <br />
-            Special Cupcakes <br />
             Regular - $4 <br />
             Mini - $2 <br />
             <br />
