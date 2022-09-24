@@ -41,7 +41,25 @@ export default function Home() {
           </p>
           <For each={dates()}>
             {([date, specials], i) => (
-              <p>{`• ${date.toString().substring(4, 7)} ${(
+              <p
+                class={(() => {
+                  let thisDate = (date as Date).setHours(0, 0, 0, 0);
+                  let lastDate = (
+                    dates()[i() - 1] != undefined
+                      ? (dates()[i() - 1][0] as Date)
+                      : new Date(0)
+                  ).getTime();
+
+                  if (new Date().setHours(0, 0, 0, 0) === thisDate)
+                    return styles.today;
+                  else if (
+                    new Date().getTime() > lastDate &&
+                    new Date().getTime() < thisDate
+                  )
+                    return styles.nextWeek;
+                  else return '';
+                })()}
+              >{`• ${date.toString().substring(4, 7)} ${(
                 date as Date
               ).getDate()}${specials ? ` - ${specials}` : ''}`}</p>
             )}

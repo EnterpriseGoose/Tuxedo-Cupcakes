@@ -15,6 +15,22 @@
   &.two {
     padding-top: calc(2 * $ru);
     width: calc(85 * $ru);
+    
+    p {
+        position: relative;
+        
+        &.today::before {
+            content: "Today! -> ";
+        }
+        &.nextWeek::before {
+            content: "Next Market Day -> ";
+        }
+        &.today::before, &.nextWeek::before {
+            position: absolute;
+            left: calc(-2 * $ru);
+            transform: translateX(-100%)
+        }
+    }
   }
 
   &.three {
