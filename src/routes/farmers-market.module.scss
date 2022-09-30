@@ -18,6 +18,17 @@
     
     p {
         position: relative;
+        color: #707070;
+        
+        &.desc {
+          color: black;
+        }
+        
+        &.today, &.nextWeek {
+          font-size: calc(3.2 * $tru);
+          position: relative;
+          color: black;
+        }
         
         &.today::before {
             content: "Today! -> ";
@@ -28,8 +39,22 @@
         &.today::before, &.nextWeek::before {
             position: absolute;
             left: calc(-2 * $ru);
-            transform: translateX(-100%)
+            transform: translateX(-100%);
+            font-size: calc(2.7 * $tru);
         }
+        @media (max-width: 1500px) {
+            &.nextWeek::before {
+                width: calc(13 * $ru);
+                bottom: calc(0.5 * $tru);
+                left: calc(0 * $ru);
+            }
+            //position: static
+            
+        }
+    }
+    
+    .today ~ p, .nextWeek ~ p {
+          color: #303030;
     }
   }
 
