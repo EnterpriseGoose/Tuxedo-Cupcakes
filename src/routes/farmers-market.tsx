@@ -14,10 +14,10 @@ export default function Home() {
       'Red Bean, Chocolate Black Sesame & Pineapple Cake',
     ],
     [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 9, 1), 'Matcha & Yuzu'],
-    [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
+    [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
+    [new Date(2022, 9, 8), 'Cinnamon Pear & Caramel Apple'],
     [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
-    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Cinnamon Pumpkin'],
+    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
   ]);
   return (
     <Layout>
@@ -34,7 +34,7 @@ export default function Home() {
         </div>
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Dates</h3>
-          <p>
+          <p class={styles.desc}>
             Here are the full list of dates I’m appearing at the farmers’
             market, as well as the specials I will have available that day
             (2022):
