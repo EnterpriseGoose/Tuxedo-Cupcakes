@@ -15,9 +15,9 @@ export default function Home() {
     ],
     [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
     [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
-    [new Date(2022, 9, 8), 'Cinnamon Pear & Caramel Apple'],
+    [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
     [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
-    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
+    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Pie'],
   ]);
   return (
     <Layout>
