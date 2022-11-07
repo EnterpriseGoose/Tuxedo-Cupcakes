@@ -14,10 +14,13 @@ export default function Home() {
       'Red Bean, Chocolate Black Sesame & Pineapple Cake',
     ],
     [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
+    [new Date(2022, 8, 24), 'Strawberry & Salted Caramel'][
+      (new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu')
+    ],
     [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
     [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
-    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Pie'],
+    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
+    [new Date(2022, 10, 19), 'Brown Butter Sweet Potato & ???'],
   ]);
   return (
     <Layout>
@@ -52,6 +55,12 @@ export default function Home() {
 
                   if (new Date().setHours(0, 0, 0, 0) === thisDate)
                     return styles.today;
+                  else if (
+                    new Date().getTime() > lastDate &&
+                    new Date().getTime() < thisDate &&
+                    i() === dates().length - 1
+                  )
+                    return styles.finalWeek;
                   else if (
                     new Date().getTime() > lastDate &&
                     new Date().getTime() < thisDate
