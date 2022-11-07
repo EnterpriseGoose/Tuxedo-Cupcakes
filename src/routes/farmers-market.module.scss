@@ -36,6 +36,9 @@
         &.nextWeek::before {
             content: "Next Market Day -> ";
         }
+        &.finalWeek::before {
+            content: "Last Market Day! -> ";
+        }
         &.today::before, &.nextWeek::before {
             position: absolute;
             left: calc(-2 * $ru);
