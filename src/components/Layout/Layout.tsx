@@ -56,6 +56,13 @@ export default function Layout(props?: { children?: any; home?: any }) {
             Farmers' Market
           </NavLink>
           <NavLink
+            href="/virtual-market"
+            activeClass={styles.selectedTab}
+            draggable={false}
+          >
+            Virtual Market
+          </NavLink>
+          <NavLink
             href="/contact"
             activeClass={styles.selectedTab}
             draggable={false}

@@ -17,14 +17,18 @@
     width: calc(85 * $ru);
     
     p {
-        position: relative;
-        color: #707070;
-        
-        &.desc {
-          color: black;
-        }
-        
-        &.today, &.nextWeek {
+      position: relative;
+      color: black;
+    }
+    
+    ul {
+      list-style-type: '• ';
+    }
+    
+    li {
+      position: relative;
+      color: #707070;
+      &.today, &.nextWeek, &.finalWeek {
           font-size: calc(3.2 * $tru);
           position: relative;
           color: black;
@@ -39,25 +43,33 @@
         &.finalWeek::before {
             content: "Last Market Day! -> ";
         }
-        &.today::before, &.nextWeek::before {
+        &.today::before, &.nextWeek::before, &.finalWeek::before {
             position: absolute;
             left: calc(-2 * $ru);
-            transform: translateX(-100%);
+            top: 0;
+            transform: translate(-100%, -90%);
             font-size: calc(2.7 * $tru);
+        }
+        &.today::before {
+            transform: translate(-110%, 0%);
         }
         @media (max-width: 1500px) {
             &.nextWeek::before {
-                width: calc(13 * $ru);
-                bottom: calc(0.5 * $tru);
-                left: calc(0 * $ru);
+                width: calc(9 * $tru);
+                transform: translate(-115%, -67%);
+            }
+            &.finalWeek::before {
+                width: calc(9 * $tru);
+                transform: translate(-115%, -67%);
             }
             //position: static
             
         }
     }
+        
     
-    .today ~ p, .nextWeek ~ p {
-          color: #303030;
+    .today ~ li, .nextWeek ~ li {
+          color: #202020;
     }
   }
 

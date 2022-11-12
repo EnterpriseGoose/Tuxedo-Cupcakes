@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/FileRoutes.tsx?v=9ac0fbdc",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "solid-start-file-system-router",
+    "solid",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "/// <reference path=\"../server/types.tsx\" />\n\n// @ts-expect-error\nvar fileRoutes = $FILE_ROUTES;\n\n/**\n * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.\n */\n\nconst FileRoutes = () => {\n  return fileRoutes;\n};\n\nexport default FileRoutes;\nexport { fileRoutes };\n",
+      "start": 1668223115748,
+      "end": 1668223115748
+    },
+    {
+      "name": "solid-start-file-system-router",
+      "result": "/// <reference path=\"../server/types.tsx\" />\n\n// @ts-expect-error\n\n  import { lazy } from 'solid-js';\n  \n  const fileRoutes = /*#__PURE__*/ [\n{\ncomponent: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/catering.tsx')),\n path: \"/catering\" \n},\n{\ncomponent: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/contact.tsx')),\n path: \"/contact\" \n},\n{\ncomponent: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/farmers-market.tsx')),\n path: \"/farmers-market\" \n},\n{\ncomponent: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/index.tsx')),\n path: \"/\" \n},\n{\ncomponent: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/virtual-market.tsx')),\n path: \"/virtual-market\" \n}\n];\n\n/**\n * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.\n */\n\nconst FileRoutes = () => {\n  return fileRoutes;\n};\n\nexport default FileRoutes;\nexport { fileRoutes };\n",
+      "start": 1668223115748,
+      "end": 1668223115748
+    },
+    {
+      "name": "solid",
+      "result": "/// <reference path=\"../server/types.tsx\" />\n\n// @ts-expect-error\n\nimport { lazy } from 'solid-js';\nconst fileRoutes = /*#__PURE__*/[{\n  component: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/catering.tsx')),\n  path: \"/catering\"\n}, {\n  component: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/contact.tsx')),\n  path: \"/contact\"\n}, {\n  component: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/farmers-market.tsx')),\n  path: \"/farmers-market\"\n}, {\n  component: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/index.tsx')),\n  path: \"/\"\n}, {\n  component: lazy(() => import('/project/Tuxedo-Cupcakes/src/routes/virtual-market.tsx')),\n  path: \"/virtual-market\"\n}];\n\n/**\n * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.\n */\n\nconst FileRoutes = () => {\n  return fileRoutes;\n};\nexport default FileRoutes;\nexport { fileRoutes };",
+      "start": 1668223115748,
+      "end": 1668223115751
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "/// <reference path=\"../server/types.tsx\" />\n\n// @ts-expect-error\n\nimport { lazy } from '/node_modules/.vite/deps/solid-js.js?v=288f8a37';\nconst fileRoutes = /*#__PURE__*/[{\n  component: lazy(() => import(\"/src/routes/catering.tsx\")),\n  path: \"/catering\"\n}, {\n  component: lazy(() => import(\"/src/routes/contact.tsx\")),\n  path: \"/contact\"\n}, {\n  component: lazy(() => import(\"/src/routes/farmers-market.tsx\")),\n  path: \"/farmers-market\"\n}, {\n  component: lazy(() => import(\"/src/routes/index.tsx\")),\n  path: \"/\"\n}, {\n  component: lazy(() => import(\"/src/routes/virtual-market.tsx\")),\n  path: \"/virtual-market\"\n}];\n\n/**\n * Routes are the file system based routes, used by Solid App Router to show the current page according to the URL.\n */\n\nconst FileRoutes = () => {\n  return fileRoutes;\n};\nexport default FileRoutes;\nexport { fileRoutes };",
+      "start": 1668223115752,
+      "end": 1668223115753
+    }
+  ],
+  "virtual": false
+}

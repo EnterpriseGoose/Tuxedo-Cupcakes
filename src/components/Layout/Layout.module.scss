@@ -1,7 +1,7 @@
 @use '../../global-styles/variables.scss' as *;
 
 .root {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -20,8 +20,9 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    column-gap: calc(10 * $ru);
+    column-gap: calc(5 * $tru);
     padding-bottom: calc(3 * $ru);
+    width: calc(95 * $ru);
 
     @media (max-width: 700px) {
       display: grid;
@@ -32,7 +33,7 @@
     }
 
     a {
-      font-size: calc(3.5 * $tru);
+      font-size: calc(3 * $tru);
       font-weight: 500;
       color: $cyan;
       text-decoration: none;

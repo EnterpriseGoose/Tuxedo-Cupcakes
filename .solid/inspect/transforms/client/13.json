@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/index.tsx?v=9ac0fbdc",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "solid",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "export { default as mount } from \"./mount\";\nexport { default as StartClient } from \"./StartClient\";\n",
+      "start": 1668223115619,
+      "end": 1668223115619
+    },
+    {
+      "name": "solid",
+      "result": "export { default as mount } from \"./mount\";\nexport { default as StartClient } from \"./StartClient\";",
+      "start": 1668223115619,
+      "end": 1668223115621
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "export { default as mount } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/mount.tsx?v=9ac0fbdc\";\nexport { default as StartClient } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/StartClient.tsx?v=9ac0fbdc\";",
+      "start": 1668223115621,
+      "end": 1668223115623
+    }
+  ],
+  "virtual": false
+}

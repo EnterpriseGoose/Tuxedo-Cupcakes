@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/routes/index.module.scss",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:css",
+    "vite:css-post",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "@use \"../global-styles/variables.scss\" as *;\n\n.sections {\n    display: flex;\n    flex-direction: column;\n    row-gap: calc(7 * $ru);\n    align-items: center;\n}\n\n.section{\n    &.one {\n        padding-top: calc(5 * $ru);\n\t    width: calc(100 * $ru);\n    }\n    &.two {\n        width: calc(100 * $wru);\n        .cards {\n            display: flex;\n            flex-direction: row;\n            column-gap: calc(10 * $ru);\n        }\n    }\n    &.three {\n        text-align: center;\n        a {\n            text-decoration: none;\n            color: $darkCyan;\n            transition: color 0.2s ease-out;\n        }\n        a:hover {\n            color: $cyan;\n        }\n    }\n    \n\th2 {\n\t\ttext-align: center;\n\t}\n}\n\n.divider {\n    width: calc(10 * $ru)\n}",
+      "start": 1668223117482,
+      "end": 1668223117482
+    },
+    {
+      "name": "vite:css",
+      "result": "._sections_1ok0j_1 {\n  display: flex;\n  flex-direction: column;\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\n  align-items: center;\n}\n\n._section_1ok0j_1._one_1ok0j_8 {\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\n}\n._section_1ok0j_1._two_1ok0j_12 {\n  width: calc(100 * min(90vw, min(65vw + 400px, 1500px))/100);\n}\n._section_1ok0j_1._two_1ok0j_12 ._cards_1ok0j_15 {\n  display: flex;\n  flex-direction: row;\n  column-gap: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\n}\n._section_1ok0j_1._three_1ok0j_20 {\n  text-align: center;\n}\n._section_1ok0j_1._three_1ok0j_20 a {\n  text-decoration: none;\n  color: #407682;\n  transition: color 0.2s ease-out;\n}\n._section_1ok0j_1._three_1ok0j_20 a:hover {\n  color: #4aa1b4;\n}\n._section_1ok0j_1 h2 {\n  text-align: center;\n}\n\n._divider_1ok0j_35 {\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\n}",
+      "start": 1668223117482,
+      "end": 1668223117496
+    },
+    {
+      "name": "vite:css-post",
+      "result": "import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/routes/index.module.scss\"\nconst __vite__css = \"._sections_1ok0j_1 {\\n  display: flex;\\n  flex-direction: column;\\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  align-items: center;\\n}\\n\\n._section_1ok0j_1._one_1ok0j_8 {\\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1ok0j_1._two_1ok0j_12 {\\n  width: calc(100 * min(90vw, min(65vw + 400px, 1500px))/100);\\n}\\n._section_1ok0j_1._two_1ok0j_12 ._cards_1ok0j_15 {\\n  display: flex;\\n  flex-direction: row;\\n  column-gap: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1ok0j_1._three_1ok0j_20 {\\n  text-align: center;\\n}\\n._section_1ok0j_1._three_1ok0j_20 a {\\n  text-decoration: none;\\n  color: #407682;\\n  transition: color 0.2s ease-out;\\n}\\n._section_1ok0j_1._three_1ok0j_20 a:hover {\\n  color: #4aa1b4;\\n}\\n._section_1ok0j_1 h2 {\\n  text-align: center;\\n}\\n\\n._divider_1ok0j_35 {\\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const sections = \"_sections_1ok0j_1\";\nexport const section = \"_section_1ok0j_1\";\nexport const one = \"_one_1ok0j_8\";\nexport const two = \"_two_1ok0j_12\";\nexport const cards = \"_cards_1ok0j_15\";\nexport const three = \"_three_1ok0j_20\";\nexport const divider = \"_divider_1ok0j_35\";\nexport default {\n\tsections: sections,\n\tsection: section,\n\tone: one,\n\ttwo: two,\n\tcards: cards,\n\tthree: three,\n\tdivider: divider\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1668223117496,
+      "end": 1668223117496
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/routes/index.module.scss\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/routes/index.module.scss\"\nconst __vite__css = \"._sections_1ok0j_1 {\\n  display: flex;\\n  flex-direction: column;\\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  align-items: center;\\n}\\n\\n._section_1ok0j_1._one_1ok0j_8 {\\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1ok0j_1._two_1ok0j_12 {\\n  width: calc(100 * min(90vw, min(65vw + 400px, 1500px))/100);\\n}\\n._section_1ok0j_1._two_1ok0j_12 ._cards_1ok0j_15 {\\n  display: flex;\\n  flex-direction: row;\\n  column-gap: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1ok0j_1._three_1ok0j_20 {\\n  text-align: center;\\n}\\n._section_1ok0j_1._three_1ok0j_20 a {\\n  text-decoration: none;\\n  color: #407682;\\n  transition: color 0.2s ease-out;\\n}\\n._section_1ok0j_1._three_1ok0j_20 a:hover {\\n  color: #4aa1b4;\\n}\\n._section_1ok0j_1 h2 {\\n  text-align: center;\\n}\\n\\n._divider_1ok0j_35 {\\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const sections = \"_sections_1ok0j_1\";\nexport const section = \"_section_1ok0j_1\";\nexport const one = \"_one_1ok0j_8\";\nexport const two = \"_two_1ok0j_12\";\nexport const cards = \"_cards_1ok0j_15\";\nexport const three = \"_three_1ok0j_20\";\nexport const divider = \"_divider_1ok0j_35\";\nexport default {\n\tsections: sections,\n\tsection: section,\n\tone: one,\n\ttwo: two,\n\tcards: cards,\n\tthree: three,\n\tdivider: divider\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1668223117496,
+      "end": 1668223117496
+    }
+  ],
+  "virtual": false
+}
