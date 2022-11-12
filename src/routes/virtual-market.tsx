@@ -152,9 +152,7 @@ export async function POST({ request }: APIEvent) {
   let formData = await request.formData();
   let email = formData.get('email');
   console.log(email);
-  sgMail.setApiKey(
-    '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'
-  );
+  sgMail.setApiKey(import.meta.env.VITE_SENDGRID_API_KEY);
   console.log(import.meta.env.VITE_SENDGRID_API_KEY);
   const msg = {
     to: 'oliver@tuxedocupcakes.com', // Change to your recipient
@@ -164,8 +162,14 @@ export async function POST({ request }: APIEvent) {
   };
   try {
     sgMail.send(msg);
-    return redirect('?sign-up=success');
+    return redirect(
+      '?sign-up=success_' +
+        (
+          import.meta.env.VITE_SENDGRID_API_KEY ==
+          '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'
+        ).toString()
+    );
   } catch (e) {
-    return redirect('?sign-up=error_' + e);
+    return redirect('?sign-up=error' + e);
   }
 }
