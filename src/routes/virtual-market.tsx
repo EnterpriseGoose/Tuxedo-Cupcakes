@@ -6,7 +6,7 @@ import Layout from '~/components/Layout';
 import styles from './virtual-market.module.scss';
 
 export default function Home() {
-  const [dates, setDates] = createSignal([[new Date(2022, 11), '???']]);
+  const [dates, setDates] = createSignal([]);
   return (
     <Layout>
       <div class={styles.sections}>
