@@ -9,23 +9,27 @@
   },
   "type": "module",
   "devDependencies": {
-    "@solidjs/meta": "^0.28.0",
-    "@solidjs/router": "^0.4.2",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@types/testing-library__jest-dom": "^5.14.3",
-    "jsdom": "^20.0.0",
-    "sass": "^1.53.0",
-    "solid-js": "^1.4.0",
-    "solid-start": "next",
-    "solid-start-vercel": "next",
-    "solid-testing-library": "^0.3.0",
-    "typescript": "^4.4.3",
-    "undici": "^5.8.1",
-    "vite": "^3.0.4",
-    "vite-plugin-inspect": "^0.6.0",
-    "vitest": "^0.21.0"
+    "@solidjs/meta": "^0.28.2",
+    "@solidjs/router": "^0.5.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/testing-library__jest-dom": "^5.14.5",
+    "jsdom": "^20.0.2",
+    "sass": "^1.56.1",
+    "solid-js": "^1.6.2",
+    "solid-start": "^0.2.5",
+    "solid-start-vercel": "^0.2.5",
+    "solid-testing-library": "^0.5.0",
+    "typescript": "^4.8.4",
+    "undici": "^5.12.0",
+    "vite": "^3.2.3",
+    "vite-plugin-inspect": "^0.7.7",
+    "vitest": "^0.25.1"
   },
   "engines": {
     "node": ">=14"
+  },
+  "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "pnpm": "^7.15.0"
   }
 }

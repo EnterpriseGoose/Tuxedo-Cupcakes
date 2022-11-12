@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/shared.ts?v=9ac0fbdc",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:esbuild",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "export { HttpHeader } from \"./components/HttpHeader\";\nexport { HttpStatusCode } from \"./components/HttpStatusCode\";\nexport { createServerAction$, createServerData$, createServerMultiAction$, ServerError } from \"./data\";\nexport * from \"./responses\";\nexport * from \"./ServerContext\";\nexport * from \"./types\";\n\n",
+      "start": 1668223188191,
+      "end": 1668223188191
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "export { HttpHeader } from \"./components/HttpHeader\";\nexport { HttpStatusCode } from \"./components/HttpStatusCode\";\nexport { createServerAction$, createServerData$, createServerMultiAction$, ServerError } from \"./data\";\nexport * from \"./responses\";\nexport * from \"./ServerContext\";\nexport * from \"./types\";\n",
+      "start": 1668223188191,
+      "end": 1668223188194
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "export { HttpHeader } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/components/HttpHeader.tsx?v=9ac0fbdc\";\nexport { HttpStatusCode } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/components/HttpStatusCode.tsx?v=9ac0fbdc\";\nexport { createServerAction$, createServerData$, createServerMultiAction$, ServerError } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/data.ts?v=9ac0fbdc\";\nexport * from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/responses.ts?v=9ac0fbdc\";\nexport * from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/ServerContext.tsx?v=9ac0fbdc\";\nexport * from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/types.tsx?v=9ac0fbdc\";\n",
+      "start": 1668223188194,
+      "end": 1668223188196
+    }
+  ],
+  "virtual": false
+}

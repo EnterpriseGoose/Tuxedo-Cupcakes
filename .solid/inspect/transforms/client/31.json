@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/browser.ts?v=9ac0fbdc",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:esbuild",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "export { server$ as default } from \"./server-functions/browser\";\nexport * from \"./shared\";\n\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n\n\n",
+      "start": 1668223188142,
+      "end": 1668223188142
+    },
+    {
+      "name": "vite:esbuild",
+      "result": "export { server$ as default } from \"./server-functions/browser\";\nexport * from \"./shared\";\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n",
+      "start": 1668223188142,
+      "end": 1668223188186
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "export { server$ as default } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/server-functions/browser.ts?v=9ac0fbdc\";\nexport * from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/shared.ts?v=9ac0fbdc\";\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n",
+      "start": 1668223188186,
+      "end": 1668223188188
+    }
+  ],
+  "virtual": false
+}

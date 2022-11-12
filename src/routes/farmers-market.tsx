@@ -1,8 +1,6 @@
 import { createSignal, For } from 'solid-js';
 import Layout from '~/components/Layout';
-
 import styles from './farmers-market.module.scss';
-
 export default function Home() {
   const [dates, setDates] = createSignal([
     [new Date(2022, 7, 6), 'Chocolate Raspberry & Caramel Cashew'],
@@ -14,12 +12,11 @@ export default function Home() {
       'Red Bean, Chocolate Black Sesame & Pineapple Cake',
     ],
     [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 8, 24), 'Strawberry & Salted Caramel'][
-      (new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu')
-    ],
+    [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
     [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
     [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
     [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
+    [new Date(2022, 10, 12), 'Mint Chocolate Chip & Chocolate Peanut Butter'],
     [new Date(2022, 10, 19), 'Brown Butter Sweet Potato & ???'],
   ]);
   return (
@@ -29,7 +26,7 @@ export default function Home() {
           <h2>Get a Cupcake at the Farmers’ Market</h2>
           <p>
             I appear at the Chatham Farmers’ Market on most Saturdays through
-            October.
+            November.
             <br />
             Each week, I bring 4 classic flavors (chocolate and vanilla), as
             well as 2 rotating special flavors, in both regular and mini sizes.
@@ -42,37 +39,40 @@ export default function Home() {
             market, as well as the specials I will have available that day
             (2022):
           </p>
-          <For each={dates()}>
-            {([date, specials], i) => (
-              <p
-                class={(() => {
-                  let thisDate = (date as Date).setHours(0, 0, 0, 0);
-                  let lastDate = (
-                    dates()[i() - 1] != undefined
-                      ? (dates()[i() - 1][0] as Date)
-                      : new Date(0)
-                  ).getTime();
-
-                  if (new Date().setHours(0, 0, 0, 0) === thisDate)
-                    return styles.today;
-                  else if (
-                    new Date().getTime() > lastDate &&
-                    new Date().getTime() < thisDate &&
-                    i() === dates().length - 1
-                  )
-                    return styles.finalWeek;
-                  else if (
-                    new Date().getTime() > lastDate &&
-                    new Date().getTime() < thisDate
-                  )
-                    return styles.nextWeek;
-                  else return '';
-                })()}
-              >{`• ${date.toString().substring(4, 7)} ${(
-                date as Date
-              ).getDate()}${specials ? ` - ${specials}` : ''}`}</p>
-            )}
-          </For>
+          <ul>
+            <For each={dates()}>
+              {([date, specials], i) => (
+                <li
+                  class={(() => {
+                    let thisDate = (date as Date).setHours(0, 0, 0, 0);
+                    let lastDate = (
+                      dates()[i() - 1] != undefined
+                        ? (dates()[i() - 1][0] as Date)
+                        : new Date(0)
+                    ).getTime();
+                    if (new Date().setHours(0, 0, 0, 0) === thisDate)
+                      return styles.today;
+                    else if (
+                      new Date().setHours(0, 0, 0, 0) !== lastDate &&
+                      new Date().getTime() > lastDate &&
+                      new Date().getTime() < thisDate &&
+                      i() == dates().length - 1
+                    )
+                      return styles.finalWeek;
+                    else if (
+                      new Date().setHours(0, 0, 0, 0) !== lastDate &&
+                      new Date().getTime() > lastDate &&
+                      new Date().getTime() < thisDate
+                    )
+                      return styles.nextWeek;
+                    else return '';
+                  })()}
+                >{`${date.toString().substring(4, 7)} ${(
+                  date as Date
+                ).getDate()}${specials ? ` - ${specials}` : ''}`}</li>
+              )}
+            </For>
+          </ul>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.three}`}>

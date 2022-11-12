@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/entry-client.tsx",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "solid",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "import { mount, StartClient } from \"solid-start/entry-client\";\n\nmount(() => <StartClient />, document);\n",
+      "start": 1668223115603,
+      "end": 1668223115603
+    },
+    {
+      "name": "solid",
+      "result": "import { createComponent as _$createComponent } from \"solid-js/web\";\nimport { mount, StartClient } from \"solid-start/entry-client\";\nmount(() => _$createComponent(StartClient, {}), document);",
+      "start": 1668223115603,
+      "end": 1668223115607
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createComponent as _$createComponent } from \"/node_modules/.vite/deps/solid-js_web.js?v=288f8a37\";\nimport { mount, StartClient } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/index.tsx?v=9ac0fbdc\";\nmount(() => _$createComponent(StartClient, {}), document);",
+      "start": 1668223115607,
+      "end": 1668223115609
+    }
+  ],
+  "virtual": false
+}
