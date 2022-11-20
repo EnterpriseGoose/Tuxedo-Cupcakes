@@ -2,48 +2,48 @@
   {
     "name": "solid",
     "enforce": "pre",
-    "invokeCount": 39,
-    "totalTime": 568
+    "invokeCount": 28,
+    "totalTime": 291
   },
   {
     "name": "vite:esbuild",
-    "invokeCount": 15,
-    "totalTime": 324
-  },
-  {
-    "name": "vite:css",
-    "invokeCount": 6,
-    "totalTime": 160
+    "invokeCount": 11,
+    "totalTime": 239
   },
   {
     "name": "vite:import-analysis",
-    "invokeCount": 70,
-    "totalTime": 128
+    "invokeCount": 50,
+    "totalTime": 85
   },
   {
     "name": "vite:optimized-deps",
     "invokeCount": 5,
-    "totalTime": 96
+    "totalTime": 76
+  },
+  {
+    "name": "vite:css",
+    "invokeCount": 1,
+    "totalTime": 48
   },
   {
     "name": "vite:import-glob",
     "invokeCount": 1,
-    "totalTime": 15
+    "totalTime": 3
   },
   {
     "name": "vite:client-inject",
     "invokeCount": 4,
-    "totalTime": 1
-  },
-  {
-    "name": "vite:css-post",
-    "invokeCount": 6,
     "totalTime": 0
   },
   {
     "name": "solid-start-file-system-router",
     "enforce": "pre",
     "invokeCount": 2,
+    "totalTime": 0
+  },
+  {
+    "name": "vite:css-post",
+    "invokeCount": 1,
     "totalTime": 0
   },
   {

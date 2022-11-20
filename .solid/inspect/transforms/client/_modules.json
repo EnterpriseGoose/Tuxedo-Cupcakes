@@ -2,17 +2,18 @@
   "root": "/project/Tuxedo-Cupcakes",
   "modules": [
     {
-      "id": "/@solid-refresh",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+meta@0.28.2_solid-js@1.6.2/node_modules/@solidjs/meta/dist/index.jsx?v=720b9c67",
       "deps": [],
       "plugins": [
+        "__load__",
         "solid",
         "vite:import-analysis"
       ],
-      "virtual": true,
+      "virtual": false,
       "index": 0
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+meta@0.28.2_solid-js@1.6.2/node_modules/@solidjs/meta/dist/index.jsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/components.jsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -23,7 +24,7 @@
       "index": 1
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/components.jsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/index.jsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -34,18 +35,17 @@
       "index": 2
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/index.jsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/integration.js?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
-        "solid",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 3
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/integration.js?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/routing.js?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -55,7 +55,7 @@
       "index": 4
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/routing.js?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/utils.js?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -65,17 +65,18 @@
       "index": 5
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/@solidjs+router@0.5.0_solid-js@1.6.2/node_modules/@solidjs/router/dist/utils.js?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/data/Form.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
+        "solid",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 6
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/data/Form.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/data/FormError.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -86,7 +87,7 @@
       "index": 7
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/data/FormError.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/data/createRouteAction.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -97,7 +98,7 @@
       "index": 8
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/data/createRouteAction.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/data/createRouteData.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -108,18 +109,7 @@
       "index": 9
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/data/createRouteData.tsx?v=9ac0fbdc",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 10
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/data/index.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/data/index.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -127,10 +117,10 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 11
+      "index": 10
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/StartClient.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/entry-client/StartClient.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -140,10 +130,21 @@
         "vite:import-analysis"
       ],
       "virtual": false,
+      "index": 11
+    },
+    {
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/entry-client/index.tsx?v=720b9c67",
+      "deps": [],
+      "plugins": [
+        "__load__",
+        "solid",
+        "vite:import-analysis"
+      ],
+      "virtual": false,
       "index": 12
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/index.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/entry-client/mount.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -154,7 +155,7 @@
       "index": 13
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/entry-client/mount.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/error-boundary/ErrorBoundary.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -165,7 +166,7 @@
       "index": 14
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/error-boundary/ErrorBoundary.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/error-boundary/index.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -176,7 +177,7 @@
       "index": 15
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/error-boundary/index.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/index.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -187,7 +188,7 @@
       "index": 16
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/index.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/islands/clientOnly.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -198,7 +199,7 @@
       "index": 17
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/islands/clientOnly.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/islands/index.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -209,18 +210,7 @@
       "index": 18
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/islands/index.tsx?v=9ac0fbdc",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 19
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/islands/router.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/islands/router.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -228,10 +218,21 @@
         "vite:import-analysis"
       ],
       "virtual": false,
+      "index": 19
+    },
+    {
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/islands/server-router.tsx?v=720b9c67",
+      "deps": [],
+      "plugins": [
+        "__load__",
+        "solid",
+        "vite:import-analysis"
+      ],
+      "virtual": false,
       "index": 20
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/islands/server-router.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/Document.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -242,10 +243,11 @@
       "index": 21
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/Document.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/FileRoutes.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
+        "solid-start-file-system-router",
         "solid",
         "vite:import-analysis"
       ],
@@ -253,7 +255,7 @@
       "index": 22
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/FileRoutes.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/InlineStyles.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -265,11 +267,10 @@
       "index": 23
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/InlineStyles.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/Links.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
-        "solid-start-file-system-router",
         "solid",
         "vite:import-analysis"
       ],
@@ -277,7 +278,7 @@
       "index": 24
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/Links.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/Meta.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -288,7 +289,7 @@
       "index": 25
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/Meta.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/Scripts.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -299,7 +300,7 @@
       "index": 26
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/Scripts.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/root/index.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -310,7 +311,7 @@
       "index": 27
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/root/index.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/router.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -321,7 +322,7 @@
       "index": 28
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/router.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/server/ServerContext.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -332,7 +333,19 @@
       "index": 29
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/ServerContext.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/server/responses.ts?v=720b9c67",
+      "deps": [],
+      "plugins": [
+        "__load__",
+        "vite:esbuild",
+        "vite:client-inject",
+        "vite:import-analysis"
+      ],
+      "virtual": false,
+      "index": 30
+    },
+    {
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/server/types.tsx?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -340,10 +353,10 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 30
+      "index": 31
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/browser.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/cookie.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -351,32 +364,21 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 31
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/components/HttpHeader.tsx?v=9ac0fbdc",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
       "index": 32
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/components/HttpStatusCode.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/cookieSigning.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
-        "solid",
+        "vite:esbuild",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 33
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/data.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/cookieStorage.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -387,19 +389,18 @@
       "index": 34
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/responses.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/cookies.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
         "vite:esbuild",
-        "vite:client-inject",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 35
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/server-functions/browser.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/index.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -410,7 +411,7 @@
       "index": 36
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/shared.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/memoryStorage.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -421,18 +422,18 @@
       "index": 37
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/types.tsx?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/session/sessions.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
-        "solid",
+        "vite:esbuild",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 38
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/cookie.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/types.ts?v=720b9c67",
       "deps": [],
       "plugins": [
         "__load__",
@@ -443,255 +444,76 @@
       "index": 39
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/cookieSigning.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/vite@3.2.4_sass@1.56.1/node_modules/vite/dist/client/client.mjs",
       "deps": [],
       "plugins": [
         "__load__",
-        "vite:esbuild",
+        "vite:client-inject",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 40
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/cookieStorage.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/vite@3.2.4_sass@1.56.1/node_modules/vite/dist/client/env.mjs",
       "deps": [],
       "plugins": [
         "__load__",
-        "vite:esbuild",
+        "vite:client-inject",
         "vite:import-analysis"
       ],
       "virtual": false,
       "index": 41
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/cookies.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/chunk-KXMQRKIZ.js?v=720b9c67",
       "deps": [],
       "plugins": [
-        "__load__",
-        "vite:esbuild",
+        "vite:optimized-deps",
         "vite:import-analysis"
       ],
-      "virtual": false,
+      "virtual": true,
       "index": 42
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/index.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/chunk-MTPIYOZY.js?v=720b9c67",
       "deps": [],
       "plugins": [
-        "__load__",
-        "vite:esbuild",
+        "vite:optimized-deps",
         "vite:import-analysis"
       ],
-      "virtual": false,
+      "virtual": true,
       "index": 43
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/memoryStorage.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js.js?v=3a6d6cc0",
       "deps": [],
       "plugins": [
-        "__load__",
-        "vite:esbuild",
+        "vite:optimized-deps",
         "vite:import-analysis"
       ],
-      "virtual": false,
+      "virtual": true,
       "index": 44
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/session/sessions.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js_store.js?v=3a6d6cc0",
       "deps": [],
       "plugins": [
-        "__load__",
-        "vite:esbuild",
+        "vite:optimized-deps",
         "vite:import-analysis"
       ],
-      "virtual": false,
+      "virtual": true,
       "index": 45
     },
     {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/types.ts?v=9ac0fbdc",
+      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js_web.js?v=3a6d6cc0",
       "deps": [],
       "plugins": [
-        "__load__",
-        "vite:esbuild",
+        "vite:optimized-deps",
         "vite:import-analysis"
       ],
-      "virtual": false,
+      "virtual": true,
       "index": 46
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/vite@3.2.3_sass@1.56.1/node_modules/vite/dist/client/client.mjs",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:client-inject",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 47
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/vite@3.2.3_sass@1.56.1/node_modules/vite/dist/client/env.mjs",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:client-inject",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 48
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/chunk-KXMQRKIZ.js?v=9ac0fbdc",
-      "deps": [],
-      "plugins": [
-        "vite:optimized-deps",
-        "vite:import-analysis"
-      ],
-      "virtual": true,
-      "index": 49
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/chunk-MTPIYOZY.js?v=9ac0fbdc",
-      "deps": [],
-      "plugins": [
-        "vite:optimized-deps",
-        "vite:import-analysis"
-      ],
-      "virtual": true,
-      "index": 50
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js.js?v=288f8a37",
-      "deps": [],
-      "plugins": [
-        "vite:optimized-deps",
-        "vite:import-analysis"
-      ],
-      "virtual": true,
-      "index": 51
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js_store.js?v=288f8a37",
-      "deps": [],
-      "plugins": [
-        "vite:optimized-deps",
-        "vite:import-analysis"
-      ],
-      "virtual": true,
-      "index": 52
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js_web.js?v=288f8a37",
-      "deps": [],
-      "plugins": [
-        "vite:optimized-deps",
-        "vite:import-analysis"
-      ],
-      "virtual": true,
-      "index": 53
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Card/Card.module.scss",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:css",
-        "vite:css-post",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 54
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Card/Card.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 55
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Card/index.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 56
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Footer/Footer.module.scss",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:css",
-        "vite:css-post",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 57
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Footer/Footer.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 58
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Footer/index.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 59
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Layout/Layout.module.scss",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:css",
-        "vite:css-post",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 60
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Layout/Layout.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 61
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/components/Layout/index.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 62
     },
     {
       "id": "/project/Tuxedo-Cupcakes/src/entry-client.tsx",
@@ -702,7 +524,7 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 63
+      "index": 47
     },
     {
       "id": "/project/Tuxedo-Cupcakes/src/global-styles/global.scss",
@@ -714,7 +536,7 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 64
+      "index": 48
     },
     {
       "id": "/project/Tuxedo-Cupcakes/src/root.tsx",
@@ -725,53 +547,7 @@
         "vite:import-analysis"
       ],
       "virtual": false,
-      "index": 65
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/routes/index.module.scss",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:css",
-        "vite:css-post",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 66
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/routes/index.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 67
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/routes/virtual-market.module.scss",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "vite:css",
-        "vite:css-post",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 68
-    },
-    {
-      "id": "/project/Tuxedo-Cupcakes/src/routes/virtual-market.tsx",
-      "deps": [],
-      "plugins": [
-        "__load__",
-        "solid",
-        "vite:import-analysis"
-      ],
-      "virtual": false,
-      "index": 69
+      "index": 49
     }
   ]
 }

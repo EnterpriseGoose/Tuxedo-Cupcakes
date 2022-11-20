@@ -1,11 +1,13 @@
-import sgMail from '@sendgrid/mail';
 import { APIEvent } from 'solid-start/api';
-import { redirect } from 'solid-start/server';
-import { createSignal, For } from 'solid-js';
+import server$, { redirect } from 'solid-start/server';
+import { createSignal, For, Match, Switch } from 'solid-js';
 import Layout from '~/components/Layout';
 import styles from './virtual-market.module.scss';
+import { createClient } from '@supabase/supabase-js';
+import { useLocation, useParams, useSearchParams } from 'solid-start';
 
 export default function Home() {
+  const [searchParams, setSearchparams] = useSearchParams();
   const [dates, setDates] = createSignal([]);
   return (
     <Layout>
@@ -40,8 +42,17 @@ export default function Home() {
             action=""
             method="post"
             class="form-example"
-            onsubmit={() => {
-              return false;
+            onsubmit={async (event) => {
+              event.preventDefault();
+              let email = event.target.children[0].value;
+              const supabase = createClient(
+                'https://rxznihvftodgtjdtzbyr.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
+              );
+              let response = await supabase.from('emailList').insert({ email });
+              console.log(response.status);
+              setSearchparams({ status: response.status });
+              event.target.children[0].value = '';
             }}
           >
             <input
@@ -53,6 +64,21 @@ export default function Home() {
             />{' '}
             <input type="submit" id="button" value="Sign Up" />
           </form>
+          <Switch>
+            <Match when={searchParams.status === '201'}>Email added to list!</Match>
+            <Match when={searchParams.status === '409'}>
+              Email is already on list.
+            </Match>
+            <Match
+              when={
+                searchParams.status !== '201' &&
+                searchParams.status !== '409' &&
+                searchParams.status !== undefined
+              }
+            >
+              An unknown error occured. Try again.
+            </Match>
+          </Switch>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.three}`}>
@@ -72,8 +98,9 @@ export default function Home() {
           <p>Box of 12 - $20</p>
           <br />
           <p>
-            Delivery is free within Chatham and neighboring towns. There may be
-            an additional fee for delieveres far from Chatham. Contact me at{' '}
+            Delivery is free within Chatham and some neighboring towns. There
+            may be an additional fee for delieveres more than a few miles out
+            from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
               target="_blank"
@@ -146,30 +173,4 @@ export default function Home() {
       </div>
     </Layout>
   );
-}
-
-export async function POST({ request }: APIEvent) {
-  let formData = await request.formData();
-  let email = formData.get('email');
-  console.log(email);
-  sgMail.setApiKey(import.meta.env.VITE_SENDGRID_API_KEY);
-  console.log(import.meta.env.VITE_SENDGRID_API_KEY);
-  const msg = {
-    to: 'oliver@tuxedocupcakes.com', // Change to your recipient
-    from: 'oliver@tuxedocupcakes.com', // Change to your verified sender
-    subject: 'New subscriber to Tuxedo Cupcakes',
-    html: 'New email to tuxedo cupcakes list: ' + email,
-  };
-  try {
-    sgMail.send(msg);
-    return redirect(
-      '?sign-up=success_' +
-        (
-          import.meta.env.VITE_SENDGRID_API_KEY ==
-          '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'
-        ).toString()
-    );
-  } catch (e) {
-    return redirect('?sign-up=error' + e);
-  }
 }
