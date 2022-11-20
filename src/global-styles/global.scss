@@ -30,6 +30,11 @@ p, li {
   margin: calc(0.5 * $ru) 0;
 }
 
+div {
+  font-weight: 400;
+  font-size: calc(2.7 * $tru);
+}
+
 a {
   color: $darkCyan;
   text-decoration: none;

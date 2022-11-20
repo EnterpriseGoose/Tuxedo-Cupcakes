@@ -1,29 +1,29 @@
 {
-  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/browser.ts?v=9ac0fbdc",
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/server/types.tsx?v=720b9c67",
   "deps": [],
   "plugins": [
     "__load__",
-    "vite:esbuild",
+    "solid",
     "vite:import-analysis"
   ],
   "transforms": [
     {
       "name": "__load__",
-      "result": "export { server$ as default } from \"./server-functions/browser\";\nexport * from \"./shared\";\n\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n\n\n",
-      "start": 1668223188142,
-      "end": 1668223188142
+      "result": "export type ManifestEntry = {\n  type: string;\n  href: string;\n};\n\nexport const FETCH_EVENT = \"$FETCH\";\n\nexport type ContextMatches = {\n  originalPath: string;\n  pattern: string;\n  path: string;\n  params: unknown;\n};\n\ntype TagDescription = {\n  tag: string;\n  props: Record<string, unknown>;\n};\n\ntype RouterContext = {\n  // router matches;\n  matches?: ContextMatches[][];\n  // redirected url\n  url?: string;\n\n  // server route fragments\n  replaceOutletId?: string;\n  newOutletId?: string;\n};\n\nexport type IslandManifest = {\n  script: ManifestEntry;\n  assets: ManifestEntry[];\n};\n\ndeclare global {\n  interface Env {\n    /**\n     * BE CAREFUL WHILE USING. AVAILABLE IN PRODUCTION ONLY.\n     */\n    manifest?: Record<string, ManifestEntry[] | IslandManifest>;\n    /**\n     * BE CAREFUL WHILE USING. AVAILABLE IN PRODUCTION ONLY.\n     */\n    getStaticHTML?(path: string): Promise<Response>;\n    /**\n     * BE CAREFUL WHILE USING. AVAILABLE IN PRODUCTION ONLY.\n     */\n    __dev?: {\n      /**\n       * @warning\n       */\n      collectStyles?: (matches: string[]) => Promise<Record<string, string>>;\n      manifest?: [{ path: string; componentPath: string; id: string }];\n    };\n  }\n}\n\nexport interface FetchEvent {\n  request: Request;\n  env: Env;\n}\n\nexport interface ServerFunctionEvent extends FetchEvent {\n  fetch(url: string, init: RequestInit): Promise<Response>;\n  $type: typeof FETCH_EVENT;\n}\n\nexport interface PageEvent extends FetchEvent {\n  prevUrl: string;\n  responseHeaders: Headers;\n  routerContext?: RouterContext;\n  tags?: TagDescription[];\n  setStatusCode(code: number): void;\n  getStatusCode(): number;\n  fetch(url: string, init: RequestInit): Promise<Response>;\n  $type: typeof FETCH_EVENT;\n}\n",
+      "start": 1668925958286,
+      "end": 1668925958286
     },
     {
-      "name": "vite:esbuild",
-      "result": "export { server$ as default } from \"./server-functions/browser\";\nexport * from \"./shared\";\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n",
-      "start": 1668223188142,
-      "end": 1668223188186
+      "name": "solid",
+      "result": "export const FETCH_EVENT = \"$FETCH\";",
+      "start": 1668925958286,
+      "end": 1668925958292
     },
     {
       "name": "vite:import-analysis",
-      "result": "export { server$ as default } from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/server-functions/browser.ts?v=9ac0fbdc\";\nexport * from \"/node_modules/.pnpm/solid-start@0.2.5_3zrnixj5s2zo7r5ma456ac2ypm/node_modules/solid-start/server/shared.ts?v=9ac0fbdc\";\nexport const isServerFunctionRequest = () => {\n  throw new Error(\"isServerFunctionRequest is not supported on the browser\");\n};\n",
-      "start": 1668223188186,
-      "end": 1668223188188
+      "result": "export const FETCH_EVENT = \"$FETCH\";",
+      "start": 1668925958292,
+      "end": 1668925958292
     }
   ],
   "virtual": false
