@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/routes/farmers-market/past-flavors.module.scss",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:css",
+    "vite:css-post",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "@use '../../global-styles/variables.scss' as *;\n\n.sections {\n  display: flex;\n  flex-direction: column;\n  row-gap: calc(7 * $ru);\n  align-items: center;\n}\n\n.section {\n  &.one {\n    padding-top: calc(5 * $ru);\n    width: calc(100 * $ru);\n  }\n  &.two {\n    padding-top: calc(2 * $ru);\n    width: calc(85 * $ru);\n\n    p {\n      position: relative;\n      color: black;\n    }\n\n    ul {\n      list-style-type: '• ';\n    }\n\n    li {\n      position: relative;\n      color: #000000;\n    }\n  }\n\n  &.four {\n    h4 {\n      text-align: center;\n    }\n  }\n\n  h2,\n  h3 {\n    text-align: center;\n  }\n}\n\n.divider {\n  width: calc(10 * $ru);\n}\n",
+      "start": 1669683100295,
+      "end": 1669683100295
+    },
+    {
+      "name": "vite:css",
+      "result": "@charset \"UTF-8\";\n._sections_1cfnt_2 {\n  display: flex;\n  flex-direction: column;\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\n  align-items: center;\n}\n\n._section_1cfnt_2._one_1cfnt_9 {\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\n}\n._section_1cfnt_2._two_1cfnt_13 {\n  padding-top: calc(2 * min(90vw, min(60vw + 300px, 1200px))/100);\n  width: calc(85 * min(90vw, min(60vw + 300px, 1200px))/100);\n}\n._section_1cfnt_2._two_1cfnt_13 p {\n  position: relative;\n  color: black;\n}\n._section_1cfnt_2._two_1cfnt_13 ul {\n  list-style-type: \"• \";\n}\n._section_1cfnt_2._two_1cfnt_13 li {\n  position: relative;\n  color: #000000;\n}\n._section_1cfnt_2._four_1cfnt_28 h4 {\n  text-align: center;\n}\n._section_1cfnt_2 h2,\n._section_1cfnt_2 h3 {\n  text-align: center;\n}\n\n._divider_1cfnt_36 {\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\n}",
+      "start": 1669683100295,
+      "end": 1669683100313
+    },
+    {
+      "name": "vite:css-post",
+      "result": "import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/routes/farmers-market/past-flavors.module.scss\"\nconst __vite__css = \"@charset \\\"UTF-8\\\";\\n._sections_1cfnt_2 {\\n  display: flex;\\n  flex-direction: column;\\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  align-items: center;\\n}\\n\\n._section_1cfnt_2._one_1cfnt_9 {\\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1cfnt_2._two_1cfnt_13 {\\n  padding-top: calc(2 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(85 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1cfnt_2._two_1cfnt_13 p {\\n  position: relative;\\n  color: black;\\n}\\n._section_1cfnt_2._two_1cfnt_13 ul {\\n  list-style-type: \\\"• \\\";\\n}\\n._section_1cfnt_2._two_1cfnt_13 li {\\n  position: relative;\\n  color: #000000;\\n}\\n._section_1cfnt_2._four_1cfnt_28 h4 {\\n  text-align: center;\\n}\\n._section_1cfnt_2 h2,\\n._section_1cfnt_2 h3 {\\n  text-align: center;\\n}\\n\\n._divider_1cfnt_36 {\\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const sections = \"_sections_1cfnt_2\";\nexport const section = \"_section_1cfnt_2\";\nexport const one = \"_one_1cfnt_9\";\nexport const two = \"_two_1cfnt_13\";\nexport const four = \"_four_1cfnt_28\";\nexport const divider = \"_divider_1cfnt_36\";\nexport default {\n\tsections: sections,\n\tsection: section,\n\tone: one,\n\ttwo: two,\n\tfour: four,\n\tdivider: divider\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1669683100313,
+      "end": 1669683100313
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/routes/farmers-market/past-flavors.module.scss\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/routes/farmers-market/past-flavors.module.scss\"\nconst __vite__css = \"@charset \\\"UTF-8\\\";\\n._sections_1cfnt_2 {\\n  display: flex;\\n  flex-direction: column;\\n  row-gap: calc(7 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  align-items: center;\\n}\\n\\n._section_1cfnt_2._one_1cfnt_9 {\\n  padding-top: calc(5 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(100 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1cfnt_2._two_1cfnt_13 {\\n  padding-top: calc(2 * min(90vw, min(60vw + 300px, 1200px))/100);\\n  width: calc(85 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\\n._section_1cfnt_2._two_1cfnt_13 p {\\n  position: relative;\\n  color: black;\\n}\\n._section_1cfnt_2._two_1cfnt_13 ul {\\n  list-style-type: \\\"• \\\";\\n}\\n._section_1cfnt_2._two_1cfnt_13 li {\\n  position: relative;\\n  color: #000000;\\n}\\n._section_1cfnt_2._four_1cfnt_28 h4 {\\n  text-align: center;\\n}\\n._section_1cfnt_2 h2,\\n._section_1cfnt_2 h3 {\\n  text-align: center;\\n}\\n\\n._divider_1cfnt_36 {\\n  width: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const sections = \"_sections_1cfnt_2\";\nexport const section = \"_section_1cfnt_2\";\nexport const one = \"_one_1cfnt_9\";\nexport const two = \"_two_1cfnt_13\";\nexport const four = \"_four_1cfnt_28\";\nexport const divider = \"_divider_1cfnt_36\";\nexport default {\n\tsections: sections,\n\tsection: section,\n\tone: one,\n\ttwo: two,\n\tfour: four,\n\tdivider: divider\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1669683100313,
+      "end": 1669683100314
+    }
+  ],
+  "virtual": false
+}

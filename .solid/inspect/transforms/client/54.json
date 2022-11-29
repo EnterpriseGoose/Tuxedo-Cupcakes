@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/components/Layout/index.tsx",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "solid",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "import Layout from './Layout'\nexport default Layout",
+      "start": 1669682802878,
+      "end": 1669682802878
+    },
+    {
+      "name": "solid",
+      "result": "import Layout from './Layout';\nexport default Layout;",
+      "start": 1669682802878,
+      "end": 1669682802880
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import Layout from '/src/components/Layout/Layout.tsx';\nexport default Layout;",
+      "start": 1669682802880,
+      "end": 1669682802880
+    }
+  ],
+  "virtual": false
+}

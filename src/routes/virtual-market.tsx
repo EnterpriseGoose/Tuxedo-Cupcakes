@@ -6,9 +6,9 @@ import styles from './virtual-market.module.scss';
 import { createClient } from '@supabase/supabase-js';
 import { useLocation, useParams, useSearchParams } from 'solid-start';
 
-export default function Home() {
+export default function VirtualMarket() {
   const [searchParams, setSearchparams] = useSearchParams();
-  const [dates, setDates] = createSignal([]);
+  const [dates, setDates] = createSignal([[new Date(2022, 11, 18), 'Gingerbread & Panettone']]);
   return (
     <Layout>
       <div class={styles.sections}>
@@ -20,7 +20,7 @@ export default function Home() {
             These markets are an opportunity to get cupcakes in smaller
             quantites, similar to going to the farmers' market. Each virtual
             market will have both the classics (Chocolate & Vanilla) as well as
-            a couple different special flavors
+            a couple different special flavors.
             <br /> <br />
             To participate in a virtual market, you have to place an order a few
             days before the market day. On the market day, your order will be
@@ -31,12 +31,27 @@ export default function Home() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Next Virtual Market</h3>
           <p>
-            The next virtual market will be a Holiday Virtual Market in December
+            The next virtual market will be a Holiday Virtual Market on Sunday, December 18th.
+          </p>
+          <br />
+					<h4>The flavors are:</h4>
+					<p>
+						Vanilla-Vanilla<br/>
+						Vanilla-Chocolate<br/>
+						Chocolate-Vanilla<br/>
+						Chocolate-Chocolate<br/>
+						(Cake-Frosting)<br/>
+						<br/>
+						Gingerbread<br/>
+						Panettone<br/>
+
           </p>
           <br />
           <p>
-            The date is currently TBD. Sign up to get updates about when the
-            market will be and how you can order cupcakes:
+            The order form to order cupcakes will be on this page soon. The deadline for orders is Thursday, December 15th.
+						<br/>
+            Sign up to be updated about when the
+            order form is up and additional news:
           </p>
           <form
             action=""
@@ -44,7 +59,7 @@ export default function Home() {
             class="form-example"
             onsubmit={async (event) => {
               event.preventDefault();
-              let email = event.target.children[0].value;
+              let email = (event.target.children[0] as HTMLInputElement).value;
               const supabase = createClient(
                 'https://rxznihvftodgtjdtzbyr.supabase.co',
                 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
@@ -52,7 +67,7 @@ export default function Home() {
               let response = await supabase.from('emailList').insert({ email });
               console.log(response.status);
               setSearchparams({ status: response.status });
-              event.target.children[0].value = '';
+              (event.target.children[0] as HTMLInputElement).value = '';
             }}
           >
             <input
@@ -65,7 +80,9 @@ export default function Home() {
             <input type="submit" id="button" value="Sign Up" />
           </form>
           <Switch>
-            <Match when={searchParams.status === '201'}>Email added to list!</Match>
+            <Match when={searchParams.status === '201'}>
+              Email added to list!
+            </Match>
             <Match when={searchParams.status === '409'}>
               Email is already on list.
             </Match>
@@ -99,7 +116,7 @@ export default function Home() {
           <br />
           <p>
             Delivery is free within Chatham and some neighboring towns. There
-            may be an additional fee for delieveres more than a few miles out
+            may be an additional fee for delieveries more than a few miles out
             from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
@@ -108,7 +125,7 @@ export default function Home() {
             >
               oliver@tuxedocupcakes.com
             </a>{' '}
-            with any questions
+            with any questions.
           </p>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
@@ -117,8 +134,7 @@ export default function Home() {
           <h3>Dates</h3>
           <p class={styles.desc}>
             Here are the dates that I'm currently planning a virtual market for.
-            Keep in mind, these dates are subject to change, as I will keep
-            adding dates as they get closer.
+            Keep in mind that these dates are subject to change (I will not change a market date once the order form is up, but I may add dates at any time)
           </p>
           <ul>
             <For each={dates()}>
