@@ -1,8 +1,10 @@
+import { onMount } from 'solid-js';
+import { useSearchParams } from 'solid-start';
 import Layout from '~/components/Layout';
 
 import styles from './catering.module.scss';
 
-export default function Home() {
+export default function Catering() {
   return (
     <Layout>
       <div class={styles.sections}>

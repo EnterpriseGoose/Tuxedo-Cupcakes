@@ -20,11 +20,15 @@ export default function Home() {
         <div class={`${styles.section} ${styles.two}`}>
           <h2>How to get Tuxedo Cupcakes</h2>
           <div class={styles.cards}>
-            <Card title="Catering" link="/catering">
+            <Card title="Catering" link="/catering?p=m">
               I can provide your event with a cake or cupcakes that will make it
               memorable
             </Card>
-            <Card title="Farmers' Market" link="/farmers-market">
+            <Card title="Virtual Markets" link="/virtual-market?p=m">
+              I attend the Chatham Farmers’ Market on Saturdays, where you can
+              choose from a selection of cupcakes I have available that day
+            </Card>
+            <Card title="Farmers' Market" link="/farmers-market?p=m">
               I attend the Chatham Farmers’ Market on Saturdays, where you can
               choose from a selection of cupcakes I have available that day
             </Card>

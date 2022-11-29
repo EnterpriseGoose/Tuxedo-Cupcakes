@@ -1,0 +1,165 @@
+@use '../../global-styles/variables.scss' as *;
+
+.head {
+  margin-top: calc(2 * $ru);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  user-select: none;
+
+  nav {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    column-gap: calc(5 * $tru);
+    padding-bottom: calc(3 * $ru);
+    width: calc(95 * $ru);
+
+    @media (max-width: 700px) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      height: calc(3 * $ru);
+      width: 100%;
+      min-height: calc(10 * $tru);
+    }
+
+    a {
+      font-size: calc(3 * $tru);
+      font-weight: 500;
+      color: $cyan;
+      text-decoration: none;
+      text-align: center;
+      transition: color 0.2s ease-out;
+    }
+    a:hover {
+      color: $darkCyan;
+    }
+    a.selectedTab {
+      color: $darkCyan;
+      cursor: default;
+    }
+  }
+
+  a.selectedTab {
+    cursor: default;
+  }
+}
+
+.logo {
+  &.bigLogo {
+    width: calc($ru * 60);
+    padding: calc($ru * 3);
+  }
+
+  &.smallLogo {
+    width: calc($ru * 30);
+    padding-bottom: calc($ru * 1.5);
+    padding-top: calc($ru * 0.5);
+  }
+
+  &.toBigLogo {
+    animation: grow 0.3s ease-out forwards;
+  }
+
+  @keyframes grow {
+    from {
+      width: calc($ru * 30);
+      padding-bottom: calc($ru * 1.5);
+      padding-top: calc($ru * 0.5);
+    }
+    to {
+      width: calc($ru * 60);
+      padding-top: calc($ru * 3);
+      padding-bottom: calc($ru * 3);
+    }
+  }
+
+  &.toSmallLogo {
+    animation: shrink 0.3s ease-out forwards;
+  }
+
+  @keyframes shrink {
+    from {
+      width: calc($ru * 60);
+      padding-top: calc($ru * 3);
+      padding-bottom: calc($ru * 3);
+    }
+    to {
+      width: calc($ru * 30);
+      padding-bottom: calc($ru * 1.5);
+      padding-top: calc($ru * 0.5);
+    }
+  }
+}
+
+.decoration {
+  width: calc(90 * $ru);
+
+  &.bigLogo {
+    transform: translateY(0);
+    width: calc(90 * $ru);
+  }
+
+  &.smallLogo {
+    transform: translateY(calc(-5 * $ru));
+    width: 0;
+  }
+
+  &.toBigLogo {
+    animation: slideIn 0.3s ease-out forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(calc(-5 * $ru));
+      width: 0;
+    }
+    to {
+      transform: translateY(0);
+      width: calc(90 * $ru);
+    }
+  }
+
+  &.toSmallLogo {
+    animation: slideOut 0.3s ease-out forwards;
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      width: calc(90 * $ru);
+    }
+    to {
+      transform: translateY(calc(-5 * $ru));
+      width: 0;
+    }
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+.fadeOut {
+  opacity: 100%;
+  animation: fadeOut 1s ease-in forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}

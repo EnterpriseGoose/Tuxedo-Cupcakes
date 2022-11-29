@@ -1,0 +1,30 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/components/Footer/index.tsx",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "solid",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "import Footer from './Footer'\r\nexport default Footer",
+      "start": 1669682802974,
+      "end": 1669682802974
+    },
+    {
+      "name": "solid",
+      "result": "import Footer from './Footer';\nexport default Footer;",
+      "start": 1669682802974,
+      "end": 1669682802976
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import Footer from '/src/components/Footer/Footer.tsx';\nexport default Footer;",
+      "start": 1669682802976,
+      "end": 1669682802976
+    }
+  ],
+  "virtual": false
+}

@@ -1,21 +1,58 @@
-import {NavLink} from '@solidjs/router'
-import styles from "./Footer.module.scss";
+import { A } from '@solidjs/router';
+import styles from './Footer.module.scss';
 
-export default function Footer(props?: {children?: any, title?: string}) {
+export default function Footer(props?: {
+  children?: any;
+  title?: string;
+  ref?: any;
+}) {
   return (
-    <div class={styles.footer}>
-			<img src="/images/decorations/footer-decoration.svg" class={styles.decoration} draggable={false} />
+    <div class={styles.footer} ref={props.ref}>
+      <img
+        src="/images/decorations/footer-decoration.svg"
+        class={styles.decoration}
+        draggable={false}
+      />
       <div class={styles.links}>
-				<div class={styles.left}>
-					<NavLink href="/" activeClass={styles.selectedTab} end={true} draggable={false}>Home</NavLink>
-          <NavLink href="/catering" activeClass={styles.selectedTab} draggable={false}>Catering</NavLink>
-				</div>
-				<img src="/images/logo.svg" draggable={false} />
-				<div class={styles.right}>
-					<NavLink href="/farmers-market" activeClass={styles.selectedTab} draggable={false}>Farmers' Market</NavLink>
-          <NavLink href="/contact" activeClass={styles.selectedTab} draggable={false}>Contact</NavLink>
-				</div>
-			</div>
+        <div class={styles.left}>
+          <A
+            href="/?p=b"
+            activeClass={styles.selectedTab}
+            end={true}
+            draggable={false}
+            noScroll={true}
+          >
+            Home
+          </A>
+          <A
+            href="/catering?p=b"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Catering
+          </A>
+        </div>
+        <img src="/images/logo.svg" draggable={false} />
+        <div class={styles.right}>
+          <A
+            href="/farmers-market?p=b"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Farmers' Market
+          </A>
+          <A
+            href="/contact?p=b"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Contact
+          </A>
+        </div>
+      </div>
     </div>
   );
 }
