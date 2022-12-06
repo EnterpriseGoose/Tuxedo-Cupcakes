@@ -1,0 +1,200 @@
+@use '../../global-styles/variables.scss' as *;
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(7 * $ru);
+  align-items: center;
+}
+
+.section {
+  &.one {
+    padding-top: calc(5 * $ru);
+    width: calc(100 * $ru);
+  }
+  &.two {
+    width: calc(100 * $ru);
+    
+    #productGrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: calc(4 * $ru);
+      
+      @media (max-width: 1000px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      div {
+        background-color: #F5F5F5;
+        border-radius: calc(2 * $ru);
+        padding: calc(2 * $ru);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        transition: background-color 0.2s ease-out;
+        user-select: none;
+        cursor: pointer;
+        
+        &:hover {
+          background-color: #E9E9E9;
+        }
+      }
+    }
+  }
+  &.three {
+    width: calc(100 * $ru);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    label {
+      font-weight: 400;
+      font-size: calc(2.7 * $tru);
+      margin: calc(0.5 * $ru) 0;
+    }
+    
+    input {
+      font-weight: 400;
+      font-size: calc(2.7 * $tru);
+      margin: calc(0.5 * $ru) 0;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    #order {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: calc(2 * $ru);
+      
+      div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: calc(2 * $ru);
+        
+        textarea {
+          width: calc(50 * $ru);
+          height: calc(15 * $ru);
+          font-size: calc(2 * $tru);
+          margin-left: calc(2 * $tru);
+          margin-right: calc(2 * $tru);
+          resize: none;
+        }
+        
+        .cost {
+          margin-left: auto;
+        }
+        
+        button {
+          border-width: 0;
+          background-color: transparent;
+          cursor: pointer;
+          font-size: calc(3.5 * $tru);
+        }
+      }
+      .cartTotal {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: calc(4 * $tru);
+      }
+    }
+    
+    #orderForm {
+        display: grid;
+        width: calc(50 * $tru);
+        gap: calc(4 * $tru);
+        justify-items: center;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(9, calc(4 * $tru));
+        grid-template-areas: 
+        "email email"
+        "name phone"
+        "address address"
+        "shipping shipping"
+        "shipping shipping"
+        "deliveryTexts deliveryTexts"
+        "newsletter newsletter"
+        "placeOrder placeOrder";
+        
+        input {
+            width: 100%;
+            height: 100%;
+            margin: -4px;
+            font-size: calc(2 * $tru);
+        }
+        textarea {
+            width: 100%;
+            height: 100%;
+            margin: -3px;
+            resize: none;
+            font-size: calc(2 * $tru);
+        }
+        
+        div {
+            width: 100%;
+        }
+        
+        #deliveryTexts, #newsletter {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          
+          p {
+            width: calc(49 * $tru);
+          }
+          
+          input {
+            width: calc(2 * $tru);
+          }
+        }
+        
+        #email {
+            grid-area: email;
+        }
+        #name {
+            grid-area: name;
+        }
+        #phone {
+            grid-area: phone;
+        }
+        #address {
+            grid-area: address;
+        }
+        #order {
+            grid-area: order;
+        }
+        #shipping {
+            grid-area: shipping;
+        }
+        #deliveryTexts {
+            grid-area: deliveryTexts;
+        }
+        #newsletter {
+            grid-area: newsletter;
+        }
+        #placeOrder {
+            grid-area: placeOrder;
+            
+            input {
+              height: 100%;
+              margin-bottom: calc(1 * $tru);
+            }
+        }
+    }
+  }
+
+  h2,
+  h3 {
+    text-align: center;
+  }
+}
+
+.divider {
+  width: calc(10 * $ru);
+}

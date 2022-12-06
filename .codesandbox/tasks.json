@@ -3,12 +3,17 @@
   "setupTasks": [
     {
       "name": "pnpm install",
-      "command": "pnpm install -f"
+      "command": "pnpm install"
     }
   ],
 
   // These tasks can be run from CodeSandbox. Running one will open a log in the app.
   "tasks": {
+    "Install Packages": {
+      "name": "Install Packages",
+      "command": "pnpm install",
+      "runAtStart": true
+    },
     "Dev Server": {
       "name": "Dev Server",
       "command": "pnpm run dev",
