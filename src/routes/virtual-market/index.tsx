@@ -1,14 +1,14 @@
-import { APIEvent } from 'solid-start/api';
-import server$, { redirect } from 'solid-start/server';
 import { createSignal, For, Match, Switch } from 'solid-js';
 import Layout from '~/components/Layout';
-import styles from './virtual-market.module.scss';
+import styles from './index.module.scss';
 import { createClient } from '@supabase/supabase-js';
-import { useLocation, useParams, useSearchParams } from 'solid-start';
+import { useSearchParams, A } from 'solid-start';
 
 export default function VirtualMarket() {
   const [searchParams, setSearchparams] = useSearchParams();
-  const [dates, setDates] = createSignal([[new Date(2022, 11, 18), 'Gingerbread & Panettone']]);
+  const [dates, setDates] = createSignal([
+    [new Date(2022, 11, 18), 'Gingerbread & Panettone'],
+  ]);
   return (
     <Layout>
       <div class={styles.sections}>
@@ -18,45 +18,57 @@ export default function VirtualMarket() {
             When it's not market season, I will do occasional virtual markets.
             <br />
             These markets are an opportunity to get cupcakes in smaller
-            quantites, similar to going to the farmers' market. Each virtual
+            quantities, similar to going to the farmers' market. Each virtual
             market will have both the classics (Chocolate & Vanilla) as well as
             a couple different special flavors.
             <br /> <br />
             To participate in a virtual market, you have to place an order a few
             days before the market day. On the market day, your order will be
             delivered at some point in the afternoon.
+            <br /> <br />
+            <A href="/virtual-market/faqs">Virtual Market FAQs</A>
           </p>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Next Virtual Market</h3>
           <p>
-            The next virtual market will be a Holiday Virtual Market on Sunday, December 18th.
+            The next virtual market is a Holiday Virtual Market.
+            <br />
+            Orders will be delivered on Sunday, December 18th.
           </p>
           <br />
-					<h4>The flavors are:</h4>
-					<p>
-						Vanilla-Vanilla<br/>
-						Vanilla-Chocolate<br/>
-						Chocolate-Vanilla<br/>
-						Chocolate-Chocolate<br/>
-						(Cake-Frosting)<br/>
-						<br/>
-						Gingerbread<br/>
-						Panettone<br/>
-
-          </p>
-          <br />
+          <h4>The flavors are:</h4>
           <p>
-            The order form to order cupcakes will be on this page soon. The deadline for orders is Thursday, December 15th.
-						<br/>
-            Sign up to be updated about when the
-            order form is up and additional news:
+            Vanilla-Vanilla
+            <br />
+            Vanilla-Chocolate
+            <br />
+            Chocolate-Vanilla
+            <br />
+            Chocolate-Chocolate
+            <br />
+            (Cake-Frosting)
+            <br />
+            <br />
+            Gingerbread
+            <br />
+            Panettone
+            <br />
+          </p>
+          <br />
+          <h3>
+            <A href="/virtual-market/order">Click here to place an order</A>
+          </h3>
+          <p>
+            The deadline for orders is Thursday, December 15th.
+            <br /> <br />
+            Sign up to be updated about this virtual market and future virtual
+            markets, as well as other news about Tuxedo Cupcakes:
           </p>
           <form
             action=""
             method="post"
-            class="form-example"
             onsubmit={async (event) => {
               event.preventDefault();
               let email = (event.target.children[0] as HTMLInputElement).value;
@@ -93,7 +105,7 @@ export default function VirtualMarket() {
                 searchParams.status !== undefined
               }
             >
-              An unknown error occured. Try again.
+              An unknown error occurred. Try again.
             </Match>
           </Switch>
         </div>
@@ -116,7 +128,7 @@ export default function VirtualMarket() {
           <br />
           <p>
             Delivery is free within Chatham and some neighboring towns. There
-            may be an additional fee for delieveries more than a few miles out
+            may be an additional fee for deliveries more than a few miles out
             from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
@@ -134,7 +146,9 @@ export default function VirtualMarket() {
           <h3>Dates</h3>
           <p class={styles.desc}>
             Here are the dates that I'm currently planning a virtual market for.
-            Keep in mind that these dates are subject to change (I will not change a market date once the order form is up, but I may add dates at any time)
+            Keep in mind that these dates are subject to change (I will not
+            change a market date once the order form is up, but I may add dates
+            at any time)
           </p>
           <ul>
             <For each={dates()}>

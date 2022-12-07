@@ -2,48 +2,48 @@
   {
     "name": "solid",
     "enforce": "pre",
-    "invokeCount": 37,
-    "totalTime": 410
-  },
-  {
-    "name": "vite:optimized-deps",
-    "invokeCount": 6,
-    "totalTime": 117
-  },
-  {
-    "name": "vite:import-analysis",
-    "invokeCount": 65,
-    "totalTime": 106
-  },
-  {
-    "name": "vite:css",
-    "invokeCount": 6,
-    "totalTime": 89
+    "invokeCount": 28,
+    "totalTime": 256
   },
   {
     "name": "vite:esbuild",
     "invokeCount": 11,
-    "totalTime": 83
+    "totalTime": 132
   },
   {
-    "name": "vite:client-inject",
-    "invokeCount": 4,
-    "totalTime": 44
+    "name": "vite:optimized-deps",
+    "invokeCount": 6,
+    "totalTime": 78
+  },
+  {
+    "name": "vite:import-analysis",
+    "invokeCount": 51,
+    "totalTime": 49
+  },
+  {
+    "name": "vite:css",
+    "invokeCount": 1,
+    "totalTime": 6
   },
   {
     "name": "vite:import-glob",
     "invokeCount": 1,
-    "totalTime": 3
+    "totalTime": 5
   },
   {
-    "name": "vite:css-post",
-    "invokeCount": 6,
-    "totalTime": 0
+    "name": "vite:client-inject",
+    "invokeCount": 4,
+    "totalTime": 2
   },
   {
     "name": "solid-start-file-system-router",
     "enforce": "pre",
     "invokeCount": 2,
+    "totalTime": 0
+  },
+  {
+    "name": "vite:css-post",
+    "invokeCount": 1,
     "totalTime": 0
   },
   {
