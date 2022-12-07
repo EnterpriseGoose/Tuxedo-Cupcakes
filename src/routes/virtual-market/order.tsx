@@ -154,7 +154,7 @@ export default function VirtualMarket() {
               <For each={cart()} fallback={<p>Your cart is currently empty</p>}>
                 {(item, i) => (
                   <div class="cart-item">
-                    <p>{item.name}</p>
+                    <p class={styles.name}>{item.name}</p>
                     <Show when={item.custom === 'flavor'}>
                       <textarea
                         name="flavors"

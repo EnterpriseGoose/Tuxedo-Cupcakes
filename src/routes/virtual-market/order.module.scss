@@ -74,22 +74,30 @@
       
       div {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         margin-bottom: calc(2 * $ru);
         
         textarea {
-          width: calc(50 * $ru);
+          min-width: calc(50 * $ru);
           height: calc(15 * $ru);
           font-size: calc(2 * $tru);
-          margin-left: calc(2 * $tru);
-          margin-right: calc(2 * $tru);
+          margin-left: calc(4 * $ru);
+          margin-right: calc(1 * $ru);
           resize: none;
+          flex-basis: 0;
+        }
+        
+        .name {
+          margin-right: auto;
         }
         
         .cost {
-          margin-left: auto;
+          min-width: calc(7 * $ru);
+          flex-basis: 0;
+          text-align: center;
         }
+        
         
         button {
           border-width: 0;
