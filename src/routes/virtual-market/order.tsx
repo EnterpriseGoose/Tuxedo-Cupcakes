@@ -49,7 +49,7 @@ export default function VirtualMarket() {
           <ol>
             <li>
               Place an order by Thursday, December 15th using the form below.
-              You will recieve a confirmation email within a day confirming your
+              You will receive a confirmation email within a day confirming your
               order.
             </li>
             <li>
@@ -58,11 +58,11 @@ export default function VirtualMarket() {
               delivery notification texts.
             </li>
             <li>
-              Shortly before your order is delivered, you will recieve another
+              Shortly before your order is delivered, you will receive another
               text.
             </li>
             <li>
-              When you recieve your cupcakes, you can pay using cash, credit,
+              When you receive your cupcakes, you can pay using cash, credit,
               venmo, etc. (there is a small fee if using anything except cash).
             </li>
             <li>Enjoy your cupcakes!</li>
@@ -87,7 +87,7 @@ export default function VirtualMarket() {
             <br />
           </p>
           <br />
-          <h4>Chocolate Flavors</h4>
+          <h4>Penguin Chocolates Flavors</h4>
           <p>
             Raspberry <br />
             Hazelnut <br />
@@ -103,7 +103,7 @@ export default function VirtualMarket() {
           </p>
           <p>
             Delivery is free within Chatham and some neighboring towns. There
-            may be an additional fee for delieveries more than a few miles out
+            may be an additional fee for deliveries more than a few miles out
             from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
@@ -119,8 +119,8 @@ export default function VirtualMarket() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Products</h3>
           <p>
-            Click on a product to add it to your cart. Flavors are choosen in
-            the cart (cart is below)
+            Click on a product to add it to your cart. Flavors are chosen in the
+            cart (cart is below)
           </p>{' '}
           <br />
           <div id={styles.productGrid}>
@@ -258,7 +258,7 @@ export default function VirtualMarket() {
                 Order placed!
               </Match>
               <Match when={searchParams.orderStatus === '409'}>
-                An unknown error occured. Try again.
+                An unknown error occurred. Try again.
               </Match>
               <Match
                 when={
@@ -267,7 +267,7 @@ export default function VirtualMarket() {
                   searchParams.orderStatus !== undefined
                 }
               >
-                An unknown error occured. Try again.
+                An unknown error occurred. Try again.
               </Match>
             </Switch>
           </div>
@@ -318,7 +318,7 @@ export default function VirtualMarket() {
                 searchParams.status !== undefined
               }
             >
-              An unknown error occured. Try again.
+              An unknown error occurred. Try again.
             </Match>
           </Switch>
         </div>

@@ -46,7 +46,7 @@ export default function VirtualMarket() {
           <p>
             I am a student at CHS, so I am able to make deliveries at CHS on the
             school day following the virtual market date. Just make sure to
-            specifiy that you would like this when ordering (in the special
+            specify that you would like this when ordering (in the special
             delivery notes section). I will contact you to figure out something
             that works.
           </p>

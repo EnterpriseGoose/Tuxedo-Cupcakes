@@ -18,7 +18,7 @@ export default function VirtualMarket() {
             When it's not market season, I will do occasional virtual markets.
             <br />
             These markets are an opportunity to get cupcakes in smaller
-            quantites, similar to going to the farmers' market. Each virtual
+            quantities, similar to going to the farmers' market. Each virtual
             market will have both the classics (Chocolate & Vanilla) as well as
             a couple different special flavors.
             <br /> <br />
@@ -105,7 +105,7 @@ export default function VirtualMarket() {
                 searchParams.status !== undefined
               }
             >
-              An unknown error occured. Try again.
+              An unknown error occurred. Try again.
             </Match>
           </Switch>
         </div>
@@ -128,7 +128,7 @@ export default function VirtualMarket() {
           <br />
           <p>
             Delivery is free within Chatham and some neighboring towns. There
-            may be an additional fee for delieveries more than a few miles out
+            may be an additional fee for deliveries more than a few miles out
             from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
