@@ -25,8 +25,9 @@ export default function Home() {
               memorable
             </Card>
             <Card title="Virtual Markets" link="/virtual-market?p=m">
-              I attend the Chatham Farmers’ Market on Saturdays, where you can
-              choose from a selection of cupcakes I have available that day
+              Virtual Markets are an opportunity to get Tuxedo Cupcakes when I'm
+              not at the Farmers' Market and you don't want an entire catering
+              order worth of cupcakes.
             </Card>
             <Card title="Farmers' Market" link="/farmers-market?p=m">
               I attend the Chatham Farmers’ Market on Saturdays, where you can
