@@ -81,9 +81,9 @@ export default function VirtualMarket() {
             (Cake-Frosting)
             <br />
             <br />
-            Gingerbread
+            Gingerbread - Gingerbread cake with a light cream cheese frosting
             <br />
-            Panettone
+            Panettone - Panettone cake with a mascarpone frosting
             <br />
           </p>
           <br />
