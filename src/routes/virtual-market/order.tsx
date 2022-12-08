@@ -167,7 +167,7 @@ export default function VirtualMarket() {
                     <button
                       onClick={() => {
                         let cartItems = cart();
-                        cartItems.splice(i, 1);
+                        cartItems.splice(i(), 1);
                         setCart(cartItems);
                       }}
                     >
