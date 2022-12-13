@@ -67,6 +67,7 @@ export default function VirtualMarket() {
             </li>
             <li>Enjoy your cupcakes!</li>
           </ol>
+          (If you select to have your cupcakes delivered to you at CHS, the process will be slightly different. See <A href="/virtual-market/faqs">the FAQs</A> for more information)
           <br />
           <h4>Cupcake Flavors</h4>
           <p>
@@ -102,9 +103,10 @@ export default function VirtualMarket() {
             Candied cashews are sold in 4oz bags
           </p>
           <p>
-            Delivery is free within Chatham and some neighboring towns. There
-            may be an additional fee for deliveries more than a few miles out
-            from Chatham. Contact me at{' '}
+            Delivery is free within Chatham and some neighboring towns. I am
+            also a student at CHS, so I can deliver them to you at CHS on a
+            school day following the market date. There may be an additional fee
+            for deliveries more than a few miles out from Chatham. Contact me at{' '}
             <a
               href="mailto:oliver@tuxedocupcakes.com"
               target="_blank"
@@ -232,7 +234,7 @@ export default function VirtualMarket() {
                   name="shipping"
                   cols="10"
                   rows="3"
-                  placeholder="Any extra details needed for delivery &#10;(not required)"
+                  placeholder="Any extra details needed for delivery&#10;(not required)&#10;Are you a student or staff at CHS and want them delivered to you at CHS on Monday, December 19th? Specify here!"
                   spellcheck
                 ></textarea>
               </div>
