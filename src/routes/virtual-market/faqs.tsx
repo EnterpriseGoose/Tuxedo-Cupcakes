@@ -47,8 +47,8 @@ export default function VirtualMarket() {
             I am a student at CHS, so I am able to make deliveries at CHS on the
             school day following the virtual market date. Just make sure to
             specify that you would like this when ordering (in the special
-            delivery notes section). I will contact you to figure out something
-            that works.
+            delivery notes section). I will contact you to figure out a school
+            day following the market date that will work for dropoff.
           </p>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
