@@ -1,5 +1,5 @@
 import { onMount } from 'solid-js';
-import { useSearchParams } from 'solid-start';
+import { A, useSearchParams } from 'solid-start';
 import Layout from '~/components/Layout';
 
 import styles from './catering.module.scss';
@@ -82,25 +82,26 @@ export default function Catering() {
             general idea of how much basic cakes and cupcakes cost
             <br />
           </p>
+          <br />
+          <br />
           <h4>Cakes:</h4>
           <p>
-            9 in. 1 layer cake (serves 5-8): $30
+            9 in. 1 layer cake (serves 5-8): $50
             <br />
-            9 in. 2 layer cake (serves 10-16): $50
+            9 in. 2 layer cake (serves 10-16): $70
             <br />
-            9 in. 3 layer cake (serves 16-28): $70
+            9 in. 3 layer cake (serves 16-28): $90
             <br />
             <br />
             I can also make other sizes on request
             <br />
           </p>
+          <br /> <br />
           <h4>Cupcakes (discounts for bulk orders):</h4>
           <p>
-            12 classic cupcakes (vanilla, chocolate): $35
+            12 regular cupcakes: $40
             <br />
-            12 special cupcakes (other flavors): $40
-            <br />
-            12 mini cupcakes (any flavor): $20
+            24 mini cupcakes: $40
             <br />
           </p>
         </div>

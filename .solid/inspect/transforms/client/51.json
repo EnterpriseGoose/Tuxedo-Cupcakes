@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/components/EmailForm/EmailForm.module.scss",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:css",
+    "vite:css-post",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": ".emailForm {\n\tmargin: 10px 0px;\n\t.email {\n\t\tall: unset;\n\t\tborder: none;\n\t\tborder-bottom: 2px solid black;\n\t\tbackground-color: #f7f7f7;\n\t\tpadding: 10px;\n\t\ttransition: all 100ms ease-in-out;\n\t\twidth: 15em;\n\t\ttext-align: left;\n\n\t\t&:focus {\n\t\t\tborder-bottom: 3px solid black;\n\t\t}\n\t}\n\t.submit {\n\t\tall: unset;\n\n\t\tcursor: pointer;\n\t\tborder: 2px solid black;\n\t\tpadding: 7px;\n\t\tborder-radius: 4px;\n\t\tmargin-left: 10px;\n\t\ttext-align: center;\n\t}\n}\n",
+      "start": 1681505639166,
+      "end": 1681505639166
+    },
+    {
+      "name": "vite:css",
+      "result": "._emailForm_1r0zm_1 {\n  margin: 10px 0px;\n}\n._emailForm_1r0zm_1 ._email_1r0zm_1 {\n  all: unset;\n  border: none;\n  border-bottom: 2px solid black;\n  background-color: #f7f7f7;\n  padding: 10px;\n  transition: all 100ms ease-in-out;\n  width: 15em;\n  text-align: left;\n}\n._emailForm_1r0zm_1 ._email_1r0zm_1:focus {\n  border-bottom: 3px solid black;\n}\n._emailForm_1r0zm_1 ._submit_1r0zm_17 {\n  all: unset;\n  cursor: pointer;\n  border: 2px solid black;\n  padding: 7px;\n  border-radius: 4px;\n  margin-left: 10px;\n  text-align: center;\n}",
+      "start": 1681505639166,
+      "end": 1681505639173
+    },
+    {
+      "name": "vite:css-post",
+      "result": "import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/components/EmailForm/EmailForm.module.scss\"\nconst __vite__css = \"._emailForm_1r0zm_1 {\\n  margin: 10px 0px;\\n}\\n._emailForm_1r0zm_1 ._email_1r0zm_1 {\\n  all: unset;\\n  border: none;\\n  border-bottom: 2px solid black;\\n  background-color: #f7f7f7;\\n  padding: 10px;\\n  transition: all 100ms ease-in-out;\\n  width: 15em;\\n  text-align: left;\\n}\\n._emailForm_1r0zm_1 ._email_1r0zm_1:focus {\\n  border-bottom: 3px solid black;\\n}\\n._emailForm_1r0zm_1 ._submit_1r0zm_17 {\\n  all: unset;\\n  cursor: pointer;\\n  border: 2px solid black;\\n  padding: 7px;\\n  border-radius: 4px;\\n  margin-left: 10px;\\n  text-align: center;\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const emailForm = \"_emailForm_1r0zm_1\";\nexport const email = \"_email_1r0zm_1\";\nexport const submit = \"_submit_1r0zm_17\";\nexport default {\n\temailForm: emailForm,\n\temail: email,\n\tsubmit: submit\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505639173,
+      "end": 1681505639173
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/components/EmailForm/EmailForm.module.scss\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/components/EmailForm/EmailForm.module.scss\"\nconst __vite__css = \"._emailForm_1r0zm_1 {\\n  margin: 10px 0px;\\n}\\n._emailForm_1r0zm_1 ._email_1r0zm_1 {\\n  all: unset;\\n  border: none;\\n  border-bottom: 2px solid black;\\n  background-color: #f7f7f7;\\n  padding: 10px;\\n  transition: all 100ms ease-in-out;\\n  width: 15em;\\n  text-align: left;\\n}\\n._emailForm_1r0zm_1 ._email_1r0zm_1:focus {\\n  border-bottom: 3px solid black;\\n}\\n._emailForm_1r0zm_1 ._submit_1r0zm_17 {\\n  all: unset;\\n  cursor: pointer;\\n  border: 2px solid black;\\n  padding: 7px;\\n  border-radius: 4px;\\n  margin-left: 10px;\\n  text-align: center;\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const emailForm = \"_emailForm_1r0zm_1\";\nexport const email = \"_email_1r0zm_1\";\nexport const submit = \"_submit_1r0zm_17\";\nexport default {\n\temailForm: emailForm,\n\temail: email,\n\tsubmit: submit\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505639174,
+      "end": 1681505639174
+    }
+  ],
+  "virtual": false
+}

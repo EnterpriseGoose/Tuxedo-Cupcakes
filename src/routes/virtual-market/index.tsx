@@ -1,14 +1,11 @@
-import { createSignal, For, Match, Switch } from 'solid-js';
+import { createSignal, For } from 'solid-js';
 import Layout from '~/components/Layout';
 import styles from './index.module.scss';
-import { createClient } from '@supabase/supabase-js';
-import { useSearchParams, A } from 'solid-start';
+import { A } from 'solid-start';
+import EmailForm from '~/components/EmailForm';
 
 export default function VirtualMarket() {
-  const [searchParams, setSearchparams] = useSearchParams();
-  const [dates, setDates] = createSignal([
-    [new Date(2022, 11, 18), 'Gingerbread & Panettone'],
-  ]);
+  const [dates, setDates] = createSignal([]);
   return (
     <Layout>
       <div class={styles.sections}>
@@ -33,12 +30,11 @@ export default function VirtualMarket() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Next Virtual Market</h3>
           <p>
-            The next virtual market is a Holiday Virtual Market.
-            <br />
-            Orders will be delivered on Sunday, December 18th.
+            There will not be another virtual market until after this year's{' '}
+            <A href="/farmers-market">Farmers' Market season</A>.
           </p>
           <br />
-          <h4>The flavors are:</h4>
+          {/* <h4>The flavors are:</h4>
           <p>
             Vanilla-Vanilla
             <br />
@@ -59,61 +55,19 @@ export default function VirtualMarket() {
           <br />
           <h3>
             <A href="/virtual-market/order">Click here to place an order</A>
-          </h3>
+          </h3> */}
           <p>
-            The deadline for orders is Thursday, December 15th.
             <br /> <br />
-            Sign up to be updated about this virtual market and future virtual
-            markets, as well as other news about Tuxedo Cupcakes:
+            Sign up to be updated about future virtual markets as well as other
+            news about Tuxedo Cupcakes:
+            <EmailForm />
           </p>
-          <form
-            action=""
-            method="post"
-            onsubmit={async (event) => {
-              event.preventDefault();
-              let email = (event.target.children[0] as HTMLInputElement).value;
-              const supabase = createClient(
-                'https://rxznihvftodgtjdtzbyr.supabase.co',
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
-              );
-              let response = await supabase.from('emailList').insert({ email });
-              console.log(response.status);
-              setSearchparams({ status: response.status });
-              (event.target.children[0] as HTMLInputElement).value = '';
-            }}
-          >
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              required
-            />{' '}
-            <input type="submit" id="button" value="Sign Up" />
-          </form>
-          <Switch>
-            <Match when={searchParams.status === '201'}>
-              Email added to list!
-            </Match>
-            <Match when={searchParams.status === '409'}>
-              Email is already on list.
-            </Match>
-            <Match
-              when={
-                searchParams.status !== '201' &&
-                searchParams.status !== '409' &&
-                searchParams.status !== undefined
-              }
-            >
-              An unknown error occurred. Try again.
-            </Match>
-          </Switch>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
-            Cupcakes are priced by the size of box. A box can contain any mix of
+            Cupcakes are priced by the box. A box can contain any mix of
             cupcakes.
           </p>
           <h4>Regular Size Cupcakes:</h4>
@@ -145,10 +99,12 @@ export default function VirtualMarket() {
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Dates</h3>
           <p class={styles.desc}>
-            Here are the dates that I'm currently planning a virtual market for.
-            Keep in mind that these dates are subject to change (I will not
-            change a market date once the order form is up, but I may add dates
-            at any time)
+            There are currently no virtual markets planned. <br />
+            Look back here closer to the end of this year's market season to see
+            the virtual market dates. <br />
+            If you want to be notified when a new date is added, sign up for the
+            Tuxedo Cupcakes newsletter!
+            <EmailForm />
           </p>
           <ul>
             <For each={dates()}>

@@ -4,7 +4,7 @@ import Layout from '~/components/Layout';
 import styles from './past-flavors.module.scss';
 
 export default function FarmersMarket() {
-  const [dates, setDates] = createSignal([
+  const [dates2022, setDates2022] = createSignal([
     [new Date(2022, 7, 6), 'Chocolate Raspberry & Caramel Cashew'],
     [new Date(2022, 7, 13), 'Mint Chocolate Chip & Salted Caramel'],
     [new Date(2022, 7, 20), 'Cinnamon Peach & Chocolate Peanut Butter'],
@@ -26,12 +26,12 @@ export default function FarmersMarket() {
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Past Flavors</h2>
-          <p>Here I list any flavors from past Farmers' Markets</p>
+          <p>Here is a list of past Farmers' Market specials:</p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
           <h3>2022</h3>
           <ul>
-            <For each={dates()}>
+            <For each={dates2022()}>
               {([date, specials], i) => (
                 <li>{`${date.toString().substring(4, 7)} ${(
                   date as Date
