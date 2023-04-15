@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/global-styles/global.scss",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:css",
+    "vite:css-post",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "@use \"./variables.scss\" as *;\n\n* {\n\tfont-family: \"Raleway\", sans-serif;\n\tfont-weight: 400;\n\tmargin: 0;\n}\n\nh2 {\n\tfont-weight: 500;\n\tfont-size: calc(4.3 * $tru);\n\tmargin: 0 0 calc(4 * $ru) 0;\n}\n\nh3 {\n\tfont-weight: 500;\n\tfont-size: calc(3.4 * $tru);\n\tmargin: 0 0 calc(2 * $ru) 0;\n}\n\nh4 {\n\tfont-weight: 500;\n\tfont-size: calc(2.5 * $tru);\n\tmargin: 0 0 calc(2 * $ru) 0;\n}\n\np,\nli,\ninput {\n\tfont-weight: 400;\n\tfont-size: calc(2.7 * $tru);\n\tmargin: calc(0.5 * $ru) 0;\n}\n\ndiv {\n\tfont-weight: 400;\n\tfont-size: calc(2.7 * $tru);\n}\n\na {\n\ttext-decoration: none;\n\tcolor: $darkCyan;\n\ttransition: color 0.2s ease-out;\n}\na:hover {\n\tcolor: $cyan;\n}\n",
+      "start": 1681505637883,
+      "end": 1681505637883
+    },
+    {
+      "name": "vite:css",
+      "result": "* {\n  font-family: \"Raleway\", sans-serif;\n  font-weight: 400;\n  margin: 0;\n}\n\nh2 {\n  font-weight: 500;\n  font-size: calc(4.3 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\n  margin: 0 0 calc(4 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\n}\n\nh3 {\n  font-weight: 500;\n  font-size: calc(3.4 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\n}\n\nh4 {\n  font-weight: 500;\n  font-size: calc(2.5 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\n}\n\np,\nli,\ninput {\n  font-weight: 400;\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\n  margin: calc(0.5 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\n}\n\ndiv {\n  font-weight: 400;\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\n}\n\na {\n  text-decoration: none;\n  color: #407682;\n  transition: color 0.2s ease-out;\n}\n\na:hover {\n  color: #4aa1b4;\n}",
+      "start": 1681505637883,
+      "end": 1681505637890
+    },
+    {
+      "name": "vite:css-post",
+      "result": "import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/global-styles/global.scss\"\nconst __vite__css = \"* {\\n  font-family: \\\"Raleway\\\", sans-serif;\\n  font-weight: 400;\\n  margin: 0;\\n}\\n\\nh2 {\\n  font-weight: 500;\\n  font-size: calc(4.3 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(4 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\nh3 {\\n  font-weight: 500;\\n  font-size: calc(3.4 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\nh4 {\\n  font-weight: 500;\\n  font-size: calc(2.5 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\np,\\nli,\\ninput {\\n  font-weight: 400;\\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: calc(0.5 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\ndiv {\\n  font-weight: 400;\\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n}\\n\\na {\\n  text-decoration: none;\\n  color: #407682;\\n  transition: color 0.2s ease-out;\\n}\\n\\na:hover {\\n  color: #4aa1b4;\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nimport.meta.hot.accept()\nexport default __vite__css\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505637890,
+      "end": 1681505637890
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/global-styles/global.scss\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/global-styles/global.scss\"\nconst __vite__css = \"* {\\n  font-family: \\\"Raleway\\\", sans-serif;\\n  font-weight: 400;\\n  margin: 0;\\n}\\n\\nh2 {\\n  font-weight: 500;\\n  font-size: calc(4.3 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(4 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\nh3 {\\n  font-weight: 500;\\n  font-size: calc(3.4 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\nh4 {\\n  font-weight: 500;\\n  font-size: calc(2.5 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: 0 0 calc(2 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\np,\\nli,\\ninput {\\n  font-weight: 400;\\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n  margin: calc(0.5 * min(90vw, min(60vw + 300px, 1200px))/100) 0;\\n}\\n\\ndiv {\\n  font-weight: 400;\\n  font-size: calc(2.7 * min(90vw + 200px, min(60vw + 400px, 1200px))/100);\\n}\\n\\na {\\n  text-decoration: none;\\n  color: #407682;\\n  transition: color 0.2s ease-out;\\n}\\n\\na:hover {\\n  color: #4aa1b4;\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nimport.meta.hot.accept()\nexport default __vite__css\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505637890,
+      "end": 1681505637890
+    }
+  ],
+  "virtual": false
+}

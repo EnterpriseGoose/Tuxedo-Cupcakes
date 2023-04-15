@@ -1,30 +1,23 @@
 {
-  "id": "/project/Tuxedo-Cupcakes/src/entry-client.tsx",
+  "id": "/project/Tuxedo-Cupcakes/node_modules/.vite/deps/solid-js.js?v=6ed96d96",
   "deps": [],
   "plugins": [
-    "__load__",
-    "solid",
+    "vite:optimized-deps",
     "vite:import-analysis"
   ],
   "transforms": [
     {
-      "name": "__load__",
-      "result": "import { mount, StartClient } from \"solid-start/entry-client\";\n\nmount(() => <StartClient />, document);\n",
-      "start": 1670291461914,
-      "end": 1670291461914
-    },
-    {
-      "name": "solid",
-      "result": "import { createComponent as _$createComponent } from \"solid-js/web\";\nimport { mount, StartClient } from \"solid-start/entry-client\";\nmount(() => _$createComponent(StartClient, {}), document);",
-      "start": 1670291461914,
-      "end": 1670291461917
+      "name": "vite:optimized-deps",
+      "result": "import {\n  $DEVCOMP,\n  $PROXY,\n  $TRACK,\n  DEV,\n  ErrorBoundary,\n  For,\n  Index,\n  Match,\n  Show,\n  Suspense,\n  SuspenseList,\n  Switch,\n  batch,\n  cancelCallback,\n  children,\n  createComponent,\n  createComputed,\n  createContext,\n  createDeferred,\n  createEffect,\n  createMemo,\n  createReaction,\n  createRenderEffect,\n  createResource,\n  createRoot,\n  createSelector,\n  createSignal,\n  createUniqueId,\n  enableExternalSource,\n  enableHydration,\n  enableScheduling,\n  equalFn,\n  from,\n  getListener,\n  getOwner,\n  indexArray,\n  lazy,\n  mapArray,\n  mergeProps,\n  observable,\n  on,\n  onCleanup,\n  onError,\n  onMount,\n  requestCallback,\n  resetErrorBoundaries,\n  runWithOwner,\n  sharedConfig,\n  splitProps,\n  startTransition,\n  untrack,\n  useContext,\n  useTransition\n} from \"./chunk-MTPIYOZY.js\";\nimport \"./chunk-TWLJ45QX.js\";\nexport {\n  $DEVCOMP,\n  $PROXY,\n  $TRACK,\n  DEV,\n  ErrorBoundary,\n  For,\n  Index,\n  Match,\n  Show,\n  Suspense,\n  SuspenseList,\n  Switch,\n  batch,\n  cancelCallback,\n  children,\n  createComponent,\n  createComputed,\n  createContext,\n  createDeferred,\n  createEffect,\n  createMemo,\n  createReaction,\n  createRenderEffect,\n  createResource,\n  createRoot,\n  createSelector,\n  createSignal,\n  createUniqueId,\n  enableExternalSource,\n  enableHydration,\n  enableScheduling,\n  equalFn,\n  from,\n  getListener,\n  getOwner,\n  indexArray,\n  lazy,\n  mapArray,\n  mergeProps,\n  observable,\n  on,\n  onCleanup,\n  onError,\n  onMount,\n  requestCallback,\n  resetErrorBoundaries,\n  runWithOwner,\n  sharedConfig,\n  splitProps,\n  startTransition,\n  untrack,\n  useContext,\n  useTransition\n};\n//# sourceMappingURL=solid-js.js.map\n",
+      "start": 1681505637760,
+      "end": 1681505637785
     },
     {
       "name": "vite:import-analysis",
-      "result": "import { createComponent as _$createComponent } from \"/node_modules/.vite/deps/solid-js_web.js?v=4bdf6fca\";\nimport { mount, StartClient } from \"/node_modules/.pnpm/solid-start@0.2.5_qx3wzgkguxvthvssnutneqxbxi/node_modules/solid-start/entry-client/index.tsx?v=4bdf6fca\";\nmount(() => _$createComponent(StartClient, {}), document);",
-      "start": 1670291461917,
-      "end": 1670291461919
+      "result": "import {\n  $DEVCOMP,\n  $PROXY,\n  $TRACK,\n  DEV,\n  ErrorBoundary,\n  For,\n  Index,\n  Match,\n  Show,\n  Suspense,\n  SuspenseList,\n  Switch,\n  batch,\n  cancelCallback,\n  children,\n  createComponent,\n  createComputed,\n  createContext,\n  createDeferred,\n  createEffect,\n  createMemo,\n  createReaction,\n  createRenderEffect,\n  createResource,\n  createRoot,\n  createSelector,\n  createSignal,\n  createUniqueId,\n  enableExternalSource,\n  enableHydration,\n  enableScheduling,\n  equalFn,\n  from,\n  getListener,\n  getOwner,\n  indexArray,\n  lazy,\n  mapArray,\n  mergeProps,\n  observable,\n  on,\n  onCleanup,\n  onError,\n  onMount,\n  requestCallback,\n  resetErrorBoundaries,\n  runWithOwner,\n  sharedConfig,\n  splitProps,\n  startTransition,\n  untrack,\n  useContext,\n  useTransition\n} from \"/node_modules/.vite/deps/chunk-MTPIYOZY.js?v=5c95b2a1\";\nimport \"/node_modules/.vite/deps/chunk-TWLJ45QX.js?v=5c95b2a1\";\nexport {\n  $DEVCOMP,\n  $PROXY,\n  $TRACK,\n  DEV,\n  ErrorBoundary,\n  For,\n  Index,\n  Match,\n  Show,\n  Suspense,\n  SuspenseList,\n  Switch,\n  batch,\n  cancelCallback,\n  children,\n  createComponent,\n  createComputed,\n  createContext,\n  createDeferred,\n  createEffect,\n  createMemo,\n  createReaction,\n  createRenderEffect,\n  createResource,\n  createRoot,\n  createSelector,\n  createSignal,\n  createUniqueId,\n  enableExternalSource,\n  enableHydration,\n  enableScheduling,\n  equalFn,\n  from,\n  getListener,\n  getOwner,\n  indexArray,\n  lazy,\n  mapArray,\n  mergeProps,\n  observable,\n  on,\n  onCleanup,\n  onError,\n  onMount,\n  requestCallback,\n  resetErrorBoundaries,\n  runWithOwner,\n  sharedConfig,\n  splitProps,\n  startTransition,\n  untrack,\n  useContext,\n  useTransition\n};\n//# sourceMappingURL=solid-js.js.map\n",
+      "start": 1681505637786,
+      "end": 1681505637786
     }
   ],
-  "virtual": false
+  "virtual": true
 }

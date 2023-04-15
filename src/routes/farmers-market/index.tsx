@@ -5,21 +5,24 @@ import styles from './index.module.scss';
 
 export default function FarmersMarket() {
   const [dates, setDates] = createSignal([
-    [new Date(2022, 7, 6), 'Chocolate Raspberry & Caramel Cashew'],
-    [new Date(2022, 7, 13), 'Mint Chocolate Chip & Salted Caramel'],
-    [new Date(2022, 7, 20), 'Cinnamon Peach & Chocolate Peanut Butter'],
-    [new Date(2022, 7, 27), 'Chocolate Raspberry & Strawberry'],
-    [
-      new Date(2022, 8, 10),
-      'Red Bean, Chocolate Black Sesame & Pineapple Cake',
-    ],
-    [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
-    [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
-    [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
-    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
-    [new Date(2022, 10, 12), 'Mint Chocolate Chip & Chocolate Peanut Butter'],
-    [new Date(2022, 10, 19), 'Brown Sugar Sweet Potato & Apple Pie'],
+    [new Date(2023, 5, 17), '???'],
+    [new Date(2023, 5, 24), '???'],
+    [new Date(2023, 6, 1), '???'],
+    [new Date(2023, 6, 8), '???'],
+    [new Date(2023, 6, 15), '???'],
+    [new Date(2023, 6, 22), '???'],
+    [new Date(2023, 6, 29), '???'],
+    [new Date(2023, 7, 5), '???'],
+    [new Date(2023, 7, 12), '???'],
+    [new Date(2023, 7, 19), '???'],
+    [new Date(2023, 7, 26), '???'],
+    [new Date(2023, 8, 2), '???'],
+    [new Date(2023, 8, 9), '???'],
+    [new Date(2023, 8, 23), '???'],
+    [new Date(2023, 9, 7), '???'],
+    [new Date(2023, 9, 28), '???'],
+    [new Date(2023, 10, 11), '???'],
+    [new Date(2023, 10, 18), '???'],
   ]);
   return (
     <Layout>
@@ -27,9 +30,10 @@ export default function FarmersMarket() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Get a Cupcake at the Farmers’ Market</h2>
           <p>
-            I appear at the Chatham Farmers’ Market on most Saturdays through
-            November.
-            <br />
+            I appear at the Chatham Farmers’ Market every Saturday in the summer
+            (June-August) and about every other week in the fall
+            (September-November).
+            <br /> <br />
             Each week, I bring 4 classic flavors (chocolate and vanilla), as
             well as 2 rotating special flavors, in both regular and mini sizes.
           </p>
@@ -51,15 +55,15 @@ export default function FarmersMarket() {
           >
             <Match
               when={
-                new Date().getMonth() > 4 &&
+                new Date().getMonth() > 2 &&
                 (new Date().getMonth() < 10 ||
                   (new Date().getMonth() == 10 && new Date().getDate() < 20))
               }
             >
               <p class={styles.desc}>
-                Here are the full list of dates I’m appearing at the farmers’
+                Here is the full list of dates I’m appearing at the farmers’
                 market, as well as the specials I will have available that day
-                (2022):
+                (2023):
               </p>
               <ul>
                 <For each={dates()}>
@@ -68,7 +72,7 @@ export default function FarmersMarket() {
                       class={(() => {
                         let thisDate = (date as Date).setHours(0, 0, 0, 0);
                         let lastDate = (
-                          dates()[i() - 1] != undefined
+                          i() !== 0
                             ? (dates()[i() - 1][0] as Date)
                             : new Date(0)
                         ).getTime();
@@ -77,17 +81,13 @@ export default function FarmersMarket() {
                         else if (
                           new Date().setHours(0, 0, 0, 0) !== lastDate &&
                           new Date().getTime() > lastDate &&
-                          new Date().getTime() < thisDate &&
-                          i() == dates().length - 1
-                        )
-                          return styles.finalWeek;
-                        else if (
-                          new Date().setHours(0, 0, 0, 0) !== lastDate &&
-                          new Date().getTime() > lastDate &&
                           new Date().getTime() < thisDate
-                        )
-                          return styles.nextWeek;
-                        else return '';
+                        ) {
+                          if (i() == 0) return styles.firstWeek;
+                          else if (i() == dates().length - 1)
+                            return styles.finalWeek;
+                          else return styles.nextWeek;
+                        } else return '';
                       })()}
                     >{`${date.toString().substring(4, 7)} ${(
                       date as Date
@@ -97,6 +97,9 @@ export default function FarmersMarket() {
               </ul>
             </Match>
           </Switch>
+          <A href="/farmers-market/past-flavors">
+            Click here to see past cupcake flavors
+          </A>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.three}`}>

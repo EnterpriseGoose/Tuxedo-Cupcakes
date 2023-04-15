@@ -1,0 +1,37 @@
+{
+  "id": "/project/Tuxedo-Cupcakes/src/components/Layout/Layout.module.scss",
+  "deps": [],
+  "plugins": [
+    "__load__",
+    "vite:css",
+    "vite:css-post",
+    "vite:import-analysis"
+  ],
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "@use '../../global-styles/variables.scss' as *;\n\n.root {\n  width: 100%;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  position: relative;\n}\n\n.main {\n  margin-bottom: calc(10 * $ru);\n}",
+      "start": 1681505639152,
+      "end": 1681505639152
+    },
+    {
+      "name": "vite:css",
+      "result": "._root_vcgun_1 {\n  width: 100%;\n  min-height: 100vh;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  position: relative;\n}\n\n._main_vcgun_10 {\n  margin-bottom: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\n}",
+      "start": 1681505639152,
+      "end": 1681505639166
+    },
+    {
+      "name": "vite:css-post",
+      "result": "import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/components/Layout/Layout.module.scss\"\nconst __vite__css = \"._root_vcgun_1 {\\n  width: 100%;\\n  min-height: 100vh;\\n  display: flex;\\n  align-items: center;\\n  flex-direction: column;\\n  position: relative;\\n}\\n\\n._main_vcgun_10 {\\n  margin-bottom: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const root = \"_root_vcgun_1\";\nexport const main = \"_main_vcgun_10\";\nexport default {\n\troot: root,\n\tmain: main\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505639166,
+      "end": 1681505639166
+    },
+    {
+      "name": "vite:import-analysis",
+      "result": "import { createHotContext as __vite__createHotContext } from \"/@vite/client\";import.meta.hot = __vite__createHotContext(\"/src/components/Layout/Layout.module.scss\");import { updateStyle as __vite__updateStyle, removeStyle as __vite__removeStyle } from \"/@vite/client\"\nconst __vite__id = \"/project/Tuxedo-Cupcakes/src/components/Layout/Layout.module.scss\"\nconst __vite__css = \"._root_vcgun_1 {\\n  width: 100%;\\n  min-height: 100vh;\\n  display: flex;\\n  align-items: center;\\n  flex-direction: column;\\n  position: relative;\\n}\\n\\n._main_vcgun_10 {\\n  margin-bottom: calc(10 * min(90vw, min(60vw + 300px, 1200px))/100);\\n}\"\n__vite__updateStyle(__vite__id, __vite__css)\nexport const root = \"_root_vcgun_1\";\nexport const main = \"_main_vcgun_10\";\nexport default {\n\troot: root,\n\tmain: main\n};\n\nimport.meta.hot.prune(() => __vite__removeStyle(__vite__id))",
+      "start": 1681505639166,
+      "end": 1681505639166
+    }
+  ],
+  "virtual": false
+}

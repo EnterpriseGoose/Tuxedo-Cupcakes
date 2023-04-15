@@ -50,6 +50,27 @@ export default function VirtualMarket() {
             delivery notes section). I will contact you to figure out a school
             day following the market date that will work for dropoff.
           </p>
+          <br />
+          <h4>What is the difference between virtual markets and catering?</h4>
+          <p>
+            Virtual markets have a much smaller minimum order size (2 regular /
+            6 mini), compared to the 12 regular or 24 mini minimum order size
+            for catering. <br />
+            Virtual markets have a set date, while catering can be delivered
+            whenever you want.
+          </p>
+          <br />
+          <h4>When is the next virutal market?</h4>
+          <p>
+            The idea with virtual markets is that it allows me to have a way of
+            selling cupcakes similar to the Farmers' Markets when it's not
+            Farmers' Market season. This means that I will only schedule virtual
+            markets for the winter and spring when I don't already have a
+            Farmers' Market. <br />I will schedule virtual markets about a month
+            (or more) ahead in the winter and spring. If you look at the bottom
+            of the <A href="/virtual-market/">virtual markets</A> page, it has
+            all of the currently scheduled dates.
+          </p>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
         <div class={`${styles.section} ${styles.four}`}>

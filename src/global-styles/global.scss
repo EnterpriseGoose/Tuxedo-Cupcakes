@@ -1,41 +1,47 @@
-@use './variables.scss' as *;
+@use "./variables.scss" as *;
 
 * {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 400;
-  margin: 0;
+	font-family: "Raleway", sans-serif;
+	font-weight: 400;
+	margin: 0;
 }
 
 h2 {
-  font-weight: 500;
-  font-size: calc(4.3 * $tru);
-  margin: 0 0 calc(4 * $ru) 0;
+	font-weight: 500;
+	font-size: calc(4.3 * $tru);
+	margin: 0 0 calc(4 * $ru) 0;
 }
 
 h3 {
-  font-weight: 500;
-  font-size: calc(3.4 * $tru);
-  margin: 0 0 calc(2 * $ru) 0;
+	font-weight: 500;
+	font-size: calc(3.4 * $tru);
+	margin: 0 0 calc(2 * $ru) 0;
 }
 
 h4 {
-  font-weight: 500;
-  font-size: calc(2.5 * $tru);
-  margin: calc(2 * $ru) 0;
+	font-weight: 500;
+	font-size: calc(2.5 * $tru);
+	margin: 0 0 calc(2 * $ru) 0;
 }
 
-p, li {
-  font-weight: 400;
-  font-size: calc(2.7 * $tru);
-  margin: calc(0.5 * $ru) 0;
+p,
+li,
+input {
+	font-weight: 400;
+	font-size: calc(2.7 * $tru);
+	margin: calc(0.5 * $ru) 0;
 }
 
 div {
-  font-weight: 400;
-  font-size: calc(2.7 * $tru);
+	font-weight: 400;
+	font-size: calc(2.7 * $tru);
 }
 
 a {
-  color: $darkCyan;
-  text-decoration: none;
+	text-decoration: none;
+	color: $darkCyan;
+	transition: color 0.2s ease-out;
+}
+a:hover {
+	color: $cyan;
 }

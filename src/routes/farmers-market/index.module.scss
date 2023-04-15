@@ -1,98 +1,111 @@
-@use '../../global-styles/variables.scss' as *;
+@use "../../global-styles/variables.scss" as *;
 
 .sections {
-  display: flex;
-  flex-direction: column;
-  row-gap: calc(7 * $ru);
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(7 * $ru);
+	align-items: center;
 }
 
 .section {
-  &.one {
-    padding-top: calc(5 * $ru);
-    width: calc(100 * $ru);
-  }
-  &.two {
-    padding-top: calc(2 * $ru);
-    width: calc(85 * $ru);
+	&.one {
+		padding-top: calc(5 * $ru);
+		width: calc(100 * $ru);
+	}
+	&.two {
+		padding-top: calc(2 * $ru);
+		width: calc(85 * $ru);
 
-    p {
-      position: relative;
-      color: black;
-    }
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
-    ul {
-      list-style-type: '• ';
-    }
+		p {
+			position: relative;
+			color: black;
+			width: 80%;
+		}
 
-    li {
-      position: relative;
-      color: #707070;
-      &.today,
-      &.nextWeek,
-      &.finalWeek {
-        font-size: calc(3.2 * $tru);
-        position: relative;
-        color: black;
-      }
+		ul {
+			list-style-type: "• ";
+			align-self: flex-start;
+			margin-top: calc(4 * $ru);
+			margin-bottom: calc(4 * $ru);
+		}
 
-      &.today::before {
-        content: 'Today! -> ';
-      }
-      &.nextWeek::before {
-        content: 'Next Market Day -> ';
-      }
-      &.finalWeek::before {
-        content: 'Last Market Day! -> ';
-      }
-      &.today::before,
-      &.nextWeek::before,
-      &.finalWeek::before {
-        position: absolute;
-        left: calc(-2 * $ru);
-        top: 0;
-        transform: translate(-100%, -90%);
-        font-size: calc(2.7 * $tru);
-      }
-      &.today::before {
-        transform: translate(-110%, 0%);
-      }
-      @media (max-width: 1500px) {
-        &.nextWeek::before {
-          width: calc(9 * $tru);
-          transform: translate(-115%, -67%);
-        }
-        &.finalWeek::before {
-          width: calc(9 * $tru);
-          transform: translate(-115%, -67%);
-        }
-        //position: static
-      }
-    }
+		li {
+			position: relative;
+			color: #707070;
+			&.today,
+			&.nextWeek,
+			&.finalWeek,
+			&.firstWeek {
+				font-size: calc(3.2 * $tru);
+				position: relative;
+				color: black;
+			}
 
-    .today ~ li,
-    .nextWeek ~ li {
-      color: #202020;
-    }
-  }
+			&.today::before {
+				content: "Today! -> ";
+			}
+			&.nextWeek::before {
+				content: "Next Market -> ";
+			}
+			&.finalWeek::before {
+				content: "Last Market! -> ";
+			}
+			&.firstWeek::before {
+				content: "First Market! -> ";
+			}
 
-  &.three {
-    padding-top: calc(2 * $ru);
-    width: calc(60 * $ru);
-  }
+			&.today::before,
+			&.nextWeek::before,
+			&.finalWeek::before,
+			&.firstWeek::before {
+				position: absolute;
+				left: calc(-2 * $ru);
+				top: 0;
+				transform: translate(-105%, 0%);
+				font-size: calc(2.7 * $tru);
+				text-align: right;
+				width: max-content;
+			}
+			&.today::before {
+				transform: translate(-110%, 0%);
+			}
+			@media (max-width: 1500px) {
+				&.nextWeek::before,
+				&.finalWeek::before,
+				&.firstWeek::before {
+					width: min-content;
+					transform: translate(-115%, -67%);
+				}
+			}
+		}
 
-  &.four {
-    h4 {
-      text-align: center;
-    }
-  }
+		.today ~ li,
+		.nextWeek ~ li {
+			color: #202020;
+		}
+	}
 
-  h2,
-  h3 {
-    text-align: center;
-  }
+	&.three {
+		padding-top: calc(2 * $ru);
+		width: calc(60 * $ru);
+	}
+
+	&.four {
+		h4 {
+			text-align: center;
+		}
+	}
+
+	h2,
+	h3 {
+		text-align: center;
+	}
 }
 
 .divider {
-  width: calc(10 * $ru);
+	width: calc(10 * $ru);
 }
