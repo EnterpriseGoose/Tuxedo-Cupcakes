@@ -34,7 +34,7 @@
 		.images {
 			display: flex;
 			flex-direction: row;
-			column-gap: calc(8 * $wru);
+			column-gap: calc(6 * $wru);
 			margin-top: calc(3 * $ru);
 
 			.image {
@@ -43,7 +43,8 @@
 				}
 
 				p {
-					width: calc(28 * $wru);
+					width: calc(31 * $wru);
+					font-size: calc(2.5 * $tru);
 				}
 			}
 		}

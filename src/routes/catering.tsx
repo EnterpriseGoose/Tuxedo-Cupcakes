@@ -62,15 +62,27 @@ export default function Catering() {
           <div class={styles.images}>
             <div class={styles.image}>
               <img src="/images/cupcake-1.png" />
-              <p>Chocolate Peanut Butter Mini Cupcake</p>
+              <p>
+                Frosting Mini Cupcakes
+                <br />
+                Front: Chocolate Vanilla
+                <br />
+                Back: Pumpkin Spice
+              </p>
             </div>
             <div class={styles.image}>
               <img src="/images/cupcake-2.png" />
-              <p>Mint Chocolate Chip Mini Cupcake</p>
+              <p>
+                12 cupcake catering order
+                <br />
+                Left: Brown Sugar Sweet Potato
+                <br />
+                Right: Apple Pie
+              </p>
             </div>
             <div class={styles.image}>
               <img src="/images/cupcake-3.png" />
-              <p>Chocolate Chocolate Mini Cupcake</p>
+              <p>S’mores mini cupcake</p>
             </div>
           </div>
         </div>
@@ -99,10 +111,18 @@ export default function Catering() {
           <br /> <br />
           <h4>Cupcakes (discounts for bulk orders):</h4>
           <p>
-            12 regular cupcakes: $40
+            12 regular cupcakes: $40 <br />
+            24 mini cupcakes: $40 <br />
             <br />
-            24 mini cupcakes: $40
-            <br />
+            Detailed cupcake catering pricing information can be found{' '}
+            <a
+              href="/documents/cupcake-catering-pricing.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              here
+            </a>
+            .
           </p>
         </div>
         <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
