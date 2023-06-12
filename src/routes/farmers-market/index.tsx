@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 
 export default function FarmersMarket() {
   const [dates, setDates] = createSignal([
-    [new Date(2023, 5, 17), '???'],
+    [new Date(2023, 5, 17), 'Coconut Passion Fruit, Salted Caramel Cashew, & Chocolate Strawberry'],
     [new Date(2023, 5, 24), '???'],
     [new Date(2023, 6, 1), '???'],
     [new Date(2023, 6, 8), '???'],
