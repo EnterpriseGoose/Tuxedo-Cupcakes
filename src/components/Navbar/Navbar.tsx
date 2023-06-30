@@ -69,6 +69,14 @@ export default function Navbar(props?: { home?: any }) {
         >
           Farmers' Market
         </A>
+				<A
+          href="/sweet-16/"
+          activeClass={styles.selectedTab}
+          draggable={false}
+          noScroll={true}
+        >
+          Sweet 16
+        </A>
         <A
           href="/virtual-market"
           activeClass={styles.selectedTab}

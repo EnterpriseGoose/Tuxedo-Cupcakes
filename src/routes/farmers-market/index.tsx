@@ -5,13 +5,15 @@ import styles from './index.module.scss';
 
 export default function FarmersMarket() {
   const [dates, setDates] = createSignal([
-    [new Date(2023, 5, 17), 'Coconut Passion Fruit, Salted Caramel Cashew, & Chocolate Strawberry'],
-    [new Date(2023, 5, 24), '???'],
-    [new Date(2023, 6, 1), '???'],
+    [
+      new Date(2023, 5, 17),
+      'Coconut Passion Fruit, Salted Caramel Cashew, & Chocolate Strawberry',
+    ],
+    [new Date(2023, 5, 24), 'Lemon Blueberry & Mint Chocolate Chip'],
+    [new Date(2023, 6, 1), 'Pomegranate & Chocolate Hazelnut'],
     [new Date(2023, 6, 8), '???'],
     [new Date(2023, 6, 15), '???'],
     [new Date(2023, 6, 22), '???'],
-    [new Date(2023, 6, 29), '???'],
     [new Date(2023, 7, 5), '???'],
     [new Date(2023, 7, 12), '???'],
     [new Date(2023, 7, 19), '???'],
@@ -36,6 +38,9 @@ export default function FarmersMarket() {
             <br /> <br />
             Each week, I bring 4 classic flavors (chocolate and vanilla), as
             well as 2 rotating special flavors, in both regular and mini sizes.
+            <br /> <br />
+            This year I will also be hosting the{' '}
+            <A href="/sweet-16/">Sweet 16 Cupcake Bracket</A>
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
@@ -44,8 +49,8 @@ export default function FarmersMarket() {
             fallback={
               <div>
                 <p>
-                  The 2022 farmers' market season has ended. Come back next year
-                  for the 2023 Chatham Farmers' Market dates!
+                  The 2023 farmers' market season has ended. Come back next year
+                  for the 2024 Chatham Farmers' Market dates!
                 </p>
                 <A href="/farmers-market/past-flavors">
                   Click here to see past cupcake flavors
@@ -62,8 +67,17 @@ export default function FarmersMarket() {
             >
               <p class={styles.desc}>
                 Here is the full list of dates I’m appearing at the farmers’
-                market, as well as the specials I will have available that day
-                (2023):
+                market, as well as the specials I will have available that day.
+                If you want to know the specials ahead of time, you can sign up
+                for the newsletter or follow{' '}
+                <a
+                  href="https://www.instagram.com/tuxedo_cupcakes/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  my instagram
+                </a>
+                .
               </p>
               <ul>
                 <For each={dates()}>
