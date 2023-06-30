@@ -13,9 +13,9 @@
     flex-direction: row;
     column-gap: calc(5 * $tru);
     padding-bottom: calc(3 * $ru);
-    width: calc(95 * $ru);
+    max-width: calc(100 * $wru);
 
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       height: calc(3 * $ru);
