@@ -1,7 +1,7 @@
 import { createSignal, For, Match, Switch } from 'solid-js';
 import { A } from 'solid-start';
 import Layout from '~/components/Layout';
-import styles from './sweet-16.module.scss';
+import styles from './index.module.scss';
 
 export default function Sweet16() {
   return (
