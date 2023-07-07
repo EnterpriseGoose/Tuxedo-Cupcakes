@@ -11,27 +11,130 @@
 	&.one {
 		padding-top: calc(5 * $ru);
 		width: calc(100 * $ru);
-	}
-	&.two {
-		padding-top: calc(2 * $ru);
-		width: calc(85 * $ru);
 
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		.voteForm {
+			margin: 10px 0px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 
-		p {
-			position: relative;
-			color: black;
-			width: 80%;
-		}
-	}
+			form {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+			}
 
-	&.three {
-		padding-top: calc(5 * $ru);
-		width: calc(100 * $ru);
-		h4 {
-			padding-top: calc(2 * $ru);
+			.codeVerify {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+
+				.code {
+					all: unset;
+					border: none;
+					border-bottom: 2px solid black;
+					background-color: #f7f7f7;
+					padding: 10px;
+					transition: all 100ms ease-in-out;
+					text-align: left;
+					width: 4em;
+					margin-left: calc(2 * $ru);
+
+					&:focus {
+						border-bottom: 3px solid black;
+					}
+
+					&[valid="true"] + label {
+						color: green;
+					}
+
+					&[valid="false"] + label {
+						color: red;
+					}
+
+					& + label {
+						position: absolute;
+						right: -1em;
+						transition: all ease 100ms;
+					}
+				}
+			}
+
+			.vote {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+
+				gap: calc(5 * $ru);
+				margin: calc(5 * $ru) 0;
+
+				input {
+					all: unset;
+					position: absolute;
+				}
+
+				input:checked + label {
+					img {
+						filter: drop-shadow(0 0 calc(1.5 * $ru) $darkCyan);
+					}
+				}
+
+				label {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					//background-color: rgb(235, 235, 235);
+					position: relative;
+					transition: all ease 300ms;
+					gap: calc(2 * $ru);
+					cursor: pointer;
+					user-select: none;
+
+					img {
+						transition: all ease 300ms;
+					}
+
+					&.disabled {
+						filter: grayscale(100%);
+						cursor: not-allowed;
+					}
+				}
+			}
+
+			.submit {
+				all: unset;
+
+				cursor: pointer;
+				border: 2px solid black;
+				padding: 7px;
+				border-radius: 4px;
+				margin-left: 10px;
+				text-align: center;
+				user-select: none;
+				transition: all ease 0.5s;
+
+				box-shadow: inset 0 0px $cyan;
+
+				&:hover {
+					box-shadow: inset 0 -25px $cyan;
+				}
+
+				&:disabled {
+					cursor: not-allowed;
+					box-shadow: inset 0 0px $cyan;
+				}
+
+				&.submitted,
+				&:focus {
+					box-shadow: inset 0 -55px $cyan;
+				}
+			}
 		}
 	}
 
@@ -49,9 +152,4 @@
 
 .divider {
 	width: calc(10 * $ru);
-}
-
-.bracket {
-	width: calc(100 * $wru);
-	padding: calc(3 * $ru) 0;
 }
