@@ -12,7 +12,7 @@ export default function FarmersMarket() {
     [new Date(2023, 5, 24), 'Lemon Blueberry & Mint Chocolate Chip'],
     [new Date(2023, 6, 1), 'Pomegranate & Chocolate Hazelnut'],
     [new Date(2023, 6, 8), 'Lemon Raspberry & Chocolate Caramel'],
-    [new Date(2023, 6, 15), '???'],
+    [new Date(2023, 6, 15), 'Coconut Passion Fruit & Chocolate Matcha'],
     [new Date(2023, 6, 22), '???'],
     [new Date(2023, 7, 5), '???'],
     [new Date(2023, 7, 12), '???'],
@@ -69,7 +69,7 @@ export default function FarmersMarket() {
                 Here is the full list of dates I’m appearing at the farmers’
                 market, as well as the specials I will have available that day.
                 If you want to know the specials ahead of time, you can sign up
-                for the newsletter or follow{' '}
+                for <A href="/newsletter">the newsletter</A> or follow{' '}
                 <a
                   href="https://www.instagram.com/tuxedo_cupcakes/"
                   target="_blank"
