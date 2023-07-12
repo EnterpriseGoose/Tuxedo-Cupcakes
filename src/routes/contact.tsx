@@ -3,7 +3,7 @@ import styles from './contact.module.scss';
 
 export default function Contact() {
   return (
-    <Layout>
+    <Layout hideFooter>
       <div class={styles.contact}>
         <h2>Contact</h2>
         <h4>

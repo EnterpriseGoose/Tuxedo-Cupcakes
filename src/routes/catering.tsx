@@ -11,10 +11,10 @@ export default function Catering() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Catering of Cakes and Cupcakes</h2>
           <p>
-            I can cater your event with a custom cake or cupcakes! I’m able to
-            do most flavors you could imagine, I specialize in using fresh,
-            seasonal fruit to make decorative and super tasty cakes and
-            cupcakes.
+            I can cater your event with a custom cake or cupcakes that will make
+            it memorable. I love making super tasty creations with interesting
+            flavors, and I specialize in using fresh, seasonal fruit to make
+            decorative and super tasty cakes and cupcakes.
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
