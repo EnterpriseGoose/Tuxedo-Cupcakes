@@ -158,8 +158,8 @@ export default function Vote() {
                       value="one"
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/raspberry-lemon.svg" />
-                      Raspberry Lemon
+                      <img src="/images/cupcake-graphics/coconut-passion-fruit.svg" />
+                      Coconut Passion Fruit
                     </label>
                     <input
                       type="radio"
@@ -169,8 +169,8 @@ export default function Vote() {
                       value="two"
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/chocolate-caramel.svg" />
-                      Chocolate Caramel
+                      <img src="/images/cupcake-graphics/chocolate-matcha.svg" />
+                      Chocolate Matcha
                     </label>
                   </div>
                   <input
