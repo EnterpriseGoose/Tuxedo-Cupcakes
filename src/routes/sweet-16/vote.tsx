@@ -1,10 +1,5 @@
 import { useSearchParams } from '@solidjs/router';
-import {
-  Match,
-  Switch,
-  createEffect,
-  createSignal,
-} from 'solid-js';
+import { Match, Switch, createEffect, createSignal } from 'solid-js';
 import { createClient } from '@supabase/supabase-js';
 import Layout from '~/components/Layout';
 import styles from './vote.module.scss';
@@ -126,9 +121,9 @@ export default function Vote() {
                     elementsGotten[1].checked = false;
                     elementsGotten[2].checked = false;
                     verifyCode({ target: codeElem });
-										event.submitter.classList.add(styles.submitted)
-										await sleep(2000)
-										event.submitter.className = styles.submit
+                    event.submitter.classList.add(styles.submitted);
+                    await sleep(2000);
+                    event.submitter.className = styles.submit;
                   }}
                 >
                   <div class={styles.codeVerify}>
@@ -158,8 +153,8 @@ export default function Vote() {
                       value="one"
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/coconut-passion-fruit.svg" />
-                      Coconut Passion Fruit
+                      <img src="/images/cupcake-graphics/mango.svg" />
+                      Mango
                     </label>
                     <input
                       type="radio"
@@ -169,8 +164,8 @@ export default function Vote() {
                       value="two"
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/chocolate-matcha.svg" />
-                      Chocolate Matcha
+                      <img src="/images/cupcake-graphics/salted-caramel-cashew.svg" />
+                      Salted Caramel Cashew
                     </label>
                   </div>
                   <input
