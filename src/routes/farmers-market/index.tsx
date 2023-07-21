@@ -14,7 +14,7 @@ export default function FarmersMarket() {
     [new Date(2023, 6, 8), 'Lemon Raspberry & Chocolate Caramel'],
     [new Date(2023, 6, 15), 'Coconut Passion Fruit & Chocolate Matcha'],
     [new Date(2023, 6, 22), 'Mango & Salted Caramel Cashew'],
-    [new Date(2023, 7, 5), '???'],
+    [new Date(2023, 7, 5), 'Chocolate Raspberry & Mint Chocolate Chip'],
     [new Date(2023, 7, 12), '???'],
     [new Date(2023, 7, 19), '???'],
     [new Date(2023, 7, 26), '???'],
@@ -36,7 +36,7 @@ export default function FarmersMarket() {
             (June-August) and about every other week in the fall
             (September-November).
             <br /> <br />
-            Each week, I bring 4 classic flavors (chocolate and vanilla), as
+            Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as
             well as 2 rotating special flavors, in both regular and mini sizes.
             <br /> <br />
             This year I will also be hosting the{' '}
