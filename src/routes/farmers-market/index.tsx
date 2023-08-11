@@ -16,7 +16,7 @@ export default function FarmersMarket() {
     [new Date(2023, 6, 22), 'Mango & Salted Caramel Cashew'],
     [new Date(2023, 7, 5), 'Chocolate Raspberry & Mint Chocolate Chip *& Lilikoi Guava*'],
     [new Date(2023, 7, 12), 'Pomegranate & Lemon Raspberry'],
-    [new Date(2023, 7, 19), '???'],
+    [new Date(2023, 7, 19), 'Cinnamon Peach & Yuzu'],
     [new Date(2023, 7, 26), '???'],
     [new Date(2023, 8, 2), '???'],
     [new Date(2023, 8, 9), '???'],

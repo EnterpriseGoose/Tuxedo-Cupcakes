@@ -24,7 +24,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the the fifth week of the bracket: Chocolate Raspberry vs. Mint Chocolate Chip
+            This week is the the sixth week of the bracket: Pomegranate vs. Lemon Raspberry
           </p>
           <br />
           <img src="/images/bracket.svg" class={styles.bracket} />
