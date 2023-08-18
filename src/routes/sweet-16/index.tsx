@@ -1,5 +1,3 @@
-import { createSignal, For, Match, Switch } from 'solid-js';
-import { A } from 'solid-start';
 import Layout from '~/components/Layout';
 import styles from './index.module.scss';
 
@@ -24,7 +22,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the the sixth week of the bracket: Pomegranate vs. Lemon Raspberry
+            This week is the the seventh week of the bracket: Cinnamon Peach vs. Yuzu
           </p>
           <br />
           <img src="/images/bracket.svg" class={styles.bracket} />

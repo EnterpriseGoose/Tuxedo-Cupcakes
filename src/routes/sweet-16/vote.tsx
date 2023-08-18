@@ -76,7 +76,7 @@ export default function Vote() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Voting</h2>
           <Switch>
-            <Match when={dotw === 5}>
+            <Match when={dotw === 5 && false}>
               <div class={styles.voteForm}>
                 Voting is currently closed. Come back tomorrow to vote on this
                 week's flavors.
@@ -153,8 +153,8 @@ export default function Vote() {
                       value="one"
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/lemon-raspberry.svg" />
-                      Lemon Raspberry
+                      <img src="/images/cupcake-graphics/cinnamon-peach.svg" />
+                      Cinnamon Peach
                     </label>
                     <input
                       type="radio"
@@ -164,8 +164,8 @@ export default function Vote() {
                       value="two"
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/pomegranate.svg" />
-                      Pomegranate
+                      <img src="/images/cupcake-graphics/yuzu.svg" />
+                      Yuzu
                     </label>
                   </div>
                   <input
