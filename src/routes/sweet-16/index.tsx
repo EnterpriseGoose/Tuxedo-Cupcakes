@@ -22,12 +22,29 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the the seventh week of the bracket: Cinnamon Peach vs. Yuzu
+            This week is the the seventh week of the bracket: Cinnamon Peach vs.
+            Yuzu
           </p>
+
           <br />
-          <img src="/images/bracket.svg" class={styles.bracket} />
+          <a
+            href="/images/bracket.svg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="/images/bracket.svg"
+              class={styles.bracket}
+              alt="Sweet 16 Cupcake Bracket image"
+            />
+            <p class={styles.mobileHint}>(Tap to expand)</p>
+          </a>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h3>FAQs</h3>
           <h4>How do I vote?</h4>

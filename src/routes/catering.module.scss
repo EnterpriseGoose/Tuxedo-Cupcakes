@@ -19,6 +19,13 @@
 			font-weight: 500;
 		}
 	}
+
+	@media (max-width: 700px) {
+		&.three {
+			margin-bottom: calc(10 * $ru);
+		}
+	}
+
 	&.three,
 	&.four {
 		text-align: center;
@@ -44,7 +51,7 @@
 
 				p {
 					width: calc(31 * $wru);
-					font-size: calc(2.5 * $tru);
+					font-size: calc(1.5 * $ru + 1 * $tru);
 				}
 			}
 		}
@@ -80,4 +87,10 @@
 
 .divider {
 	width: calc(10 * $ru);
+}
+
+@media (max-width: 500px) {
+	.divider {
+		margin: calc(10 * $ru);
+	}
 }

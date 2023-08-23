@@ -1,5 +1,3 @@
-import { onMount } from 'solid-js';
-import { A, useSearchParams } from 'solid-start';
 import Layout from '~/components/Layout';
 
 import styles from './catering.module.scss';
@@ -34,34 +32,35 @@ export default function Catering() {
             and the price.
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h2>Past Cakes</h2>
           <p>Here are some of the cakes I’ve made in the past:</p>
           <div class={styles.images}>
             <div class={styles.image}>
-              <img src="/images/cake-1.png" />
+              <img src="/images/cake-1.png" alt="cake 1" />
               <p>2 layer lemon, peach and blueberry cake</p>
             </div>
             <div class={styles.image}>
-              <img src="/images/cake-2.png" />
+              <img src="/images/cake-2.png" alt="cake 2" />
               <p>3 layer cake themed to look like an easter basket</p>
             </div>
             <div class={styles.image}>
-              <img src="/images/cake-3.png" />
+              <img src="/images/cake-3.png" alt="cake 3" />
               <p>12 layer sponge cake with fruit and other fillings</p>
             </div>
           </div>
         </div>
         <div class={`${styles.section} ${styles.four}`}>
           <h2>Cupcakes</h2>
-          <p>
-            Here are some of the cupcakes I sell at the Farmers’ Market and
-            would be happy to do catering for (I can also do custom flavors)
-          </p>
+          <p>Here are some of the cupcakes I've made for catering orders:</p>
           <div class={styles.images}>
             <div class={styles.image}>
-              <img src="/images/cupcake-1.png" />
+              <img src="/images/cupcake-1.png" alt="cupcake 1" />
               <p>
                 Frosting Mini Cupcakes
                 <br />
@@ -71,7 +70,7 @@ export default function Catering() {
               </p>
             </div>
             <div class={styles.image}>
-              <img src="/images/cupcake-2.png" />
+              <img src="/images/cupcake-2.png" alt="cupcake 2" />
               <p>
                 12 cupcake catering order
                 <br />
@@ -81,12 +80,16 @@ export default function Catering() {
               </p>
             </div>
             <div class={styles.image}>
-              <img src="/images/cupcake-3.png" />
+              <img src="/images/cupcake-3.png" alt="cupcake 3" />
               <p>S’mores mini cupcake</p>
             </div>
           </div>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.five}`}>
           <h2>Pricing</h2>
           <p>
@@ -98,11 +101,16 @@ export default function Catering() {
           <br />
           <h4>Cakes:</h4>
           <p>
-            9 in. 1 layer cake (serves 5-8): $50
             <br />
-            9 in. 2 layer cake (serves 10-16): $70
+            6 in. 2 layer cake (serves 5-8): $40
             <br />
-            9 in. 3 layer cake (serves 16-28): $90
+            6 in. 3 layer cake (serves 7-12): $60
+            <br /> <br />
+            9 in. 1 layer cake (serves 5-8): $40
+            <br />
+            9 in. 2 layer cake (serves 10-16): $75
+            <br />
+            9 in. 3 layer cake (serves 16-24): $100
             <br />
             <br />
             I can also make other sizes on request
@@ -125,7 +133,11 @@ export default function Catering() {
             .
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.six}`}>
           <h3>Order</h3>
           <h4>

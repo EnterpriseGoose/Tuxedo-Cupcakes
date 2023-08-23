@@ -72,7 +72,11 @@ export default function VirtualMarket() {
             all of the currently scheduled dates.
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Still have questions?</h3>
           <h4>

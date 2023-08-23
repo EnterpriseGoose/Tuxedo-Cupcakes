@@ -9,11 +9,15 @@
 
 .section {
 	&.one {
-		padding-top: calc(5 * $ru);
+		margin-top: calc(5 * $ru);
 		width: calc(100 * $ru);
+
+		@media (max-width: 500px) {
+			margin-bottom: calc(15 * $ru);
+		}
 	}
 	&.two {
-		padding-top: calc(2 * $ru);
+		margin-top: calc(2 * $ru);
 		width: calc(85 * $ru);
 
 		display: flex;
@@ -23,7 +27,7 @@
 		p {
 			position: relative;
 			color: black;
-			width: 80%;
+			width: calc(90 * $ru);
 		}
 
 		ul {
@@ -108,4 +112,10 @@
 
 .divider {
 	width: calc(10 * $ru);
+}
+
+@media (max-width: 500px) {
+	.divider {
+		margin: calc(10 * $ru);
+	}
 }

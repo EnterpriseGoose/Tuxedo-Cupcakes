@@ -1,57 +1,83 @@
-@use '../../global-styles/variables.scss' as *;
+@use "../../global-styles/variables.scss" as *;
 
 .sections {
-  display: flex;
-  flex-direction: column;
-  row-gap: calc(7 * $ru);
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	row-gap: calc(7 * $ru);
+	align-items: center;
 }
 
 .section {
-  &.one {
-    padding-top: calc(5 * $ru);
-    width: calc(100 * $ru);
-  }
-  &.two {
-    padding-top: calc(2 * $ru);
-    width: calc(85 * $ru);
+	&.one {
+		margin-top: calc(5 * $ru);
+		width: calc(100 * $ru);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+		@media (max-width: 500px) {
+			margin-bottom: calc(15 * $ru);
+		}
+	}
+	&.two {
+		margin-top: calc(2 * $ru);
+		width: calc(85 * $ru);
 
-    p {
-      position: relative;
-      color: black;
-      width: 80%;
-    }
-  }
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
-  &.three {
-    padding-top: calc(5 * $ru);
-    width: calc(100 * $ru);
-    h4 {
-      padding-top: calc(2 * $ru);
-    }
-  }
+		p {
+			position: relative;
+			color: black;
+			width: calc(85 * $ru);
+		}
 
-  &.four {
-    h4 {
-      text-align: center;
-    }
-  }
+		a {
+			cursor: default;
 
-  h2,
-  h3 {
-    text-align: center;
-  }
+			p {
+				display: none;
+			}
+
+			@media (max-width: 800px) {
+				cursor: pointer;
+
+				p {
+					display: block;
+				}
+			}
+		}
+	}
+
+	&.three {
+		margin-top: calc(5 * $ru);
+		width: calc(100 * $ru);
+		h4 {
+			margin-top: calc(2 * $ru);
+		}
+	}
+
+	&.four {
+		h4 {
+			text-align: center;
+		}
+	}
+
+	h2,
+	h3 {
+		text-align: center;
+	}
 }
 
 .divider {
-  width: calc(10 * $ru);
+	width: calc(10 * $ru);
+}
+
+@media (max-width: 500px) {
+	.divider {
+		margin: calc(10 * $ru);
+	}
 }
 
 .bracket {
-  width: calc(100 * $wru);
-  padding: calc(3 * $ru) 0;
+	width: calc(100 * $wru);
+	padding: calc(3 * $ru) 0;
 }

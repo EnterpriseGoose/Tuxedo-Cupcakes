@@ -30,3 +30,9 @@
 .divider {
 	width: calc(10 * $ru);
 }
+
+@media (max-width: 500px) {
+	.divider {
+		margin: calc(10 * $ru);
+	}
+}

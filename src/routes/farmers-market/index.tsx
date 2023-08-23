@@ -14,10 +14,13 @@ export default function FarmersMarket() {
     [new Date(2023, 6, 8), 'Lemon Raspberry & Chocolate Caramel'],
     [new Date(2023, 6, 15), 'Coconut Passion Fruit & Chocolate Matcha'],
     [new Date(2023, 6, 22), 'Mango & Salted Caramel Cashew'],
-    [new Date(2023, 7, 5), 'Chocolate Raspberry & Mint Chocolate Chip *& Lilikoi Guava*'],
+    [
+      new Date(2023, 7, 5),
+      'Chocolate Raspberry & Mint Chocolate Chip *& Lilikoi Guava*',
+    ],
     [new Date(2023, 7, 12), 'Pomegranate & Lemon Raspberry'],
     [new Date(2023, 7, 19), 'Cinnamon Peach & Yuzu'],
-    [new Date(2023, 7, 26), '???'],
+    [new Date(2023, 7, 26), 'Mint Chocolate Chip & Yuzu'],
     [new Date(2023, 8, 2), '???'],
     [new Date(2023, 8, 9), '???'],
     [new Date(2023, 8, 23), '???'],
@@ -36,8 +39,9 @@ export default function FarmersMarket() {
             (June-August) and about every other week in the fall
             (September-November).
             <br /> <br />
-            Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as
-            well as 2 rotating special flavors, in both regular and mini sizes.
+            Each week, I bring 5 classic flavors (chocolate, vanilla, and
+            strawberry), as well as 2 rotating special flavors, in both regular
+            and mini sizes.
             <br /> <br />
             This year I will also be hosting the{' '}
             <A href="/sweet-16/">Sweet 16 Cupcake Bracket</A>
@@ -115,7 +119,11 @@ export default function FarmersMarket() {
             Click here to see past cupcake flavors
           </A>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
@@ -125,7 +133,11 @@ export default function FarmersMarket() {
             Buy any 5 cupcakes of the same size and get one free!
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Contact me</h3>
           <h4>

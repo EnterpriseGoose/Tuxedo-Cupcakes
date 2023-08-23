@@ -28,6 +28,9 @@ export default function Navbar(props?: { home?: any }) {
         src="/images/decorations/nav-top.svg"
         class={`${styles.decoration} ${logoTransition}`}
         draggable={false}
+        alt=""
+        width="900"
+        height="80"
       />
       <A
         href="/"
@@ -40,6 +43,9 @@ export default function Navbar(props?: { home?: any }) {
           src="/images/full-logo.svg"
           class={`${logoTransition} ${styles.logo}`}
           draggable={false}
+          alt="Tuxedo Cupcakes Logo"
+          width="600"
+          height="150"
         />
       </A>
 
@@ -69,7 +75,7 @@ export default function Navbar(props?: { home?: any }) {
         >
           Farmers' Market
         </A>
-				<A
+        <A
           href="/sweet-16/"
           activeClass={styles.selectedTab}
           draggable={false}
@@ -97,8 +103,11 @@ export default function Navbar(props?: { home?: any }) {
       <div />
       <img
         src="/images/decorations/nav-bottom.svg"
-        class={styles.decoration}
+        class={`${styles.decoration} ${styles.bottom}`}
         draggable={false}
+        alt=""
+        width="900"
+        height="80"
       />
     </div>
   );
