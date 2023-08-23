@@ -26,7 +26,11 @@ export default function VirtualMarket() {
             <A href="/virtual-market/faqs">Virtual Market FAQs</A>
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Next Virtual Market</h3>
           <p>
@@ -63,7 +67,11 @@ export default function VirtualMarket() {
             <EmailForm />
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
@@ -94,7 +102,11 @@ export default function VirtualMarket() {
             with any questions.
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
 
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Dates</h3>
@@ -104,8 +116,8 @@ export default function VirtualMarket() {
             the virtual market dates. <br />
             If you want to be notified when a new date is added, sign up for the
             Tuxedo Cupcakes newsletter!
-            <EmailForm />
           </p>
+          <EmailForm />
           <ul>
             <For each={dates()}>
               {([date, specials], i) => (
@@ -141,7 +153,11 @@ export default function VirtualMarket() {
             </For>
           </ul>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Contact me</h3>
           <h4>

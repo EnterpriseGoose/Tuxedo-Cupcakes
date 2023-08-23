@@ -25,8 +25,7 @@ export default function FarmersMarket() {
     <Layout>
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
-          <h2>Past Flavors</h2>
-          <p>Here is a list of past Farmers' Market specials:</p>
+          <h2>Past Specials</h2>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
           <h3>2022</h3>
@@ -40,7 +39,11 @@ export default function FarmersMarket() {
             </For>
           </ul>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Contact me</h3>
           <h4>

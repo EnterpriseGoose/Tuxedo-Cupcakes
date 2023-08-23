@@ -17,7 +17,11 @@ export default function Home() {
             cupcakes.
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.two}`}>
           <h2>How to get Tuxedo Cupcakes</h2>
           <div class={styles.cards}>
@@ -36,14 +40,20 @@ export default function Home() {
             </Card>
           </div>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h2>Newsletter</h2>
           <p>
             Sign up for the Tuxedo Cupcakes newsletter to get notified of
             events, weekly flavors, virtual markets and more!
-            <EmailForm />
           </p>
+          <div class={styles.emailForm}>
+            <EmailForm />
+          </div>
 
           <h2>Contact</h2>
           <h4>

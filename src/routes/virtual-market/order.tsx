@@ -142,6 +142,7 @@ export default function VirtualMarket() {
           <img
             src="/images/decorations/bow-divider.svg"
             class={styles.divider}
+            alt=""
           />
           <div class={`${styles.section} ${styles.two}`}>
             <h3>Products</h3>
@@ -169,6 +170,7 @@ export default function VirtualMarket() {
           <img
             src="/images/decorations/bow-divider.svg"
             class={styles.divider}
+            alt=""
           />
           <div class={`${styles.section} ${styles.three}`}>
             <h3>Cart</h3>
@@ -324,7 +326,11 @@ export default function VirtualMarket() {
           </div>
         </Show>
 
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h3>Contact me</h3>
           <h4>

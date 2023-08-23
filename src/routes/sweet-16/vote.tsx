@@ -153,7 +153,10 @@ export default function Vote() {
                       value="one"
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/cinnamon-peach.svg" />
+                      <img
+                        src="/images/cupcake-graphics/cinnamon-peach.svg"
+                        alt="vote cinnamon peach"
+                      />
                       Cinnamon Peach
                     </label>
                     <input
@@ -164,7 +167,10 @@ export default function Vote() {
                       value="two"
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
-                      <img src="/images/cupcake-graphics/yuzu.svg" />
+                      <img
+                        src="/images/cupcake-graphics/yuzu.svg"
+                        alt="vote yuzu"
+                      />
                       Yuzu
                     </label>
                   </div>
@@ -188,7 +194,11 @@ export default function Vote() {
           </Switch>
         </div>
         <div class={`${styles.section} ${styles.two}`}></div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
           <h4>
             Any questions? Contact me at

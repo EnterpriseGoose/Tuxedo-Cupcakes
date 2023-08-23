@@ -15,10 +15,12 @@ export default function Card(props?: {
         <img
           src="/images/decorations/card-outline-top.svg"
           class={`${styles.outline} ${styles.top}`}
+          alt=""
         />
         <img
           src="/images/decorations/card-outline-bottom.svg"
           class={`${styles.outline} ${styles.bottom}`}
+          alt=""
         />
       </div>
     </A>

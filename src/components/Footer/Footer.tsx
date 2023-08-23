@@ -12,6 +12,7 @@ export default function Footer(props?: {
         src="/images/decorations/footer-decoration.svg"
         class={styles.decoration}
         draggable={false}
+        alt=""
       />
       <div class={styles.links}>
         <div class={styles.left}>
@@ -33,7 +34,7 @@ export default function Footer(props?: {
             Catering
           </A>
         </div>
-        <img src="/images/logo.svg" draggable={false} />
+        <img src="/images/logo.svg" draggable={false} alt="" />
         <div class={styles.right}>
           <A
             href="/farmers-market?p=b"
