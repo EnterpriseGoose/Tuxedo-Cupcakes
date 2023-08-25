@@ -22,7 +22,7 @@ export default function FarmersMarket() {
     [new Date(2022, 10, 19), 'Brown Sugar Sweet Potato & Apple Pie'],
   ]);
   return (
-    <Layout>
+    <Layout desc="View my past specials for previous Chatham Farmers' Market seasons">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Past Specials</h2>

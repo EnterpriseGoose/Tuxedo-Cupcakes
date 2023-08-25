@@ -71,7 +71,7 @@ export default function Vote() {
   const dotw = new Date(Date.now()).getDay();
 
   return (
-    <Layout>
+    <Layout desc='Vote for a flavor in the Sweet 16 Cupcake Bracket! Each winning flavor will move on to another week until one flavor remains!'>
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Voting</h2>
@@ -154,10 +154,10 @@ export default function Vote() {
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/cinnamon-peach.svg"
-                        alt="vote cinnamon peach"
+                        src="/images/cupcake-graphics/mint-chocolate-chip.svg"
+                        alt="vote mint chocolate chip"
                       />
-                      Cinnamon Peach
+                      Mint Chocolate Chip
                     </label>
                     <input
                       type="radio"

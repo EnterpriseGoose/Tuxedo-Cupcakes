@@ -4,7 +4,7 @@ import styles from './faqs.module.scss';
 
 export default function VirtualMarket() {
   return (
-    <Layout>
+    <Layout desc='FAQs for Tuxedo Cupcakes Virtual Markets. Get information about how Virtual Markets work and how to get some tasty cupcakes.'>
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Virtual Market FAQs</h2>

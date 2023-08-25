@@ -30,7 +30,7 @@ export default function FarmersMarket() {
     [new Date(2023, 10, 18), '???'],
   ]);
   return (
-    <Layout>
+    <Layout desc="I appear at the Chatham Farmers’ Market every Saturday in the summer (June-August) and about every other week in the fall (September-November). Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as well as 2 rotating special flavors, in both regular and mini sizes.">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Get a Cupcake at the Farmers’ Market</h2>
