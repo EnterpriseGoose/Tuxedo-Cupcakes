@@ -4,7 +4,7 @@ import EmailForm from '~/components/EmailForm';
 
 export default function Newsletter() {
   return (
-    <Layout hideFooter>
+    <Layout hideFooter desc="Sign up for the Tuxedo Cupcakes newsletter to get notified of special events, weekly Farmers' Market flavors, virtual markets, and more!">
       <div class={styles.newsletter}>
         <h2>Newsletter</h2>
         <p>

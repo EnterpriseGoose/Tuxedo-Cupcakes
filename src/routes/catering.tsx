@@ -4,7 +4,7 @@ import styles from './catering.module.scss';
 
 export default function Catering() {
   return (
-    <Layout>
+    <Layout desc='Tuxedo Cupcakes can cater your event with a custom cake or cupcakes to make it memorable. Tuxedo Cupcakes specializes in making super tasty creations that have bold flavors with just the right amount of sweetness.'>
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Catering of Cakes and Cupcakes</h2>

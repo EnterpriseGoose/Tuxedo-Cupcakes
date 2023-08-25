@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 
 export default function Sweet16() {
   return (
-    <Layout>
+    <Layout desc="To celebrate the 16th year of the Chatham Farmers' Market (and my turning 16), I am hosting a Sweet 16 Cupcake Bracket this year! Each week, I will bring two different specials to the market, and anyone who buys and tries both flavors will be able to vote on the better flavor. The winning flavor of each week will move on to the next round until we end up with one winning flavor!">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Cupcake Bracket</h2>

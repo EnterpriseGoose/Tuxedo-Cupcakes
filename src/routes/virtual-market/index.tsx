@@ -7,7 +7,7 @@ import EmailForm from '~/components/EmailForm';
 export default function VirtualMarket() {
   const [dates, setDates] = createSignal([]);
   return (
-    <Layout>
+    <Layout desc="Virtual Markets are an opportunity to get cupcakes in smaller quantities, similar to going to the farmers' market. Each virtual market will have both the classics (Chocolate & Vanilla) as well as a couple different special flavors.">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Order Cupcakes from the Tuxedo Cupcakes Virtual Market</h2>

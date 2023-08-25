@@ -35,7 +35,7 @@ export default function VirtualMarket() {
   });
 
   return (
-    <Layout>
+    <Layout desc='Order Cupcakes from a Tuxedo Cupcakes Virtual Market.'>
       <div class={styles.sections}>
         <Show
           when={UPCOMING_VIRTUAL_MARKET}
