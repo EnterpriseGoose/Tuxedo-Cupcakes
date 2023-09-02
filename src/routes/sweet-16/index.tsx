@@ -22,8 +22,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the the seventh week of the bracket: Cinnamon Peach vs.
-            Yuzu
+            This week is the the ninth week of the bracket: Chocolate Matcha vs. Salted Caramel Cashew
           </p>
 
           <br />

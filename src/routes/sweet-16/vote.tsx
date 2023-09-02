@@ -71,12 +71,12 @@ export default function Vote() {
   const dotw = new Date(Date.now()).getDay();
 
   return (
-    <Layout desc='Vote for a flavor in the Sweet 16 Cupcake Bracket! Each winning flavor will move on to another week until one flavor remains!'>
+    <Layout desc="Vote for a flavor in the Sweet 16 Cupcake Bracket! Each winning flavor will move on to another week until one flavor remains!">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Voting</h2>
           <Switch>
-            <Match when={dotw === 5 && false}>
+            <Match when={dotw === 5}>
               <div class={styles.voteForm}>
                 Voting is currently closed. Come back tomorrow to vote on this
                 week's flavors.
@@ -154,10 +154,10 @@ export default function Vote() {
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/mint-chocolate-chip.svg"
-                        alt="vote mint chocolate chip"
+                        src="/images/cupcake-graphics/chocolate-matcha.svg"
+                        alt="vote chocolate matcha"
                       />
-                      Mint Chocolate Chip
+                      Chocolate Matcha
                     </label>
                     <input
                       type="radio"
@@ -168,10 +168,10 @@ export default function Vote() {
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/yuzu.svg"
-                        alt="vote yuzu"
+                        src="/images/cupcake-graphics/salted-caramel-cashew.svg"
+                        alt="vote salted caramel cashew"
                       />
-                      Yuzu
+                      Salted Caramel Cashew
                     </label>
                   </div>
                   <input
