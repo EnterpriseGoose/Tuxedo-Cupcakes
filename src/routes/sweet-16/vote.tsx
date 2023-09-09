@@ -154,10 +154,10 @@ export default function Vote() {
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/chocolate-matcha.svg"
-                        alt="vote chocolate matcha"
+                        src="/images/cupcake-graphics/lemon-raspberry.svg"
+                        alt="vote lemon raspberry"
                       />
-                      Chocolate Matcha
+                      Lemon Raspberry
                     </label>
                     <input
                       type="radio"
