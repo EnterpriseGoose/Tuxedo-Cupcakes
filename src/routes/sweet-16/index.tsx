@@ -22,7 +22,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the the tenth week of the bracket: Lemon Raspberry vs. Salted Caramel Cashew
+            This week is Red Bean and Chocolate Black Sesame are going head to head to see which one will make it on!
           </p>
 
           <br />
