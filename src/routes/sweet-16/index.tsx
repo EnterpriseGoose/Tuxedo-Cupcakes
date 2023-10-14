@@ -22,7 +22,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is Red Bean and Chocolate Black Sesame are going head to head to see which one will make it on!
+            This week Pumpkin Spice and Red Bean are both being brought back to go head-to-head!
           </p>
 
           <br />

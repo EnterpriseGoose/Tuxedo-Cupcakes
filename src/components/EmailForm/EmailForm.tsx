@@ -24,6 +24,10 @@ export default function EmailForm() {
           console.log(response.status);
           setSearchparams({ email: response.status });
           (event.target.children[0] as HTMLInputElement).value = '';
+
+					event.submitter.classList.add("submitted");
+					await sleep(2000);
+					event.submitter.className = "button";
         }}
       >
         <input
@@ -35,7 +39,7 @@ export default function EmailForm() {
           required
         />{' '}
         <input
-          class={styles.submit}
+          class="button"
           type="submit"
           id="button"
           value="Sign Up"

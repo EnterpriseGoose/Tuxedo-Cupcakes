@@ -25,7 +25,7 @@ export default function FarmersMarket() {
     [new Date(2023, 8, 9), 'Lemon Raspberry & Salted Caramel Cashew'],
     [new Date(2023, 8, 16), 'Cinnamon Apple Cider & Pumpkin Spice'],
 		[new Date(2023, 8, 30), 'Chocolate Black Sesame & Red Bean'],
-    [new Date(2023, 9, 14), '???'],
+    [new Date(2023, 9, 14), 'Pumpkin Spice & Red Bean'],
     [new Date(2023, 9, 28), '???'],
     [new Date(2023, 10, 11), '???'],
     [new Date(2023, 10, 18), '???'],

@@ -121,9 +121,9 @@ export default function Vote() {
                     elementsGotten[1].checked = false;
                     elementsGotten[2].checked = false;
                     verifyCode({ target: codeElem });
-                    event.submitter.classList.add(styles.submitted);
+                    event.submitter.classList.add("submitted");
                     await sleep(2000);
-                    event.submitter.className = styles.submit;
+                    event.submitter.className = "button";
                   }}
                 >
                   <div class={styles.codeVerify}>
@@ -168,14 +168,14 @@ export default function Vote() {
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/chocolate-black-sesame.svg"
-                        alt="vote chocolate black sesame"
+                        src="/images/cupcake-graphics/pumpkin-spice.svg"
+                        alt="vote pumpkin spice"
                       />
-                      Chocolate Black Sesame
+                      Pumpkin Spice
                     </label>
                   </div>
                   <input
-                    class={styles.submit}
+                    class="button"
                     type="submit"
                     value={'Submit Vote'}
                     id="submit"
