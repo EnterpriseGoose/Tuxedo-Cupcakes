@@ -106,35 +106,6 @@
 					}
 				}
 			}
-
-			.submit {
-				all: unset;
-
-				cursor: pointer;
-				border: 2px solid black;
-				padding: 7px;
-				border-radius: 4px;
-				margin-left: 10px;
-				text-align: center;
-				user-select: none;
-				transition: all ease 0.5s;
-
-				box-shadow: inset 0 0px $cyan;
-
-				&:hover {
-					box-shadow: inset 0 -25px $cyan;
-				}
-
-				&:disabled {
-					cursor: not-allowed;
-					box-shadow: inset 0 0px $cyan;
-				}
-
-				&.submitted,
-				&:focus {
-					box-shadow: inset 0 -55px $cyan;
-				}
-			}
 		}
 	}
 
