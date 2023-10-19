@@ -1,10 +1,11 @@
 import Layout from '~/components/Layout';
 
 import styles from './catering.module.scss';
+import { A } from 'solid-start';
 
 export default function Catering() {
   return (
-    <Layout desc='Tuxedo Cupcakes can cater your event with a custom cake or cupcakes to make it memorable. Tuxedo Cupcakes specializes in making super tasty creations that have bold flavors with just the right amount of sweetness.'>
+    <Layout desc="Tuxedo Cupcakes can cater your event with a custom cake or cupcakes to make it memorable. Tuxedo Cupcakes specializes in making super tasty creations that have bold flavors with just the right amount of sweetness.">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Catering of Cakes and Cupcakes</h2>
@@ -27,9 +28,12 @@ export default function Catering() {
             >
               oliver@tuxedocupcakes.com
             </a>
+            .
             <br />I can help you figure out the details about flavors or
             decorations, as well as the size of the cake or quantity of cupcakes
-            and the price.
+            and the price. For basic pricing info,{' '}
+            <A href="/catering#pricing">see below</A>.<br /> <br />I have a menu
+            of my previous flavors <A href="/menu">here</A>.
           </p>
         </div>
         <img
@@ -43,11 +47,11 @@ export default function Catering() {
           <div class={styles.images}>
             <div class={styles.image}>
               <img src="/images/cake-1.png" alt="cake 1" />
-              <p>2 layer lemon, peach and blueberry cake</p>
+              <p>2 layer chocolate raspberry cake</p>
             </div>
             <div class={styles.image}>
               <img src="/images/cake-2.png" alt="cake 2" />
-              <p>3 layer cake themed to look like an easter basket</p>
+              <p>2 layer lemon raspberry cake</p>
             </div>
             <div class={styles.image}>
               <img src="/images/cake-3.png" alt="cake 3" />
@@ -81,7 +85,7 @@ export default function Catering() {
             </div>
             <div class={styles.image}>
               <img src="/images/cupcake-3.png" alt="cupcake 3" />
-              <p>S’mores mini cupcake</p>
+              <p>Lemon Raspberry Cupcake</p>
             </div>
           </div>
         </div>
@@ -90,7 +94,7 @@ export default function Catering() {
           class={styles.divider}
           alt=""
         />
-        <div class={`${styles.section} ${styles.five}`}>
+        <div class={`${styles.section} ${styles.five}`} id="pricing">
           <h2>Pricing</h2>
           <p>
             In the end, pricing has to be done per-order, but I can give a
