@@ -1,0 +1,28 @@
+@use "../global-styles/variables.scss" as *;
+
+.menu {
+	padding-top: calc(5 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+
+	h2 {
+		margin-bottom: calc(1 * $ru);
+	}
+	h3 {
+		margin-top: calc(4 * $ru);
+		margin-bottom: calc(1 * $ru);
+	}
+	p {
+		width: calc(50 * $wru);
+	}
+}
+
+.contact {
+	padding-top: calc(8 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}

@@ -24,9 +24,9 @@ export default function FarmersMarket() {
     [new Date(2023, 8, 2), 'Chocolate Matcha & Salted Caramel Cashew'],
     [new Date(2023, 8, 9), 'Lemon Raspberry & Salted Caramel Cashew'],
     [new Date(2023, 8, 16), 'Cinnamon Apple Cider & Pumpkin Spice'],
-		[new Date(2023, 8, 30), 'Chocolate Black Sesame & Red Bean'],
+    [new Date(2023, 8, 30), 'Chocolate Black Sesame & Red Bean'],
     [new Date(2023, 9, 14), 'Pumpkin Spice & Red Bean'],
-    [new Date(2023, 9, 28), '???'],
+    [new Date(2023, 10, 4), 'Red Bean & Mint Chocolate Chip'],
     [new Date(2023, 10, 11), '???'],
     [new Date(2023, 10, 18), '???'],
   ]);
@@ -40,8 +40,8 @@ export default function FarmersMarket() {
             (June-August) and about every other week in the fall
             (September-November).
             <br /> <br />
-            Each week, I bring 4 classic flavors (chocolate and vanilla), as well as 2 rotating special flavors, in both regular
-            and mini sizes.
+            Each week, I bring 4 classic flavors (chocolate and vanilla), as
+            well as 2 rotating special flavors, in both regular and mini sizes.
             <br /> <br />
             This year I will also be hosting the{' '}
             <A href="/sweet-16/">Sweet 16 Cupcake Bracket</A>
