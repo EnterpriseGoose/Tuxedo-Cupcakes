@@ -168,10 +168,10 @@ export default function Vote() {
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/pumpkin-spice.svg"
-                        alt="vote pumpkin spice"
+                        src="/images/cupcake-graphics/mint-chocolate-chip.svg"
+                        alt="vote mint chocolate chip"
                       />
-                      Pumpkin Spice
+                      Mint Chocolate Chip
                     </label>
                   </div>
                   <input
