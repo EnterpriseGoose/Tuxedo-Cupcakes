@@ -82,7 +82,7 @@ export default function Navbar(props?: { home?: any }) {
           noScroll={true}
         >
           Sweet 16
-        </A>
+        </A>{/*
         <A
           href="/virtual-market"
           activeClass={styles.selectedTab}
@@ -90,7 +90,7 @@ export default function Navbar(props?: { home?: any }) {
           noScroll={true}
         >
           Virtual Market
-        </A>
+	</A>*/}
         <A
           href="/contact"
           activeClass={styles.selectedTab}

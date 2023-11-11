@@ -76,7 +76,7 @@ export default function Vote() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Voting</h2>
           <Switch>
-            <Match when={dotw === 5}>
+            <Match when={dotw === 4}>
               <div class={styles.voteForm}>
                 Voting is currently closed. Come back tomorrow to vote on this
                 week's flavors.
@@ -151,13 +151,15 @@ export default function Vote() {
                       name="vote"
                       required
                       value="one"
+											disabled
                     />
                     <label for="one" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/red-bean.svg"
-                        alt="vote red bean"
+                        src="/images/cupcake-graphics/lemon-raspberry.svg"
+                        alt="vote lemon raspberry"
+												draggable={false}
                       />
-                      Red Bean
+                      Lemon Raspberry
                     </label>
                     <input
                       type="radio"
@@ -165,13 +167,15 @@ export default function Vote() {
                       name="vote"
                       required
                       value="two"
+											disabled
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/mint-chocolate-chip.svg"
-                        alt="vote mint chocolate chip"
+                        src="/images/cupcake-graphics/salted-caramel-cashew.svg"
+                        alt="vote salted caramel cashew"
+												draggable={false}
                       />
-                      Mint Chocolate Chip
+                      Salted Caramel Cashew
                     </label>
                   </div>
                   <input
@@ -179,6 +183,7 @@ export default function Vote() {
                     type="submit"
                     value={'Submit Vote'}
                     id="submit"
+										disabled
                   />
                 </form>
                 <Switch>

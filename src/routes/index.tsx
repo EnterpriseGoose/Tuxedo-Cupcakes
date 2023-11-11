@@ -25,6 +25,7 @@ export default function Home() {
         <div class={`${styles.section} ${styles.two}`}>
           <h2>How to get Tuxedo Cupcakes</h2>
           <div class={styles.cards}>
+						
             <Card title="Catering" link="/catering?p=m">
               I can provide your event with a cake or cupcakes that will make it
               memorable
@@ -33,11 +34,11 @@ export default function Home() {
               I attend the Chatham Farmers’ Market on Saturdays, where you can
               choose from a selection of cupcakes I have available that day
             </Card>
-            <Card title="Virtual Markets" link="/virtual-market?p=m">
+            {/* <Card title="Virtual Markets" link="/virtual-market?p=m">
               Virtual Markets are an opportunity to get Tuxedo Cupcakes when I'm
               not at the Farmers' Market and you don't want an entire catering
               order worth of cupcakes.
-            </Card>
+            </Card> */}
           </div>
         </div>
         <img
