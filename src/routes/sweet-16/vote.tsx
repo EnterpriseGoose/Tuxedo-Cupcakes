@@ -171,11 +171,11 @@ export default function Vote() {
                     />
                     <label for="two" class={`voteOption ${styles.disabled}`}>
                       <img
-                        src="/images/cupcake-graphics/salted-caramel-cashew.svg"
-                        alt="vote salted caramel cashew"
+                        src="/images/cupcake-graphics/red-bean.svg"
+                        alt="vote red bean"
 												draggable={false}
                       />
-                      Salted Caramel Cashew
+                      Red Bean
                     </label>
                   </div>
                   <input

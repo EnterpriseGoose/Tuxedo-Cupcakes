@@ -22,7 +22,7 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week Lemon Raspberry and Salted Caramel Cashew are both being brought back to go head-to-head and see which one makes it to the finals!
+            This week is the final match! Lemon Raspberry and Red Bean are going head-to-head to see which one is the ultimate victor!
           </p>
 
           <br />

@@ -28,7 +28,7 @@ export default function FarmersMarket() {
     [new Date(2023, 9, 14), 'Pumpkin Spice & Red Bean'],
     [new Date(2023, 10, 4), 'Red Bean & Mint Chocolate Chip'],
     [new Date(2023, 10, 11), 'Lemon Raspberry & Salted Caramel Cashew'],
-    [new Date(2023, 10, 18), 'Red Bean & ???'],
+    [new Date(2023, 10, 18), 'Red Bean & Lemon Raspberry'],
   ]);
   return (
     <Layout desc="I appear at the Chatham Farmers’ Market every Saturday in the summer (June-August) and about every other week in the fall (September-November). Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as well as 2 rotating special flavors, in both regular and mini sizes.">
