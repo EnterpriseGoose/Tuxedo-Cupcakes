@@ -8,21 +8,19 @@ export default function Sweet16() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Sweet 16 Cupcake Bracket</h2>
           <p>
-            To celebrate the 16th year of the Chatham Farmers' Market (and my
-            turning 16), I am hosting a Sweet 16 Cupcake Bracket this year!
+            To celebrate the 16th year of the Chatham Farmers' Market, I hosted a Sweet 16 Cupcake Bracket during the 2023 Chatham Farmers' Market season.
             <br /> <br />
-            Each week, I will bring two different specials to the market, and
-            anyone who buys and tries both flavors will be able to vote on the
+            Each week, I brought two different specials to the market, and
+            anyone who bought and tried both flavors was able to vote on the
             better flavor.
             <br /> <br />
-            The winning flavor of each week will move on to the next round until
-            we end up with one winning flavor!
+            The winning flavor of each week moved up until there was one winning flavor left: Lemon Raspberry!
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
           <h3>Bracket</h3>
           <p>
-            This week is the final match! Lemon Raspberry and Red Bean are going head-to-head to see which one is the ultimate victor!
+            The Sweet 16 Bracket has now concluded. The winner of the bracket is Lemon Raspberry! Look forward to seeing Lemon Raspberry (along with all the other sweet 16 flavors) come back next near!
           </p>
 
           <br />
@@ -44,6 +42,7 @@ export default function Sweet16() {
           class={styles.divider}
           alt=""
         />
+				{/*
         <div class={`${styles.section} ${styles.three}`}>
           <h3>FAQs</h3>
           <h4>How do I vote?</h4>
@@ -71,9 +70,10 @@ export default function Sweet16() {
           </p>
           <br />
         </div>
+				*/}
         <div class={`${styles.section} ${styles.four}`}>
           <h4>
-            Any other questions? Contact me at
+            Any questions? Contact me at
             <br />
             <a
               href="mailto:oliver@tuxedocupcakes.com"
