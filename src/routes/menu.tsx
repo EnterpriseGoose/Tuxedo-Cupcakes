@@ -6,52 +6,63 @@ export default function Menu() {
     <Layout desc="View the menu of cupcake flavors I can make">
       <div class={styles.menu}>
         <h2>Menu</h2>
-        <p>
+        <p class={styles.desc}>
           These are some of the flavors I have done in the past. If you have an
           idea for a flavor not on this list, reach out and I'll see what I can
           do!
         </p>
+				<h3>Holiday</h3>
+        <p>
+					Chocolate&nbsp;Peppermint <br />
+					Gingerbread <br />
+					Panettone <br />
+					Pumpkin&nbsp;Spice <br />
+					Apple&nbsp;Pie <br />
+        </p>
         <h3>Classics</h3>
         <p>
-          Vanilla Vanilla <br />
-          Vanilla Chocolate <br />
-          Chocolate Vanilla <br />
-          Chocolate Chocolate <br />
+          Vanilla&nbsp;Vanilla <br />
+          Vanilla&nbsp;Chocolate <br />
+          Chocolate&nbsp;Vanilla <br />
+          Chocolate&nbsp;Chocolate <br />
           Strawberry <br />
         </p>
         <h3>Favorites</h3>
         <p>
-          Lemon Raspberry <br />
-          Lemon Blueberry <br />
-          Chocolate Strawberry <br />
-          Salted Caramel Cashew <br />
-          Mint Chocolate Chip <br />
-          Chocolate Caramel <br />
-          Chocolate Matcha <br />
-          Chocolate Raspberry <br />
-          Pumpkin Spice <br />
-          Cinnamon Apple Cider <br />
-          Apple Pie <br />
-          Red Bean <br />
-          Chocolate Black Sesame <br />
+          Lemon&nbsp;Raspberry <br />
+          Lemon&nbsp;Blueberry <br />
+          Chocolate&nbsp;Strawberry <br />
+          Salted&nbsp;Caramel&nbsp;Cashew <br />
+          Mint&nbsp;Chocolate&nbsp;Chip <br />
+          Chocolate&nbsp;Caramel <br />
+          Chocolate&nbsp;Matcha <br />
+          Chocolate&nbsp;Raspberry <br />
+					Chocolate&nbsp;Peppermint <br />
+          Pumpkin&nbsp;Spice <br />
+          Cinnamon&nbsp;Apple&nbsp;Cider <br />
+          Apple&nbsp;Pie <br />
+					Gingerbread <br />
+					Panettone <br />
+          Red&nbsp;Bean <br />
+          Chocolate&nbsp;Black&nbsp;Sesame <br />
           Yuzu <br />
           Pomegranate <br />
-          Chocolate Peanut Butter <br />
-          Chocolate Orange <br />
+          Chocolate&nbsp;Peanut&nbsp;Butter <br />
+          Chocolate&nbsp;Orange <br />
         </p>
-        <h3>Large Order Only</h3>
+        <h3>Large&nbsp;Order&nbsp;Only</h3>
         <p>
-          Coconut Passion Fruit <br />
-          Coconut Pineapple <br />
-          Lilikoi Guava <br />
-          Pineapple Cake <br />
-          Brown Sugar Sweet Potato <br />
+          Coconut&nbsp;Passion&nbsp;Fruit <br />
+          Coconut&nbsp;Pineapple <br />
+          Lilikoi&nbsp;Guava <br />
+          Pineapple&nbsp;Cake <br />
+          Brown&nbsp;Sugar&nbsp;Sweet&nbsp;Potato <br />
         </p>
         <h3>Seasonal</h3>
         <p>
           Mango <br />
-          Cinnamon Peach <br />
-          Lemon Peach Blueberry
+          Cinnamon&nbsp;Peach <br />
+          Lemon&nbsp;Peach&nbsp;Blueberry
         </p>
       </div>
       <div class={styles.contact}>

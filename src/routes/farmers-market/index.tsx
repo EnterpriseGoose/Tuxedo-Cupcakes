@@ -56,9 +56,6 @@ export default function FarmersMarket() {
                   The 2023 farmers' market season has ended. Come back next year
                   for the 2024 Chatham Farmers' Market dates!
                 </p>
-                <A href="/farmers-market/past-flavors">
-                  Click here to see past cupcake flavors
-                </A>
               </div>
             }
           >

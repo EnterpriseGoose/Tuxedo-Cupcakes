@@ -13,7 +13,6 @@
 		width: calc(100 * $ru);
 	}
 	&.two {
-		padding-top: calc(2 * $ru);
 		width: calc(85 * $ru);
 
 		p {
@@ -28,6 +27,10 @@
 		li {
 			position: relative;
 			color: #000000;
+		}
+
+		h3 {
+			padding-top: calc(5 * $ru);
 		}
 	}
 
