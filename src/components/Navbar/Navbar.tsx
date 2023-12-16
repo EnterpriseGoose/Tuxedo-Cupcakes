@@ -82,15 +82,15 @@ export default function Navbar(props?: { home?: any }) {
           noScroll={true}
         >
           Sweet 16
-        </A>{/*
+        </A>
         <A
-          href="/virtual-market"
+          href="/menu"
           activeClass={styles.selectedTab}
           draggable={false}
           noScroll={true}
         >
-          Virtual Market
-	</A>*/}
+          Flavors
+				</A>
         <A
           href="/contact"
           activeClass={styles.selectedTab}

@@ -15,7 +15,12 @@
 		margin-bottom: calc(1 * $ru);
 	}
 	p {
-		width: calc(50 * $wru);
+		width: calc(100 * $wru);
+		text-align: center;
+
+		&.desc {
+			width: calc(60 * $wru);
+		}
 	}
 }
 
