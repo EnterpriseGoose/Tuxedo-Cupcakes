@@ -26,7 +26,8 @@ h4 {
 
 p,
 li,
-input {
+input,
+button {
 	font-weight: 400;
 	font-size: calc(2.7 * $tru);
 	margin: calc(0.5 * $ru) 0;
@@ -46,7 +47,6 @@ a {
 a:hover {
 	color: $cyan;
 }
-
 
 .button {
 	all: unset;

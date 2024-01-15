@@ -59,6 +59,14 @@ export default function Navbar(props?: { home?: any }) {
         >
           Home
         </A>
+        {/* <A
+          href="/order/"
+          activeClass={styles.selectedTab}
+          draggable={false}
+          noScroll={true}
+        >
+          Order
+        </A> */}
         <A
           href="/catering"
           activeClass={styles.selectedTab}
@@ -76,21 +84,13 @@ export default function Navbar(props?: { home?: any }) {
           Farmers' Market
         </A>
         <A
-          href="/sweet-16/"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Sweet 16
-        </A>
-        <A
-          href="/menu"
+          href="/flavors"
           activeClass={styles.selectedTab}
           draggable={false}
           noScroll={true}
         >
           Flavors
-				</A>
+        </A>
         <A
           href="/contact"
           activeClass={styles.selectedTab}

@@ -1,23 +1,15 @@
 import Layout from '~/components/Layout';
-import styles from './menu.module.scss';
+import styles from './flavors.module.scss';
 
-export default function Menu() {
+export default function Flavors() {
   return (
     <Layout desc="View the menu of cupcake flavors I can make">
       <div class={styles.menu}>
-        <h2>Menu</h2>
+        <h2>Flavors</h2>
         <p class={styles.desc}>
-          These are some of the flavors I have done in the past. If you have an
-          idea for a flavor not on this list, reach out and I'll see what I can
+          These are some of the flavors we have done in the past. If you have an
+          idea for a flavor not on this list, reach out and we'll see what we can
           do!
-        </p>
-				<h3>Holiday</h3>
-        <p>
-					Chocolate&nbsp;Peppermint <br />
-					Gingerbread <br />
-					Panettone <br />
-					Pumpkin&nbsp;Spice <br />
-					Apple&nbsp;Pie <br />
         </p>
         <h3>Classics</h3>
         <p>
@@ -68,14 +60,14 @@ export default function Menu() {
       <div class={styles.contact}>
         <h2>Contact</h2>
         <h4>
-          To place an order (or if you have any other questions), contact me at
+          To place an order (or if you have any other questions), contact us at
           <br />
           <a
-            href="mailto:oliver@tuxedocupcakes.com"
+            href="mailto:hello@tuxedocupcakes.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            oliver@tuxedocupcakes.com
+            hello@tuxedocupcakes.com
           </a>
         </h4>
       </div>

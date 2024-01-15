@@ -36,15 +36,12 @@ export default function FarmersMarket() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Get a Cupcake at the Farmers’ Market</h2>
           <p>
-            I appear at the Chatham Farmers’ Market every Saturday in the summer
+            We appear at the Chatham Farmers’ Market every Saturday in the summer
             (June-August) and about every other week in the fall
             (September-November).
             <br /> <br />
-            Each week, I bring 4 classic flavors (chocolate and vanilla), as
+            Each week, we bring 4 classic flavors (chocolate and vanilla), as
             well as 2 rotating special flavors, in both regular and mini sizes.
-            <br /> <br />
-            This year I will also be hosting the{' '}
-            <A href="/sweet-16/">Sweet 16 Cupcake Bracket</A>
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
@@ -67,8 +64,8 @@ export default function FarmersMarket() {
               }
             >
               <p class={styles.desc}>
-                Here is the full list of dates I’m appearing at the farmers’
-                market, as well as the specials I will have available that day.
+                Here is the full list of dates we’re appearing at the farmers’
+                market, as well as the specials we will have available that day.
                 If you want to know the specials ahead of time, you can sign up
                 for <A href="/newsletter">the newsletter</A> or follow{' '}
                 <a
@@ -76,7 +73,7 @@ export default function FarmersMarket() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  my instagram
+                  our instagram
                 </a>
                 .
               </p>
@@ -136,16 +133,16 @@ export default function FarmersMarket() {
           alt=""
         />
         <div class={`${styles.section} ${styles.four}`}>
-          <h3>Contact me</h3>
+          <h3>Contact us</h3>
           <h4>
-            Contact me at
+            Contact us at
             <br />
             <a
-              href="mailto:oliver@tuxedocupcakes.com"
+              href="mailto:hello@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              oliver@tuxedocupcakes.com
+              hello@tuxedocupcakes.com
             </a>
           </h4>
         </div>
