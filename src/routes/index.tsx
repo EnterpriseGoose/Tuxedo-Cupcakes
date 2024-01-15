@@ -6,8 +6,20 @@ import EmailForm from '~/components/EmailForm';
 
 export default function Home() {
   return (
-    <Layout home={true}>
+    <Layout home>
       <div class={styles.sections}>
+        {/* <div class={`${styles.section} ${styles.zero}`}>
+          <img
+            src="/images/front-page-cupcakes.png"
+            class={styles.mainPicture}
+            alt=""
+          />
+          <img
+            src="/images/decorations/nav-top.svg"
+            class={styles.bottomFrame}
+            alt=""
+          />
+        </div> */}
         <div class={`${styles.section} ${styles.one}`}>
           <h2>A More Sophisticated Cupcake</h2>
           <p>
@@ -25,14 +37,13 @@ export default function Home() {
         <div class={`${styles.section} ${styles.two}`}>
           <h2>How to get Tuxedo Cupcakes</h2>
           <div class={styles.cards}>
-						
             <Card title="Catering" link="/catering?p=m">
-              I can provide your event with a cake or cupcakes that will make it
-              memorable
+              We can provide your event with a cake or cupcakes that will make
+              it memorable
             </Card>
             <Card title="Farmers' Market" link="/farmers-market?p=m">
-              I attend the Chatham Farmers’ Market on Saturdays, where you can
-              choose from a selection of cupcakes I have available that day
+              We attend the Chatham Farmers’ Market on Saturdays, where you can
+              choose from a selection of cupcakes we have available that day
             </Card>
             {/* <Card title="Virtual Markets" link="/virtual-market?p=m">
               Virtual Markets are an opportunity to get Tuxedo Cupcakes when I'm
@@ -58,14 +69,14 @@ export default function Home() {
 
           <h2>Contact</h2>
           <h4>
-            Contact me at
+            Contact us at
             <br />
             <a
-              href="mailto:oliver@tuxedocupcakes.com"
+              href="mailto:hello@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              oliver@tuxedocupcakes.com
+              hello@tuxedocupcakes.com
             </a>
           </h4>
         </div>

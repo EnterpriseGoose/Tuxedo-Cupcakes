@@ -1,7 +1,7 @@
 @use "../../global-styles/variables.scss" as *;
 
 .head {
-	margin-top: calc(2 * $ru);
+	margin-top: calc(0.5 * $ru);
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -59,6 +59,7 @@
 		width: calc($ru * 30);
 		padding-bottom: calc($ru * 1.5);
 		padding-top: calc($ru * 0.5);
+		margin-top: calc(1 * $ru);
 	}
 
 	&.toBigLogo {
@@ -99,10 +100,16 @@
 .decoration {
 	width: calc(90 * $ru);
 	height: auto;
+	margin-bottom: calc(1 * $ru);
 
 	&.bottom {
 		@media (max-width: 900px) {
 			padding-bottom: calc(5 * $tru);
+		}
+
+		&.home {
+			padding-bottom: 0;
+			margin-bottom: calc(-2.5 * $ru);
 		}
 	}
 
@@ -114,6 +121,7 @@
 	&.smallLogo {
 		transform: translateY(calc(-5 * $ru));
 		width: 0;
+		margin-bottom: 0;
 	}
 
 	&.toBigLogo {
@@ -124,6 +132,7 @@
 		from {
 			transform: translateY(calc(-5 * $ru));
 			width: 0;
+			margin-bottom: 0;
 		}
 		to {
 			transform: translateY(0);
@@ -143,6 +152,7 @@
 		to {
 			transform: translateY(calc(-5 * $ru));
 			width: 0;
+			margin-bottom: 0;
 		}
 	}
 }

@@ -8,8 +8,25 @@
 }
 
 .section {
+	&.zero {
+		width: calc(100 * $wru);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 0;
+		z-index: -10;
+
+		.mainPicture {
+			width: calc(65 * $wru);
+		}
+
+		.bottomFrame {
+			width: calc(90 * $ru);
+			height: auto;
+			margin-top: calc(-2.5 * $ru);
+		}
+	}
 	&.one {
-		padding-top: calc(5 * $ru);
 		width: calc(100 * $ru);
 	}
 	&.two {

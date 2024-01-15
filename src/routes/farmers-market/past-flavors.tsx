@@ -49,7 +49,7 @@ export default function FarmersMarket() {
     [new Date(2023, 10, 18), 'Red Bean & Lemon Raspberry'],
   ]);
   return (
-    <Layout desc="View my past specials for previous Chatham Farmers' Market seasons">
+    <Layout desc="View our past specials for previous Chatham Farmers' Market seasons">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Past Specials</h2>
@@ -82,16 +82,16 @@ export default function FarmersMarket() {
           alt=""
         />
         <div class={`${styles.section} ${styles.four}`}>
-          <h3>Contact me</h3>
+          <h3>Contact us</h3>
           <h4>
-            Contact me at
+            Contact us at
             <br />
             <a
-              href="mailto:oliver@tuxedocupcakes.com"
+              href="mailto:hello@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              oliver@tuxedocupcakes.com
+              hello@tuxedocupcakes.com
             </a>
           </h4>
         </div>

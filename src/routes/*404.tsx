@@ -14,13 +14,13 @@ export default function Newsletter() {
         </p>
         <p>
           If you very much believe that there should be a page here, you can try
-          contacting me at{' '}
+          contacting us at{' '}
           <a
-            href="mailto:oliver@tuxedocupcakes.com"
+            href="mailto:hello@tuxedocupcakes.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            oliver@tuxedocupcakes.com
+            hello@tuxedocupcakes.com
           </a>
         </p>
       </div>
