@@ -4,29 +4,59 @@ import styles from './Navbar.module.scss';
 
 let previousLayout = undefined;
 
-export default function Navbar(props?: { home?: any }) {
+export default function Navbar(props?: { home?: boolean; mini?: boolean }) {
   const [searchParams, setSearchparams] = useSearchParams();
 
-  let home = props.home;
-  if (home === undefined) home = false;
-  let logoTransition = home ? styles.bigLogo : styles.smallLogo;
-  if (previousLayout === undefined || searchParams.p === 'm') {
-    console.log('First rendering of layout');
+  let home = props.home || false;
+  let mini = props.mini || false;
+
+  let newLayout = 'regular';
+  let baseStyle = styles.regularLogo;
+  let logoTransition = '';
+  if (home) {
+    newLayout = 'home';
+    baseStyle = styles.bigLogo;
+  }
+  if (mini) {
+    newLayout = 'mini';
+    baseStyle = styles.miniLogo;
+  }
+  if (
+    previousLayout === undefined ||
+    searchParams.p === 'm' ||
+    previousLayout === newLayout
+  ) {
+    console.log(
+      previousLayout
+        ? `First rendering of layout`
+        : `${previousLayout} === ${newLayout}`
+    );
   } else {
-    console.log(`Going from layout ${previousLayout} to layout ${home}`);
-    if (previousLayout && !home) {
-      logoTransition = styles.toSmallLogo;
-    } else if (!previousLayout && home) {
+    baseStyle = styles.regularLogo;
+    logoTransition = styles.toRegularLogo;
+
+    if (previousLayout === 'home') {
+      baseStyle = styles.bigLogo;
+    }
+    if (previousLayout === 'mini') {
+      baseStyle = styles.miniLogo;
+    }
+    if (home) {
       logoTransition = styles.toBigLogo;
     }
+    if (mini) {
+      logoTransition = styles.toMiniLogo;
+    }
+
+    console.log(`Going from layout ${previousLayout} to layout ${newLayout}`);
   }
-  previousLayout = home;
+  previousLayout = newLayout;
 
   return (
     <div class={styles.head}>
       <img
         src="/images/decorations/nav-top.svg"
-        class={`${styles.decoration} ${logoTransition}`}
+        class={`${styles.decoration} ${baseStyle} ${logoTransition}`}
         draggable={false}
         alt=""
         width="900"
@@ -41,7 +71,7 @@ export default function Navbar(props?: { home?: any }) {
       >
         <img
           src="/images/full-logo.svg"
-          class={`${logoTransition} ${styles.logo}`}
+          class={`${baseStyle} ${logoTransition} ${styles.logo}`}
           draggable={false}
           alt="Tuxedo Cupcakes Logo"
           width="600"
@@ -59,14 +89,14 @@ export default function Navbar(props?: { home?: any }) {
         >
           Home
         </A>
-        {/* <A
+        <A
           href="/order/"
           activeClass={styles.selectedTab}
           draggable={false}
           noScroll={true}
         >
           Order
-        </A> */}
+        </A>
         <A
           href="/catering"
           activeClass={styles.selectedTab}
