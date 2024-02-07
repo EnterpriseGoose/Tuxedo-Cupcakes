@@ -146,7 +146,7 @@ export default function Order() {
         .getElementById('progress')
         .style.setProperty('--progress', ((progress - 1) / 4).toString());
 
-      if (prevState.formState !== formState())
+      if (prevState.formState !== formState() && formState() !== 0)
         document.getElementById('progress').scrollIntoView();
       console.log('eee');
       console.log(cart());
