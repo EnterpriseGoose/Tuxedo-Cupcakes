@@ -64,9 +64,9 @@ export default function Home() {
               it memorable
             </Card>
             <Card title="Pop-ups" link="/order?p=m">
-              When it's not Farmers' Market season, I will do occasional pop-ups
-              that are a chance to order a smaller quantity of cupcakes. Place
-              an order today!
+              When it's not Farmers' Market season, we will do occasional
+              pop-ups that are a chance to order a smaller quantity of cupcakes.
+              Place an order today!
             </Card>
             <Card title="Farmers' Market" link="/farmers-market?p=m">
               We attend the Chatham Farmers’ Market on Saturdays, where you can
