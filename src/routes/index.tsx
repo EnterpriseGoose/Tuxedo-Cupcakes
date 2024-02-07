@@ -28,6 +28,28 @@ export default function Home() {
             flavors, Tuxedo Cupcakes uses the best ingredients to make the best
             cupcakes.
           </p>
+          <div class={styles.gallery}>
+            <img
+              src="/images/gallery/top-left-cupcakes.png"
+              id={styles.topLeft}
+            />
+            <img
+              src="/images/gallery/top-right-cupcakes.png"
+              id={styles.topRight}
+            />
+            <img
+              src="/images/gallery/bottom-left-cupcakes.png"
+              id={styles.bottomLeft}
+            />
+            <img
+              src="/images/gallery/bottom-middle-cupcakes.png"
+              id={styles.bottomMiddle}
+            />
+            <img
+              src="/images/gallery/bottom-right-cupcakes.png"
+              id={styles.bottomRight}
+            />
+          </div>
         </div>
         <img
           src="/images/decorations/bow-divider.svg"
@@ -41,15 +63,15 @@ export default function Home() {
               We can provide your event with a cake or cupcakes that will make
               it memorable
             </Card>
+            <Card title="Pop-ups" link="/order?p=m">
+              When it's not Farmers' Market season, I will do occasional pop-ups
+              that are a chance to order a smaller quantity of cupcakes. Place
+              an order today!
+            </Card>
             <Card title="Farmers' Market" link="/farmers-market?p=m">
               We attend the Chatham Farmers’ Market on Saturdays, where you can
               choose from a selection of cupcakes we have available that day
             </Card>
-            {/* <Card title="Virtual Markets" link="/virtual-market?p=m">
-              Virtual Markets are an opportunity to get Tuxedo Cupcakes when I'm
-              not at the Farmers' Market and you don't want an entire catering
-              order worth of cupcakes.
-            </Card> */}
           </div>
         </div>
         <img

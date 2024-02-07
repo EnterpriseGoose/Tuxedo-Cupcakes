@@ -8,8 +8,8 @@ export default function Flavors() {
         <h2>Flavors</h2>
         <p class={styles.desc}>
           These are some of the flavors we have done in the past. If you have an
-          idea for a flavor not on this list, reach out and we'll see what we can
-          do!
+          idea for a flavor not on this list, reach out and we'll see what we
+          can do!
         </p>
         <h3>Classics</h3>
         <p>
@@ -29,12 +29,12 @@ export default function Flavors() {
           Chocolate&nbsp;Caramel <br />
           Chocolate&nbsp;Matcha <br />
           Chocolate&nbsp;Raspberry <br />
-					Chocolate&nbsp;Peppermint <br />
+          Chocolate&nbsp;Peppermint <br />
           Pumpkin&nbsp;Spice <br />
           Cinnamon&nbsp;Apple&nbsp;Cider <br />
           Apple&nbsp;Pie <br />
-					Gingerbread <br />
-					Panettone <br />
+          Gingerbread <br />
+          Panettone <br />
           Red&nbsp;Bean <br />
           Chocolate&nbsp;Black&nbsp;Sesame <br />
           Yuzu <br />
