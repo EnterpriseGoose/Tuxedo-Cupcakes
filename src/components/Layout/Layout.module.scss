@@ -1,14 +1,19 @@
-@use '../../global-styles/variables.scss' as *;
+@use "../../global-styles/variables.scss" as *;
 
 .root {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
+	width: 100%;
+	min-height: 100%;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	position: relative;
+	overflow: hidden;
 }
 
 .main {
-  margin-bottom: calc(10 * $ru);
+	margin-bottom: calc(10 * $ru);
+
+	&.mini {
+		margin-bottom: 0;
+	}
 }

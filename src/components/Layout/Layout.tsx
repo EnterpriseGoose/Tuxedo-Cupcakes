@@ -7,9 +7,10 @@ import { Head } from 'solid-start';
 
 export default function Layout(props?: {
   children?: any;
-  home?: any;
+  home?: boolean;
   hideFooter?: boolean;
-	desc?: string;
+  desc?: string;
+  mini?: boolean;
 }) {
   let footerRef;
   onMount(() => {
@@ -22,11 +23,19 @@ export default function Layout(props?: {
 
   return (
     <div class={styles.root}>
-			<Head>
-			<meta name="description" content={props.desc || "Tuxedo Cupcakes is a small bakery based in Chatham, NJ that aims to make the best cupcakes that have just the right balance of sweetness and bold flavors."} />
-			</Head>
-      <Navbar home={props.home} />
-      <main class={styles.main}>{props.children}</main>
+      <Head>
+        <meta
+          name="description"
+          content={
+            props.desc ||
+            'Tuxedo Cupcakes is a small bakery based in Chatham, NJ that aims to make the best cupcakes that have just the right balance of sweetness and bold flavors.'
+          }
+        />
+      </Head>
+      <Navbar mini={props.mini} home={props.home} />
+      <main class={`${styles.main} ${props.mini ? styles.mini : ''}`}>
+        {props.children}
+      </main>
       <Show when={!props.hideFooter}>
         <Footer ref={footerRef} />
       </Show>
