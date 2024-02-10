@@ -54,6 +54,11 @@ export default function Navbar(props?: { home?: boolean; mini?: boolean }) {
 
   return (
     <div class={styles.head}>
+      <A href="/order" draggable={false} noScroll={true}>
+        <div class={`${styles.banner} ${baseStyle} ${logoTransition}`}>
+          Click here to place an order today for our February 24th pop up!
+        </div>{' '}
+      </A>
       <img
         src="/images/decorations/nav-top.svg"
         class={`${styles.decoration} ${baseStyle} ${logoTransition}`}

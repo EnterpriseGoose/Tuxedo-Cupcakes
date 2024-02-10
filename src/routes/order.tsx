@@ -85,7 +85,9 @@ const PRODUCTS = [
   },
 ];
 
-var nextID = Date.now();
+var nextID = 0;
+var lastProductAdded = 0;
+var lastProductRemoved = 0;
 
 export default function Order() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -99,6 +101,7 @@ export default function Order() {
     phone: '',
     extra: '',
     newsletter: false,
+    saveData: false,
   });
   const [cart, setCart] = createSignal([], { equals: false });
 
@@ -146,8 +149,8 @@ export default function Order() {
         .getElementById('progress')
         .style.setProperty('--progress', ((progress - 1) / 4).toString());
 
-      if (prevState.formState !== formState() && formState() !== 0)
-        document.getElementById('progress').scrollIntoView();
+      //if (prevState.formState !== formState() && formState() !== 0)
+      //document.getElementById('progress').scrollIntoView();
       console.log('eee');
       console.log(cart());
       return {
@@ -186,6 +189,7 @@ export default function Order() {
             phone: '',
             extra: '',
             newsletter: false,
+            saveData: false,
           })
       )
     );
@@ -220,6 +224,9 @@ export default function Order() {
     let newsletterInput = document.getElementById(
       'newsletterInput'
     ) as HTMLInputElement;
+    let saveDetailsInput = document.getElementById(
+      'saveDetailsInput'
+    ) as HTMLInputElement;
 
     if (
       emailInput.value != '' &&
@@ -227,6 +234,7 @@ export default function Order() {
       document.activeElement != emailInput
     ) {
       emailInput.setCustomValidity('Please enter a valid email address');
+      console.log('invalid email');
     } else {
       emailInput.setCustomValidity('');
     }
@@ -239,9 +247,19 @@ export default function Order() {
       phoneInput.setCustomValidity(
         'Please enter a valid phone number (or none at all)'
       );
+      console.log('invalid phone');
     } else {
       phoneInput.setCustomValidity('');
     }
+    console.log({
+      email: emailInput.value.match(EMAIL_VALIDATION_REGEX),
+      phone: phoneInput.value.match(PHONE_VALIDATION_REGEX),
+    });
+    console.log({
+      val1: phoneInput.value != '',
+      val2: phoneInput.value.match(PHONE_VALIDATION_REGEX) == null,
+      val3: document.activeElement != phoneInput,
+    });
 
     if (
       nameInput.value !== '' &&
@@ -261,8 +279,20 @@ export default function Order() {
       phone: phoneInput.value,
       extra: toAddInput.value,
       newsletter: newsletterInput.checked,
+      saveData: saveDetailsInput.checked,
     });
   };
+
+  let flavorsElem = (
+    <div class={styles.flavorsList}>
+      <h4>Flavors available for this pop-up:</h4>
+      <p>Vanilla</p>
+      <p>Chocolate</p>
+      <p>Strawberry</p>
+      <p>Salted Caramel Cashew</p>
+      <p>Chocolate Peppermint</p>
+    </div>
+  );
 
   return (
     <Layout mini hideFooter desc="Place an order today!">
@@ -294,16 +324,19 @@ export default function Order() {
               Select how many cupcakes you would like to purchase. Each box can
               have multiple flavors. Flavors will be chosen at the next step.
             </p>
-            <div class={styles.flavorDivide}>
+            <div class={`${styles.flavorDivide} ${styles.boxes}`}>
               <div id={styles.productGrid}>
                 <For each={products()}>
                   {(product, i) =>
                     product.name !== 'gap' ? (
                       <div
                         onClick={() => {
-                          let newProduct = product;
-                          newProduct.id = nextID++;
-                          setCart([...cart(), product]);
+                          if (lastProductAdded + 250 < Date.now()) {
+                            let newProduct = product;
+                            newProduct.id = Date.now() + nextID++;
+                            setCart([...cart(), product]);
+                            lastProductAdded = Date.now();
+                          }
                         }}
                       >
                         <p class={styles.productName}>{product.name}</p>
@@ -315,62 +348,53 @@ export default function Order() {
                   }
                 </For>
               </div>
-              <div class={styles.leftBar}>
-                <h4>Flavors for this pop-up:</h4>
-                <p>
-                  Vanilla
-                  <br />
-                  Chocolate
-                  <br />
-                  Strawberry
-                  <br />
-                  Salted Caramel Cashew
-                  <br />
-                  Chocolate Peppermint
-                  <br />
-                  <br />
-                </p>
-
-                <h4>Cart:</h4>
-                <div id={styles.cart}>
-                  <For
-                    each={cart()}
-                    fallback={<p>Your cart is currently empty</p>}
-                  >
-                    {(item, i) => (
-                      <div class={styles.cartItem} id={item.id.toString()}>
-                        <p class={styles.name}>{item.name}</p>
-                        <p class={styles.cost}>${item.cost}</p>
-                        <button
-                          onClick={() => {
-                            let cartItems = cart();
-                            cartItems.splice(i(), 1);
-                            setCart(cartItems);
-                          }}
-                        >
-                          x
-                        </button>
-                      </div>
-                    )}
-                  </For>
-                </div>
-                <Show when={cart().length !== 0}>
-                  <div class={styles.cartTotal}>
-                    <p>
-                      Total with venmo: $
-                      {cart().reduce((sum, next) => sum + next.cost, 0)}
-                    </p>
-                    <p>
-                      Total with credit&nbsp;card / paypal: $
-                      {Math.round(
-                        (cart().reduce((sum, next) => sum + next.cost, 0) *
-                          1.025 +
-                          0.09) *
-                          100
-                      ) / 100}
-                    </p>
+              <div class={`${styles.leftBar} ${styles.boxes}`}>
+                {flavorsElem}
+                <div class={styles.cartBox}>
+                  <h4>Cart:</h4>
+                  <div id={styles.cart}>
+                    <For
+                      each={cart()}
+                      fallback={<p>Your cart is currently empty</p>}
+                    >
+                      {(item, i) => (
+                        <div class={styles.cartItem} id={item.id.toString()}>
+                          <p class={styles.name}>{item.name}</p>
+                          <p class={styles.cost}>${item.cost}</p>
+                          <button
+                            onClick={() => {
+                              if (lastProductRemoved + 250 < Date.now()) {
+                                let cartItems = cart();
+                                cartItems.splice(i(), 1);
+                                setCart(cartItems);
+                                lastProductRemoved - Date.now();
+                              }
+                            }}
+                          >
+                            x
+                          </button>
+                        </div>
+                      )}
+                    </For>
                   </div>
-                </Show>
+                  <Show when={cart().length !== 0}>
+                    <div class={styles.cartTotal}>
+                      <p>
+                        Total with venmo: $
+                        {cart().reduce((sum, next) => sum + next.cost, 0)}
+                      </p>
+                      <p>
+                        Total with credit&nbsp;card / paypal: $
+                        {Math.round(
+                          (cart().reduce((sum, next) => sum + next.cost, 0) *
+                            1.025 +
+                            0.09) *
+                            100
+                        ) / 100}
+                      </p>
+                    </div>
+                  </Show>
+                </div>
               </div>
             </div>
           </Match>
@@ -379,7 +403,7 @@ export default function Order() {
             <p class={styles.instruction}>
               Select the flavor(s) of cupcakes you would like.
             </p>
-            <div class={styles.flavorDivide}>
+            <div class={`${styles.flavorDivide} ${styles.flavors}`}>
               <div id={styles.cart}>
                 <h4>Cart:</h4>
                 <For
@@ -396,7 +420,7 @@ export default function Order() {
                           class="flavor-input"
                           id={item.id.toString()}
                           name="flavors"
-                          placeholder="*Flavor(s)"
+                          placeholder="Flavor(s) (required)"
                           required
                           spellcheck
                           onInput={checkFlavors}
@@ -406,9 +430,12 @@ export default function Order() {
                       <p class={styles.cost}>${item.cost}</p>
                       <button
                         onClick={() => {
-                          let cartItems = cart();
-                          cartItems.splice(i(), 1);
-                          setCart(cartItems);
+                          if (lastProductRemoved + 250 < Date.now()) {
+                            let cartItems = cart();
+                            cartItems.splice(i(), 1);
+                            setCart(cartItems);
+                            lastProductRemoved - Date.now();
+                          }
                         }}
                       >
                         x
@@ -435,31 +462,18 @@ export default function Order() {
                 </Show>
               </div>
 
-              <div class={styles.leftBar}>
-                <h4>Flavors available for this pop-up:</h4>
-                <p>
-                  Vanilla
-                  <br />
-                  Chocolate
-                  <br />
-                  Strawberry
-                  <br />
-                  Salted Caramel Cashew
-                  <br />
-                  Chocolate Peppermint
-                  <br />
-                  <br />
-                </p>
+              <div class={`${styles.leftBar} ${styles.flavors}`}>
+                {flavorsElem}
                 <p class={styles.emailDiffFlavor}>
-                  Want a flavor not listed? Contact us at{' '}
+                  Want a flavor not listed?{' '}
                   <a
                     href="mailto:hello@tuxedocupcakes.com"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    hello@tuxedocupcakes.com
+                    Contact us
                   </a>{' '}
-                  and we'll see what we can do.
+                  and we'll see what we can do!
                 </p>
               </div>
             </div>
@@ -521,11 +535,21 @@ export default function Order() {
                   checked={formData().newsletter}
                 ></input>
               </div>
+              <div class={styles.saveDetails}>
+                <label>Save my info for next time</label>
+
+                <input
+                  type="checkbox"
+                  id="saveDetailsInput"
+                  oninput={checkDetailInputs}
+                  checked={formData().saveData}
+                ></input>
+              </div>
             </div>
           </Match>
           <Match when={formState() === 4}>
             <h3>Review your order</h3>
-            <div class={styles.flavorDivide}>
+            <div class={`${styles.flavorDivide} ${styles.details}`}>
               <div id={styles.cart}>
                 <h4>Cart:</h4>
                 <For
@@ -569,7 +593,7 @@ export default function Order() {
                 </div>
               </div>
 
-              <div class={styles.leftBar}>
+              <div class={`${styles.leftBar} ${styles.details}`}>
                 <h4>Your details:</h4>
                 <p>
                   Name: {formData().name}
@@ -644,7 +668,11 @@ export default function Order() {
             </Show>
             <button
               disabled
-              class={styles.nextButton}
+              class={`${
+                formState() == 4
+                  ? `button ${styles.placeOrder}`
+                  : styles.nextButton
+              } `}
               id="nextButton"
               onClick={async () => {
                 if (formState() === 4) {
@@ -663,15 +691,18 @@ export default function Order() {
                   console.log(response.status);
                   setSearchParams({ orderStatus: response.status });
                   if (response.status == 201) {
-                    setFormData({
-                      email: '',
-                      name: '',
-                      phone: '',
-                      extra: '',
-                      newsletter: false,
-                    });
                     setCart([]);
                     setFormState(5);
+                    if (!formData().saveData) {
+                      setFormData({
+                        email: '',
+                        name: '',
+                        phone: '',
+                        extra: '',
+                        newsletter: false,
+                        saveData: false,
+                      });
+                    }
                   }
                   return;
                 }
@@ -687,8 +718,8 @@ export default function Order() {
               {formState() == 0
                 ? 'Order'
                 : formState() == 4
-                  ? 'Place Order'
-                  : 'Next'}{' '}
+                ? 'Place Order'
+                : 'Next'}{' '}
               →
             </button>
             <Show
@@ -718,7 +749,9 @@ export default function Order() {
 
 function fillProductList(innerWidth: number, products, setProducts) {
   let columns = 4;
-  if (innerWidth < 1000) columns = 3;
+  if (innerWidth <= 1400) columns = 3;
+  if (innerWidth <= 1000) columns = 4;
+  if (innerWidth <= 750) columns = 3;
 
   let newProducts = [];
   let group = 1;
