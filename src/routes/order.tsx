@@ -149,11 +149,15 @@ export default function Order() {
         .getElementById('progress')
         .style.setProperty('--progress', ((progress - 1) / 4).toString());
 
-      if (prevState.formState !== formState() && formState() !== 0 && document.getElementsByTagName('h3').length > 0) {
-				document.getElementsByTagName('h3')[0].scrollIntoView()
-			} else if (prevState.formState !== formState() && formState() == 0 && document.getElementsByTagName('h2').length > 0) {
+      if (
+        prevState.formState !== formState() &&
+        formState() !== 0 &&
+        document.getElementsByTagName('h3').length > 0
+      ) {
+        document.getElementsByTagName('h3')[0].scrollIntoView();
+      } /* else if (prevState.formState !== formState() && formState() == 0 && document.getElementsByTagName('h2').length > 0) {
 				document.getElementsByTagName('h2')[0].scrollIntoView()
-			}
+			}*/
       console.log('eee');
       console.log(cart());
       return {
@@ -341,18 +345,27 @@ export default function Order() {
                             lastProductAdded = Date.now();
                           }
                         }}
-												onMouseDown={(e) => {
-													e.currentTarget.setAttribute("selected", "true");
-													e.currentTarget.style.setProperty("border-radius", "0")
-												}}
-												onMouseUp={(e) => {
-													e.currentTarget.setAttribute("selected", "");
-													e.currentTarget.style.setProperty("border-radius", "calc(1 * min(90vw + 400px, min(60vw + 600px, 1200px))/100)")
-												}}
-												onMouseLeave={(e) => {
-													e.currentTarget.setAttribute("selected", "");
-													e.currentTarget.style.setProperty("border-radius", "calc(1 * min(90vw + 400px, min(60vw + 600px, 1200px))/100)")
-												}}
+                        onMouseDown={(e) => {
+                          e.currentTarget.setAttribute('selected', 'true');
+                          e.currentTarget.style.setProperty(
+                            'border-radius',
+                            '0'
+                          );
+                        }}
+                        onMouseUp={(e) => {
+                          e.currentTarget.setAttribute('selected', '');
+                          e.currentTarget.style.setProperty(
+                            'border-radius',
+                            'calc(1 * min(90vw + 400px, min(60vw + 600px, 1200px))/100)'
+                          );
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.setAttribute('selected', '');
+                          e.currentTarget.style.setProperty(
+                            'border-radius',
+                            'calc(1 * min(90vw + 400px, min(60vw + 600px, 1200px))/100)'
+                          );
+                        }}
                       >
                         <p class={styles.productName}>{product.name}</p>
                         <p class={styles.productCost}>${product.cost}</p>
@@ -733,8 +746,8 @@ export default function Order() {
               {formState() == 0
                 ? 'Order'
                 : formState() == 4
-                ? 'Place Order'
-                : 'Next'}{' '}
+                  ? 'Place Order'
+                  : 'Next'}{' '}
               →
             </button>
             <Show
