@@ -415,8 +415,8 @@ export default function Order() {
                         Total with credit&nbsp;card / paypal: $
                         {Math.round(
                           (cart().reduce((sum, next) => sum + next.cost, 0) *
-                            1.025 +
-                            0.09) *
+                            1.037 +
+                            0.5) *
                             100
                         ) / 100}
                       </p>
@@ -481,8 +481,8 @@ export default function Order() {
                       Total with credit&nbsp;card / paypal: $
                       {Math.round(
                         (cart().reduce((sum, next) => sum + next.cost, 0) *
-                          1.025 +
-                          0.09) *
+                          1.037 +
+                          0.5) *
                           100
                       ) / 100}
                     </p>
@@ -606,8 +606,8 @@ export default function Order() {
                       Total with credit&nbsp;card / paypal: $
                       {Math.round(
                         (cart().reduce((sum, next) => sum + next.cost, 0) *
-                          1.025 +
-                          0.09) *
+                          1.037 +
+                          0.5) *
                           100
                       ) / 100}
                     </p>
