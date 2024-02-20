@@ -596,6 +596,24 @@ export default function Order() {
                     </div>
                   )}
                 </For>
+                <div class={styles.discount}>
+                  <label for="code">Discount Code:</label>
+                  <input
+                    class={styles.code}
+                    type="text"
+                    name="code"
+                    id="code"
+                    placeholder="000-000-000"
+                    minLength={11}
+                    maxlength={11}
+                    spellcheck={false}
+                    value={searchParams.code || ''}
+                    required
+                    onInput={verifyCode}
+                  />
+                  <label for="code" class="codeValid"></label>
+                </div>
+
                 <Show when={cart().length !== 0}>
                   <div class={styles.cartTotal}>
                     <p>
@@ -746,8 +764,8 @@ export default function Order() {
               {formState() == 0
                 ? 'Order'
                 : formState() == 4
-                  ? 'Place Order'
-                  : 'Next'}{' '}
+                ? 'Place Order'
+                : 'Next'}{' '}
               →
             </button>
             <Show
@@ -800,3 +818,59 @@ function fillProductList(innerWidth: number, products, setProducts) {
 
   setProducts(newProducts);
 }
+
+let verifyCode = async (event) => {
+  let target = event.target as HTMLInputElement;
+  let successElem = target.parentElement.getElementsByClassName('codeValid')[0];
+  let code = target.value.replaceAll(/\D/g, '').substring(0, 10);
+  let codeString = '';
+  code.split('').forEach((digit) => {
+    if (codeString.length === 3 || codeString.length === 7) {
+      codeString += '-';
+    }
+    codeString += digit;
+  });
+  target.value = codeString;
+
+  if (parseInt(code).toString().length !== 9) {
+    successElem.textContent = '';
+    return;
+  }
+  const supabase = createClient(
+    'https://rxznihvftodgtjdtzbyr.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
+  );
+  let { data, error } = await supabase.rpc('get_discount', {
+    testcode: parseInt(code),
+  });
+  if (error) {
+    let errorNode = document.createElement('p');
+    errorNode.textContent =
+      'Unknown error occured when checking code: ' +
+      error.code +
+      '\nTry refreshing and trying again';
+    target.parentElement.after(errorNode);
+    console.log(error);
+  }
+  if (data) {
+    event.target.setAttribute('valid', 'true');
+    successElem.textContent = '✓';
+    let voteOptions = document.getElementsByClassName('voteOption');
+    voteOptions[0].className = `voteOption`;
+    (voteOptions[0].previousElementSibling as HTMLInputElement).disabled =
+      false;
+    voteOptions[1].className = `voteOption`;
+    (voteOptions[1].previousElementSibling as HTMLInputElement).disabled =
+      false;
+    (document.getElementById('submit') as HTMLInputElement).disabled = false;
+  } else {
+    event.target.setAttribute('valid', 'false');
+    successElem.textContent = '✖';
+    let voteOptions = document.getElementsByClassName('voteOption');
+    voteOptions[0].className = `voteOption ${styles.disabled}`;
+    (voteOptions[0].previousElementSibling as HTMLInputElement).disabled = true;
+    voteOptions[1].className = `voteOption ${styles.disabled}`;
+    (voteOptions[1].previousElementSibling as HTMLInputElement).disabled = true;
+    (document.getElementById('submit') as HTMLInputElement).disabled = true;
+  }
+};
