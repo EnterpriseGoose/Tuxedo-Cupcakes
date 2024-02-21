@@ -407,7 +407,7 @@ export default function Order() {
 
     let discount = formData().discount;
 
-    if (!discount.used && discount.discount > 0) {
+    if (discount && !discount.used && discount.discount > 0) {
       if (cart().length === 0) return <></>;
 
       let discountedTotal = total;
