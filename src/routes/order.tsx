@@ -330,7 +330,7 @@ export default function Order() {
     if (!target && tryCount < 5) {
       console.log('trying again to check code, try #: ' + tryCount);
       setTimeout(() => {
-        checkCode(tryCount++);
+        checkCode(tryCount + 1);
       }, 200);
       return;
     }
