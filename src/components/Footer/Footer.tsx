@@ -33,9 +33,29 @@ export default function Footer(props?: {
           >
             Catering
           </A>
+          <a
+            href="https://www.instagram.com/tuxedo_cupcakes/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={styles.socialLink}
+          >
+            <img
+              src="/images/instagram-logo-transparent.svg"
+              width={50}
+              height={50}
+            />
+          </a>
         </div>
         <img src="/images/logo.svg" draggable={false} alt="" />
         <div class={styles.right}>
+          <a
+            href="https://www.facebook.com/profile.php?id=61555665201272"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={styles.socialLink}
+          >
+            <img src="/images/facebook-logo.svg" width={50} height={50} />
+          </a>
           <A
             href="/farmers-market?p=b"
             activeClass={styles.selectedTab}

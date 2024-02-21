@@ -344,6 +344,7 @@
 		align-items: center;
 		justify-content: center;
 		position: relative;
+		margin-top: calc(2 * $ru);
 		margin-bottom: calc(1 * $ru);
 
 		.code {
@@ -356,6 +357,7 @@
 			text-align: left;
 			width: 6.5em;
 			margin-left: calc(2 * $ru);
+			transform: translateX(0);
 
 			&:focus {
 				border-bottom: 2px solid $cyan;
@@ -363,10 +365,16 @@
 
 			&[valid="true"] + label {
 				color: green;
+				transform: translateX(75%);
 			}
 
 			&[valid="false"] + label {
 				color: red;
+			}
+
+			&[valid="used"] + label {
+				color: red;
+				transform: translateY(120%);
 			}
 
 			& + label {
@@ -479,4 +487,9 @@
 			}
 		}
 	}
+}
+
+.crossedOut {
+	font-style: normal;
+	text-decoration: line-through;
 }
