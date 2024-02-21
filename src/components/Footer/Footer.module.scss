@@ -1,6 +1,5 @@
 @use "../../global-styles/variables.scss" as *;
 
-
 .footer {
 	width: 100%;
 	display: flex;
@@ -30,11 +29,11 @@
 			font-weight: 500;
 			transition: color 0.2s ease-in;
 			text-align: center;
-		
+
 			&.selectedTab {
 				color: $cyan;
 			}
-		
+
 			&:hover {
 				color: $cyan;
 			}
@@ -46,7 +45,7 @@
 			align-items: center;
 			gap: calc(10 * $ru);
 			position: absolute;
-			right: calc(20 * $ru)
+			right: calc(10 * $ru);
 		}
 
 		img {
@@ -59,7 +58,7 @@
 			align-items: center;
 			gap: calc(10 * $ru);
 			position: absolute;
-			left: calc(20 * $ru);
+			left: calc(10 * $ru);
 
 			a {
 				width: max-content;
@@ -70,4 +69,3 @@
 		}
 	}
 }
-

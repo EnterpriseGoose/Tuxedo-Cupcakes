@@ -134,6 +134,24 @@ export default function Navbar(props?: { home?: boolean; mini?: boolean }) {
         >
           Contact
         </A>
+        <div class={styles.socialLinkBox}>
+          <a
+            href="https://www.instagram.com/tuxedo_cupcakes/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={styles.socialLink}
+          >
+            <img src="/images/instagram-logo.svg" width={50} height={50} />
+          </a>
+          <a
+            href="https://www.facebook.com/profile.php?id=61555665201272"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={styles.socialLink}
+          >
+            <img src="/images/facebook-logo.svg" width={50} height={50} />
+          </a>
+        </div>
       </nav>
       <div />
       <img

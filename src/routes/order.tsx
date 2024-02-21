@@ -85,6 +85,23 @@ const PRODUCTS = [
   },
 ];
 
+interface Discount {
+  code: string;
+  discount: number;
+  type: string;
+  used: boolean;
+}
+
+interface FormData {
+  email: string;
+  name: string;
+  phone: string;
+  extra: string;
+  newsletter: boolean;
+  saveData: boolean;
+  discount: Discount;
+}
+
 var nextID = 0;
 var lastProductAdded = 0;
 var lastProductRemoved = 0;
@@ -95,17 +112,25 @@ export default function Order() {
   const [formState, setFormState] = createSignal(0);
   const [completedPage, setCompletedPage] = createSignal(false);
 
-  const [formData, setFormData] = createSignal({
+  const [formData, setFormData] = createSignal<FormData>({
     email: '',
     name: '',
     phone: '',
     extra: '',
     newsletter: false,
     saveData: false,
+    discount: {
+      code: '',
+      discount: 0,
+      type: 'PERCENT',
+      used: true,
+    },
   });
   const [cart, setCart] = createSignal([], { equals: false });
 
   const [prevCartRetrieved, setPrevCartRetrieved] = createSignal(false);
+
+  let discountCodeElem: HTMLInputElement;
 
   createEffect(
     (prevState: any) => {
@@ -131,10 +156,12 @@ export default function Order() {
       }
       if (formState() === 2) checkFlavors();
       if (formState() === 3) checkDetailInputs();
-      if (formState() === 4)
+      if (formState() === 4) {
+        checkCode(0);
         setTimeout(() => {
           setCompletedPage(true);
         }, 1500);
+      }
 
       let progress = formState();
       if (completedPage() && formState() < 5) {
@@ -197,6 +224,12 @@ export default function Order() {
             extra: '',
             newsletter: false,
             saveData: false,
+            discount: {
+              code: '',
+              discount: 0,
+              type: 'PERCENT',
+              used: true,
+            },
           })
       )
     );
@@ -204,6 +237,7 @@ export default function Order() {
     console.log('iii');
     checkFlavors();
     setPrevCartRetrieved(true);
+    checkCode(0);
   });
 
   const checkFlavors = () => {
@@ -287,7 +321,73 @@ export default function Order() {
       extra: toAddInput.value,
       newsletter: newsletterInput.checked,
       saveData: saveDetailsInput.checked,
+      discount: formData().discount,
     });
+  };
+
+  let checkCode = async (tryCount?: number) => {
+    let target = document.getElementById('code') as HTMLInputElement;
+    if (!target && tryCount < 5) {
+      console.log('trying again to check code, try #: ' + tryCount);
+      setTimeout(() => {
+        checkCode(tryCount++);
+      }, 200);
+      return;
+    }
+    let successElem =
+      target.parentElement.getElementsByClassName('codeValid')[0];
+    let code = target.value.replaceAll(/\D/g, '').substring(0, 10);
+    target.value = parseDiscountCode(code);
+
+    if (parseInt(code).toString().length !== 9) {
+      successElem.textContent = '';
+      setFormData({
+        ...formData(),
+        discount: { code, discount: 0, type: '', used: true },
+      });
+      return;
+    }
+    const supabase = createClient(
+      'https://rxznihvftodgtjdtzbyr.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
+    );
+    let { error, data } = await supabase.rpc('get_discount', {
+      testcode: code,
+    });
+    let discount = data as any as Discount;
+
+    if (error) {
+      let errorNode = document.createElement('p');
+      errorNode.textContent =
+        'Unknown error occured when checking code: ' +
+        error.code +
+        '\nTry refreshing and trying again';
+      target.parentElement.after(errorNode);
+      console.log(error);
+      setFormData({
+        ...formData(),
+        discount: { code, discount: 0, type: '', used: true },
+      });
+    }
+    if (discount) {
+      target.setAttribute('valid', 'true');
+      if (discount.used) {
+        target.setAttribute('valid', 'used');
+        successElem.textContent = 'Code Already Used';
+      } else if (discount.type === 'AMOUNT') {
+        successElem.textContent = '-$' + discount.discount;
+      } else if (discount.type === 'PERCENT') {
+        successElem.textContent = '-' + discount.discount + '%';
+      } else {
+        successElem.textContent = '✓';
+      }
+
+      setFormData({ ...formData(), discount });
+    } else {
+      target.setAttribute('valid', 'false');
+      successElem.textContent = '✖';
+    }
+    console.log(formData());
   };
 
   let flavorsElem = (
@@ -300,6 +400,60 @@ export default function Order() {
       <p>Chocolate Peppermint</p>
     </div>
   );
+
+  let cartTotalElem = (crossOut?: boolean) => {
+    let total = cart().reduce((sum, next) => sum + next.cost, 0);
+    let paypalTotal = Math.round((total * 1.037 + 0.5) * 100) / 100;
+
+    let discount = formData().discount;
+
+    if (!discount.used && discount.discount > 0) {
+      if (cart().length === 0) return <></>;
+
+      let discountedTotal = total;
+      switch (discount.type) {
+        case 'PERCENT':
+          discountedTotal -= discountedTotal * (discount.discount / 100);
+          break;
+        case 'AMOUNT':
+          discountedTotal -= discount.discount;
+      }
+      let discountedPaypalTotal =
+        Math.round((discountedTotal * 1.037 + 0.5) * 100) / 100;
+
+      if (crossOut) {
+        return (
+          <div class={styles.cartTotal}>
+            <p>
+              Total with venmo: $<i class={styles.crossedOut}>{total}</i> →{' '}
+              {discountedTotal}
+            </p>
+            <p>
+              Total with credit&nbsp;card / paypal: $
+              <i class={styles.crossedOut}>{paypalTotal}</i> →{' '}
+              {discountedPaypalTotal}
+            </p>
+          </div>
+        );
+      } else {
+        return (
+          <div class={styles.cartTotal}>
+            <p>Total with venmo: ${discountedTotal}</p>
+            <p>
+              Total with credit&nbsp;card / paypal: ${discountedPaypalTotal}
+            </p>
+          </div>
+        );
+      }
+    }
+
+    return (
+      <div class={styles.cartTotal}>
+        <p>Total with venmo: ${total}</p>
+        <p>Total with credit&nbsp;card / paypal: ${paypalTotal}</p>
+      </div>
+    );
+  };
 
   return (
     <Layout mini hideFooter desc="Place an order today!">
@@ -405,23 +559,7 @@ export default function Order() {
                       )}
                     </For>
                   </div>
-                  <Show when={cart().length !== 0}>
-                    <div class={styles.cartTotal}>
-                      <p>
-                        Total with venmo: $
-                        {cart().reduce((sum, next) => sum + next.cost, 0)}
-                      </p>
-                      <p>
-                        Total with credit&nbsp;card / paypal: $
-                        {Math.round(
-                          (cart().reduce((sum, next) => sum + next.cost, 0) *
-                            1.037 +
-                            0.5) *
-                            100
-                        ) / 100}
-                      </p>
-                    </div>
-                  </Show>
+                  {cartTotalElem(false)}
                 </div>
               </div>
             </div>
@@ -471,23 +609,7 @@ export default function Order() {
                     </div>
                   )}
                 </For>
-                <Show when={cart().length !== 0}>
-                  <div class={styles.cartTotal}>
-                    <p>
-                      Total with venmo: $
-                      {cart().reduce((sum, next) => sum + next.cost, 0)}
-                    </p>
-                    <p>
-                      Total with credit&nbsp;card / paypal: $
-                      {Math.round(
-                        (cart().reduce((sum, next) => sum + next.cost, 0) *
-                          1.037 +
-                          0.5) *
-                          100
-                      ) / 100}
-                    </p>
-                  </div>
-                </Show>
+                {cartTotalElem(false)}
               </div>
 
               <div class={`${styles.leftBar} ${styles.flavors}`}>
@@ -596,23 +718,27 @@ export default function Order() {
                     </div>
                   )}
                 </For>
-                <Show when={cart().length !== 0}>
-                  <div class={styles.cartTotal}>
-                    <p>
-                      Total with venmo: $
-                      {cart().reduce((sum, next) => sum + next.cost, 0)}
-                    </p>
-                    <p>
-                      Total with credit&nbsp;card / paypal: $
-                      {Math.round(
-                        (cart().reduce((sum, next) => sum + next.cost, 0) *
-                          1.037 +
-                          0.5) *
-                          100
-                      ) / 100}
-                    </p>
-                  </div>
-                </Show>
+                <div class={styles.discount}>
+                  <label for="code">Discount Code:</label>
+                  <input
+                    class={styles.code}
+                    type="text"
+                    name="code"
+                    id="code"
+                    placeholder="000-000-000"
+                    minLength={11}
+                    maxlength={11}
+                    spellcheck={false}
+                    value={parseDiscountCode(formData().discount.code)}
+                    required
+                    onInput={() => {
+                      checkCode();
+                    }}
+                    ref={discountCodeElem}
+                  />
+                  <label for="code" class="codeValid"></label>
+                </div>
+                {cartTotalElem(true)}
                 <div class={styles.orderDetails}>
                   <p>
                     When you place your order, we'll review it and then email
@@ -715,10 +841,15 @@ export default function Order() {
                     order: JSON.stringify(cart()),
                     extraInfo: formData().extra,
                     newsletter: formData().newsletter,
+                    discount: formData().discount,
                   });
                   console.log(response.status);
                   setSearchParams({ orderStatus: response.status });
                   if (response.status == 201) {
+                    let result = await supabase.rpc('use_discount', {
+                      usecode: formData().discount.code,
+                    });
+                    console.log(result);
                     setCart([]);
                     setFormState(5);
                     if (!formData().saveData) {
@@ -729,6 +860,17 @@ export default function Order() {
                         extra: '',
                         newsletter: false,
                         saveData: false,
+                        discount: undefined,
+                      });
+                    } else {
+                      setFormData({
+                        ...formData(),
+                        discount: {
+                          code: '',
+                          discount: 0,
+                          type: 'PERCENT',
+                          used: true,
+                        },
                       });
                     }
                   }
@@ -746,8 +888,8 @@ export default function Order() {
               {formState() == 0
                 ? 'Order'
                 : formState() == 4
-                  ? 'Place Order'
-                  : 'Next'}{' '}
+                ? 'Place Order'
+                : 'Next'}{' '}
               →
             </button>
             <Show
@@ -799,4 +941,15 @@ function fillProductList(innerWidth: number, products, setProducts) {
   }
 
   setProducts(newProducts);
+}
+
+function parseDiscountCode(code: string) {
+  let codeString = '';
+  code.split('').forEach((digit) => {
+    if (codeString.length === 3 || codeString.length === 7) {
+      codeString += '-';
+    }
+    codeString += digit;
+  });
+  return codeString;
 }

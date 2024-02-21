@@ -12,6 +12,7 @@
 	nav {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		flex-direction: row;
 		column-gap: calc(5 * $tru);
 		padding-bottom: calc(3 * $ru);
@@ -33,6 +34,10 @@
 			min-height: calc(10 * $tru);
 			column-gap: calc(0 * $tru);
 			row-gap: calc(1 * $tru);
+
+			.socialLinkBox {
+				grid-column: span 2;
+			}
 		}
 
 		a:hover {
@@ -41,6 +46,30 @@
 		a.selectedTab {
 			color: $darkCyan;
 			cursor: default;
+		}
+
+		.socialLinkBox {
+			display: flex;
+			flex-direction: row;
+			gap: calc(1 * $tru);
+
+			justify-content: center;
+			align-items: center;
+
+			.socialLink {
+				display: flex;
+
+				img {
+					width: calc(3 * $tru);
+					height: calc(3 * $tru);
+
+					transition: all 0.5s ease;
+
+					&:hover {
+						filter: drop-shadow(calc(0.2 * $tru) calc(0.2 * $tru) calc(0.5 * $ru) $darkCyan);
+					}
+				}
+			}
 		}
 	}
 
