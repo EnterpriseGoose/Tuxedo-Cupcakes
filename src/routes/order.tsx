@@ -729,7 +729,9 @@ export default function Order() {
                     minLength={11}
                     maxlength={11}
                     spellcheck={false}
-                    value={parseDiscountCode(formData().discount.code)}
+                    value={parseDiscountCode(
+                      formData().discount ? formData().discount.code : ''
+                    )}
                     required
                     onInput={() => {
                       checkCode();
@@ -846,10 +848,13 @@ export default function Order() {
                   console.log(response.status);
                   setSearchParams({ orderStatus: response.status });
                   if (response.status == 201) {
-                    let result = await supabase.rpc('use_discount', {
-                      usecode: formData().discount.code,
-                    });
-                    console.log(result);
+                    if (formData().discount && !formData().discount.used) {
+                      let result = await supabase.rpc('use_discount', {
+                        usecode: formData().discount.code,
+                      });
+                      console.log(result);
+                    }
+
                     setCart([]);
                     setFormState(5);
                     if (!formData().saveData) {
