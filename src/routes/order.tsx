@@ -185,7 +185,7 @@ export default function Order() {
       } /* else if (prevState.formState !== formState() && formState() == 0 && document.getElementsByTagName('h2').length > 0) {
 				document.getElementsByTagName('h2')[0].scrollIntoView()
 			}*/
-      console.log('eee');
+      console.log('big effect');
       console.log(cart());
       return {
         cartLen: cart().length,
@@ -244,14 +244,19 @@ export default function Order() {
     const flavorInputs = document.getElementsByClassName(
       'flavor-input'
     ) as HTMLCollectionOf<HTMLTextAreaElement>;
+    if (flavorInputs.length === 0 && formState() === 2) {
+      setCompletedPage(false);
+      return;
+    }
     let allFilled = true;
+    let tempCart = cart();
     for (let input of flavorInputs) {
       if (input.value == '') allFilled = false;
-      let tempCart = cart();
+
       let item = tempCart.find((i) => i.id.toString() == input.id);
       item.customValue = input.value;
-      setCart(tempCart);
     }
+    setCart(tempCart);
     if (formState() === 2) setCompletedPage(allFilled);
   };
 
@@ -404,6 +409,7 @@ export default function Order() {
   let cartTotalElem = (crossOut?: boolean) => {
     let total = cart().reduce((sum, next) => sum + next.cost, 0);
     let paypalTotal = Math.round((total * 1.037 + 0.5) * 100) / 100;
+    if (total == 0) paypalTotal = 0;
 
     let discount = formData().discount;
 
@@ -493,9 +499,9 @@ export default function Order() {
                       <div
                         onClick={() => {
                           if (lastProductAdded + 250 < Date.now()) {
-                            let newProduct = product;
+                            let newProduct = { ...product };
                             newProduct.id = Date.now() + nextID++;
-                            setCart([...cart(), product]);
+                            setCart([...cart(), newProduct]);
                             lastProductAdded = Date.now();
                           }
                         }}
