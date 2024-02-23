@@ -1,7 +1,7 @@
 {
 	"name": "frontend",
 	"scripts": {
-		"dev": "solid-start dev -p 2000",
+		"dev": "solid-start dev -p 2000 --host",
 		"build": "solid-start build",
 		"start": "solid-start start",
 		"postinstall": "node ./scripts/fix-jest-dom.mjs",
