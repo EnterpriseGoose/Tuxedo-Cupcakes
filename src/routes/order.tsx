@@ -12,6 +12,7 @@ import {
 } from 'solid-js';
 import { createClient } from '@supabase/supabase-js';
 import { useSearchParams } from 'solid-start';
+import EmailForm from '~/components/EmailForm';
 
 const EMAIL_VALIDATION_REGEX =
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -147,10 +148,10 @@ export default function Order() {
         };
       }
       if (formState() === 0) {
-        setCompletedPage(true);
+        setCompletedPage(false); //setCompletedPage(true);
       }
       if (formState() === 1 && cart().length > 0) {
-        setCompletedPage(true);
+        setCompletedPage(false); //setCompletedPage(true);
       } else if (formState() === 1) {
         setCompletedPage(false);
       }
@@ -187,6 +188,8 @@ export default function Order() {
 			}*/
       console.log('big effect');
       console.log(cart());
+
+      setCompletedPage(false);
       return {
         cartLen: cart().length,
         completedPage: completedPage(),
@@ -468,14 +471,13 @@ export default function Order() {
           <Match when={formState() === 0}>
             <h2>Place an order today!</h2>
             <p class={styles.instruction}>
-              Our next pop-up is February 24th. Pickup for this pop-up will be
-              done at 11 AM at the Chatham Train Station parking lot.
+              We don't have another pop-up currently planned.
               <br />
               <br />
-              Place an order by February 22nd to ensure you get the flavors you
-              want!
-              <br /> <br />
-              Want to place an order for a different time? Shoot us an email at{' '}
+              If you want to get notified when our next pop up will be, you can
+              sign up for our newsletter: <EmailForm />
+              <br />
+              Want to place an order now? Shoot us an email at{' '}
               <a
                 href="mailto:hello@tuxedocupcakes.com"
                 target="_blank"
