@@ -1,3 +1,5 @@
+@use "../../global-styles/variables.scss" as *;
+
 .emailForm {
 	margin: 10px 0px;
 	.email {
@@ -14,7 +16,7 @@
 		margin: 10px 0;
 
 		&:focus {
-			border-bottom: 3px solid black;
+			border-bottom: 2px solid $cyan;
 		}
 	}
 }

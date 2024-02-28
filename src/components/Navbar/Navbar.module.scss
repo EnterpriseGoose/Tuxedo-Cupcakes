@@ -9,6 +9,8 @@
 	width: 100%;
 	overflow: hidden;
 
+	padding-top: calc(1 * $ru);
+
 	nav {
 		display: flex;
 		align-items: center;
@@ -17,6 +19,7 @@
 		column-gap: calc(5 * $tru);
 		padding-bottom: calc(3 * $ru);
 		max-width: calc(100 * $wru);
+		margin-top: calc(2 * $ru);
 
 		a {
 			font-size: calc(3 * $tru);
