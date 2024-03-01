@@ -10,10 +10,10 @@ export default function Catering() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Catering of Cakes and Cupcakes</h2>
           <p>
-            We can cater your event with a custom cake or cupcakes that will make
-            it memorable. We love making super tasty creations with interesting
-            flavors, and we specialize in using fresh, seasonal fruit to make
-            decorative and super tasty cakes and cupcakes.
+            We can cater your event with a custom cake or cupcakes that will
+            make it memorable. We love making super tasty creations with
+            interesting flavors, and we specialize in using fresh, seasonal
+            fruit to make decorative and super tasty cakes and cupcakes.
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
@@ -29,11 +29,12 @@ export default function Catering() {
               hello@tuxedocupcakes.com
             </a>
             .
-            <br />We can help you figure out the details about flavors or
-            decorations, as well as the size of the cake or quantity of cupcakes
-            and the price. For basic pricing info,{' '}
-            <A href="/catering#pricing">see below</A>.<br /> <br />We have a menu
-            of our previous flavors <A href="/menu">here</A>.
+            <br />
+            We can help you figure out the details about flavors or decorations,
+            as well as the size of the cake or quantity of cupcakes and the
+            price. For basic pricing info,{' '}
+            <A href="/catering#pricing">see below</A>.<br /> <br />
+            We have a menu of our previous flavors <A href="/flavors">here</A>.
           </p>
         </div>
         <img
