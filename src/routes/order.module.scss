@@ -422,7 +422,8 @@
 
 			font-size: calc(2 * $tru);
 
-			&:invalid {
+			&:invalid,
+			&[valid="false"] {
 				border-bottom: 2px solid red;
 			}
 			&:focus {
