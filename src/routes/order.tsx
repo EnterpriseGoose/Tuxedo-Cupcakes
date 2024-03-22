@@ -148,10 +148,12 @@ export default function Order() {
         };
       }
       if (formState() === 0) {
-        setCompletedPage(false); //setCompletedPage(true);
+        // #NOTE DISABLE_ORDERS
+        setCompletedPage(true); //setCompletedPage(true);
       }
       if (formState() === 1 && cart().length > 0) {
-        setCompletedPage(false); //setCompletedPage(true);
+        // #NOTE DISABLE_ORDERS
+        setCompletedPage(true); //setCompletedPage(true);
       } else if (formState() === 1) {
         setCompletedPage(false);
       }
@@ -189,7 +191,9 @@ export default function Order() {
       console.log('big effect');
       console.log(cart());
 
-      setCompletedPage(false);
+      // #NOTE DISABLE_ORDERS
+      //setCompletedPage(false);
+
       return {
         cartLen: cart().length,
         completedPage: completedPage(),
@@ -283,9 +287,11 @@ export default function Order() {
       document.activeElement != emailInput
     ) {
       emailInput.setCustomValidity('Please enter a valid email address');
+      emailInput.setAttribute('valid', 'false');
       console.log('invalid email');
     } else {
       emailInput.setCustomValidity('');
+      emailInput.setAttribute('valid', 'true');
     }
 
     if (
@@ -296,9 +302,12 @@ export default function Order() {
       phoneInput.setCustomValidity(
         'Please enter a valid phone number (or none at all)'
       );
+      phoneInput.setAttribute('valid', 'false');
+
       console.log('invalid phone');
     } else {
       phoneInput.setCustomValidity('');
+      phoneInput.setAttribute('valid', 'true');
     }
     console.log({
       email: emailInput.value.match(EMAIL_VALIDATION_REGEX),
@@ -404,8 +413,8 @@ export default function Order() {
       <p>Vanilla</p>
       <p>Chocolate</p>
       <p>Strawberry</p>
-      <p>Salted Caramel Cashew</p>
-      <p>Chocolate Peppermint</p>
+      <p>Lemon Blueberry</p>
+      <p>Chocolate Matcha</p>
     </div>
   );
 
@@ -471,13 +480,18 @@ export default function Order() {
           <Match when={formState() === 0}>
             <h2>Place an order today!</h2>
             <p class={styles.instruction}>
-              We don't have another pop-up currently planned.
+              Place an order now for delivery (or pickup) on Easter Weekend!
+              (March 30-31)
               <br />
               <br />
-              If you want to get notified when our next pop up will be, you can
-              sign up for our newsletter: <EmailForm />
+              After you select your flavors and fill out a few details on this
+              page, we will email you with details on how to pay and when you
+              would like the cupcakes.
               <br />
-              Want to place an order now? Shoot us an email at{' '}
+              {/* If you want to get notified when our next pop up will be, you can
+              sign up for our newsletter: <EmailForm /> */}
+              <br />
+              Want to place an order for a different time? Shoot us an email at{' '}
               <a
                 href="mailto:hello@tuxedocupcakes.com"
                 target="_blank"
