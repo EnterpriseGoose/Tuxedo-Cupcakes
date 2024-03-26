@@ -11,7 +11,7 @@ import {
   onMount,
 } from 'solid-js';
 import { createClient } from '@supabase/supabase-js';
-import { useSearchParams } from 'solid-start';
+import { A, useSearchParams } from 'solid-start';
 import EmailForm from '~/components/EmailForm';
 
 const EMAIL_VALIDATION_REGEX =
@@ -344,11 +344,14 @@ export default function Order() {
 
   let checkCode = async (tryCount?: number) => {
     let target = document.getElementById('code') as HTMLInputElement;
-    if (!target && tryCount < 5) {
+    if (!target && tryCount < 3) {
       console.log('trying again to check code, try #: ' + tryCount);
       setTimeout(() => {
         checkCode(tryCount + 1);
       }, 200);
+      return;
+    } else if (tryCount >= 3) {
+      console.log('Unable to check code');
       return;
     }
     let successElem =
@@ -415,6 +418,9 @@ export default function Order() {
       <p>Strawberry</p>
       <p>Lemon Blueberry</p>
       <p>Chocolate Matcha</p>
+      <A href="/gallery/egg-basket">
+        <p>Easter Egg Basket (+$1 per)</p>
+      </A>
     </div>
   );
 
