@@ -11,6 +11,7 @@ export default function Layout(props?: {
   hideFooter?: boolean;
   desc?: string;
   mini?: boolean;
+  minimal?: boolean;
 }) {
   let footerRef;
   onMount(() => {
@@ -32,11 +33,11 @@ export default function Layout(props?: {
           }
         />
       </Head>
-      <Navbar mini={props.mini} home={props.home} />
+      <Navbar mini={props.mini} home={props.home} minimal={props.minimal} />
       <main class={`${styles.main} ${props.mini ? styles.mini : ''}`}>
         {props.children}
       </main>
-      <Show when={!props.hideFooter}>
+      <Show when={!props.hideFooter && !props.minimal}>
         <Footer ref={footerRef} />
       </Show>
     </div>

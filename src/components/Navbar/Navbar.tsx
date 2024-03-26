@@ -1,10 +1,15 @@
 import { useSearchParams } from '@solidjs/router';
 import { A } from 'solid-start';
 import styles from './Navbar.module.scss';
+import { Show } from 'solid-js';
 
 let previousLayout = undefined;
 
-export default function Navbar(props?: { home?: boolean; mini?: boolean }) {
+export default function Navbar(props?: {
+  home?: boolean;
+  mini?: boolean;
+  minimal?: boolean;
+}) {
   const [searchParams, setSearchparams] = useSearchParams();
 
   let home = props.home || false;
@@ -84,75 +89,77 @@ export default function Navbar(props?: { home?: boolean; mini?: boolean }) {
         />
       </A>
 
-      <nav>
-        <A
-          href="/"
-          activeClass={styles.selectedTab}
-          end={true}
-          draggable={false}
-          noScroll={true}
-        >
-          Home
-        </A>
-        <A
-          href="/order/"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Order
-        </A>
-        <A
-          href="/catering"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Catering
-        </A>
-        <A
-          href="/farmers-market/"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Farmers' Market
-        </A>
-        <A
-          href="/flavors"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Flavors
-        </A>
-        <A
-          href="/contact"
-          activeClass={styles.selectedTab}
-          draggable={false}
-          noScroll={true}
-        >
-          Contact
-        </A>
-        <div class={styles.socialLinkBox}>
-          <a
-            href="https://www.instagram.com/tuxedo_cupcakes/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class={styles.socialLink}
+      <Show when={!props.minimal}>
+        <nav>
+          <A
+            href="/"
+            activeClass={styles.selectedTab}
+            end={true}
+            draggable={false}
+            noScroll={true}
           >
-            <img src="/images/instagram-logo.svg" width={50} height={50} />
-          </a>
-          <a
-            href="https://www.facebook.com/profile.php?id=61555665201272"
-            target="_blank"
-            rel="noopener noreferrer"
-            class={styles.socialLink}
+            Home
+          </A>
+          <A
+            href="/order/"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
           >
-            <img src="/images/facebook-logo.svg" width={50} height={50} />
-          </a>
-        </div>
-      </nav>
+            Order
+          </A>
+          <A
+            href="/catering"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Catering
+          </A>
+          <A
+            href="/farmers-market/"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Farmers' Market
+          </A>
+          <A
+            href="/flavors"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Flavors
+          </A>
+          <A
+            href="/contact"
+            activeClass={styles.selectedTab}
+            draggable={false}
+            noScroll={true}
+          >
+            Contact
+          </A>
+          <div class={styles.socialLinkBox}>
+            <a
+              href="https://www.instagram.com/tuxedo_cupcakes/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={styles.socialLink}
+            >
+              <img src="/images/instagram-logo.svg" width={50} height={50} />
+            </a>
+            <a
+              href="https://www.facebook.com/profile.php?id=61555665201272"
+              target="_blank"
+              rel="noopener noreferrer"
+              class={styles.socialLink}
+            >
+              <img src="/images/facebook-logo.svg" width={50} height={50} />
+            </a>
+          </div>
+        </nav>
+      </Show>
       <div />
       <img
         src="/images/decorations/nav-bottom.svg"
