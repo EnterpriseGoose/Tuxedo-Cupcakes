@@ -149,11 +149,11 @@ export default function Order() {
       }
       if (formState() === 0) {
         // #NOTE DISABLE_ORDERS
-        setCompletedPage(true); //setCompletedPage(true);
+        setCompletedPage(false); //setCompletedPage(true);
       }
       if (formState() === 1 && cart().length > 0) {
         // #NOTE DISABLE_ORDERS
-        setCompletedPage(true); //setCompletedPage(true);
+        setCompletedPage(false); //setCompletedPage(true);
       } else if (formState() === 1) {
         setCompletedPage(false);
       }
@@ -192,7 +192,7 @@ export default function Order() {
       console.log(cart());
 
       // #NOTE DISABLE_ORDERS
-      //setCompletedPage(false);
+      setCompletedPage(false);
 
       return {
         cartLen: cart().length,
@@ -486,18 +486,13 @@ export default function Order() {
           <Match when={formState() === 0}>
             <h2>Place an order today!</h2>
             <p class={styles.instruction}>
-              Place an order now for delivery (or pickup) on Easter Weekend!
-              (March 30-31)
+              There currently is not another pop-up planned.
               <br />
               <br />
-              After you select your flavors and fill out a few details on this
-              page, we will email you with details on how to pay and when you
-              would like the cupcakes.
+              If you want to get notified when our next pop up will be, you can
+              sign up for our newsletter: <EmailForm />
               <br />
-              {/* If you want to get notified when our next pop up will be, you can
-              sign up for our newsletter: <EmailForm /> */}
-              <br />
-              Want to place an order for a different time? Shoot us an email at{' '}
+              Want to place an order now? Shoot us an email at{' '}
               <a
                 href="mailto:hello@tuxedocupcakes.com"
                 target="_blank"
