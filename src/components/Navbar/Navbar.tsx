@@ -13,7 +13,7 @@ export default function Navbar(props?: {
   const [searchParams, setSearchparams] = useSearchParams();
 
   let home = props.home || false;
-  let mini = props.mini || false;
+  let mini = props.mini || props.minimal || false;
 
   let newLayout = 'regular';
   let baseStyle = styles.regularLogo;
