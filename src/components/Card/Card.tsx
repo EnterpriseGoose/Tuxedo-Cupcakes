@@ -1,4 +1,3 @@
-import { Link } from '@solidjs/router';
 import { A } from 'solid-start';
 import styles from './Card.module.scss';
 

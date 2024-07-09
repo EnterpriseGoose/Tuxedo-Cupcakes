@@ -9,7 +9,7 @@
 	width: 100%;
 	overflow: hidden;
 
-	padding-top: calc(1 * $ru);
+	padding-top: calc(0.5 * $ru);
 
 	nav {
 		display: flex;
@@ -19,7 +19,7 @@
 		column-gap: calc(5 * $tru);
 		padding-bottom: calc(3 * $ru);
 		max-width: calc(100 * $wru);
-		margin-top: calc(2 * $ru);
+		margin-top: calc(1.5 * $ru);
 
 		a {
 			font-size: calc(3 * $tru);
@@ -91,7 +91,7 @@
 
 	&.regularLogo {
 		width: calc($tru * 25);
-		padding-bottom: calc($ru * 1.5);
+		padding-bottom: calc($ru * 0.5);
 		padding-top: calc($ru * 0.5);
 		margin-top: calc(1 * $ru);
 	}
@@ -126,7 +126,7 @@
 	@keyframes shrink {
 		to {
 			width: calc($tru * 25);
-			padding-bottom: calc($ru * 1.5);
+			padding-bottom: calc($ru * 0.5);
 			padding-top: calc($ru * 0.5);
 			margin-top: calc(1 * $ru);
 		}

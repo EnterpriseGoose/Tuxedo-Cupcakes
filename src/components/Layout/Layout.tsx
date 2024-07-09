@@ -12,6 +12,7 @@ export default function Layout(props?: {
   desc?: string;
   mini?: boolean;
   minimal?: boolean;
+  noOverflow?: boolean;
 }) {
   let footerRef;
   onMount(() => {
@@ -20,10 +21,12 @@ export default function Layout(props?: {
       footerRef.scrollIntoView();
     }
     setSearchparams({ p: undefined });
+
+    document.body.style.overflow = props.noOverflow ? 'hidden' : '';
   });
 
   return (
-    <div class={styles.root}>
+    <div class={styles.root} id="root">
       <Head>
         <meta
           name="description"
