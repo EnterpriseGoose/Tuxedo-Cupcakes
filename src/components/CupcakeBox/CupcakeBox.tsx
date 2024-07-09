@@ -48,7 +48,7 @@ export default function CupcakeBox(props: {
   return (
     <div>
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
-        <rect width="100%" height="100%" fill="gray" />
+        <rect width="100%" height="100%" fill="#cccccc" />
         <rect
           width={width - 20}
           height={height - 20}

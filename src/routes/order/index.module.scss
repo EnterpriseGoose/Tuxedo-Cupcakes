@@ -152,3 +152,28 @@
 		}
 	}
 }
+
+.cupcakeChoice {
+	.divider {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.boxChoice {
+		width: calc(40 * $wru);
+
+		.boxGrid {
+			display: grid;
+			grid: auto-flow / repeat(7, 1fr);
+			align-content: center;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	.flavorChoice {
+		width: calc(40 * $wru);
+	}
+}

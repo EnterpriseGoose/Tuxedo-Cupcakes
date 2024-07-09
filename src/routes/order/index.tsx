@@ -159,7 +159,8 @@ export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
   let [state, setState] = createSignal(1);
   let [marketSelect, setMarketSelect] = createSignal(0);
-  let [order, updateOrder] = createSignal({ market: '' });
+  let [order, updateOrder] = createSignal<Order>();
+  let [activeBox, setActiveBox] = createSignal<Box>();
 
   if (activeMarkets.length == 0) {
     for (let market of MARKETS) {
@@ -283,18 +284,46 @@ export default function Order() {
               </div>
             </Match>
             <Match when={state() >= 1 && state() < 2}>
-              <div class={styles.boxChoice}>
+              <div class={styles.cupcakeChoice}>
                 <h2>Choose your cupcakes</h2>
-                <For each={availableSizes}>
-                  {(boxSize) => (
-                    <CupcakeBox
-                      box={{
-                        type: boxSize,
-                        cupcakes: [],
-                      }}
-                    />
-                  )}
-                </For>
+                <div class={styles.divider}>
+                  <div class={styles.boxChoice}>
+                    <h2>1. Select Box</h2>
+                    <div class={styles.boxGrid}>
+                      <For each={availableSizes}>
+                        {(boxSize) => (
+                          <div
+                            class={styles.boxSelect}
+                            style={{
+                              'grid-column':
+                                'span ' +
+                                (boxSize.regular
+                                  ? Math.ceil(Math.sqrt(boxSize.quantity))
+                                  : Math.round(
+                                      (Math.ceil(Math.sqrt(boxSize.quantity)) *
+                                        2) /
+                                        3
+                                    )),
+                            }}
+                            onClick={() => {
+                              setActiveBox({ type: boxSize, cupcakes: [] });
+                            }}
+                          >
+                            <CupcakeBox
+                              box={{
+                                type: boxSize,
+                                cupcakes: [],
+                              }}
+                            />
+                          </div>
+                        )}
+                      </For>
+                    </div>
+                  </div>
+                  <div class={styles.flavorChoice}>
+                    <h2>2. Select Flavors</h2>
+                  </div>
+                </div>
               </div>
             </Match>
           </Switch>
