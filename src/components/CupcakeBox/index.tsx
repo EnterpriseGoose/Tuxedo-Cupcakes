@@ -1,3 +1,5 @@
-import CupcakeBox, { Flavor, BoxType, Box, availableSizes } from './CupcakeBox';
+import CupcakeBox, { availableSizes } from './CupcakeBox';
+import type { Flavor, BoxType, Box } from './CupcakeBox';
 export default CupcakeBox;
-export { Flavor, BoxType, Box, availableSizes };
+export type { Flavor, BoxType, Box };
+export { availableSizes };

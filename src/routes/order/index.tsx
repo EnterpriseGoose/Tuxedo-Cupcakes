@@ -66,6 +66,10 @@ const FLAVORS: { [id: string]: Flavor } = {
     id: 'LEMON_PISTACHIO',
     name: 'Lemon Pistachio',
   },
+  COCONUT_RASPBERRY: {
+    id: 'COCONUT_RASPBERRY',
+    name: 'Coconut Raspberry',
+  },
 };
 
 const MARKETS: Market[] = [
@@ -129,7 +133,22 @@ const MARKETS: Market[] = [
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
       FLAVORS.CHOCOLATE_CHERRY,
+      FLAVORS.SALTED_CARAMEL_CASHEW,
+    ],
+  },
+  {
+    week: new Date(2024, 6, 8, 0, 0),
+    times: ['Friday 7/5, 3 - 8PM', 'Saturday 7/6, 8AM - 1PM'],
+    names: ['Parsippany Farmers Market', 'Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
       FLAVORS.LEMON_PISTACHIO,
+      FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
   },
 ];
@@ -166,11 +185,7 @@ export default function Order() {
             <br />
             <button
               class="button"
-              onmouseenter={() => {
-                console.log('over');
-              }}
               onClick={async (e) => {
-                console.log('clicked');
                 e.target.classList.add('submitted');
                 setPageUp(true);
                 window.scrollTo(0, 10000);
