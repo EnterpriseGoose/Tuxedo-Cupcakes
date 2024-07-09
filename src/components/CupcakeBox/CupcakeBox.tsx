@@ -1,4 +1,4 @@
-import { For } from 'solid-js';
+import { createEffect, createSignal, For } from 'solid-js';
 import styles from './CupcakeBox.module.scss';
 
 export interface Flavor {
@@ -9,6 +9,7 @@ export interface Flavor {
 export interface BoxType {
   quantity: number;
   regular: boolean;
+  price: number;
 }
 
 export interface Box {
@@ -17,17 +18,14 @@ export interface Box {
 }
 
 export const availableSizes: BoxType[] = [
-  { quantity: 1, regular: true },
-  { quantity: 2, regular: true },
-  { quantity: 4, regular: true },
-  { quantity: 6, regular: true },
-  { quantity: 12, regular: true },
-  { quantity: 6, regular: false },
-  { quantity: 12, regular: false },
+  { quantity: 1, regular: true, price: 4 },
+  { quantity: 2, regular: true, price: 8 },
+  { quantity: 4, regular: true, price: 16 },
+  { quantity: 6, regular: true, price: 20 },
+  { quantity: 12, regular: true, price: 40 },
+  { quantity: 6, regular: false, price: 10 },
+  { quantity: 12, regular: false, price: 20 },
 ];
-
-const regularSize = 65;
-const miniSize = 40;
 
 export default function CupcakeBox(props: {
   box: Box;
@@ -35,37 +33,63 @@ export default function CupcakeBox(props: {
   brush?: string;
   scale?: number;
 }) {
-  let width = 20;
-  let height = 20;
-  let regular = props.box.type.regular;
-  let cupcakeSize = regular ? regularSize : miniSize;
+  if (props.scale == undefined) props.scale = 1;
+  let [regularSize, setRegularSize] = createSignal(65 * props.scale);
+  let [miniSize, setMiniSize] = createSignal(40 * props.scale);
+  let [width, setWidth] = createSignal(20);
+  let [height, setHeight] = createSignal(20);
+  let [flavorArray2D, setFlavorArray2D] = createSignal([]);
+  let [cupcakeSize, setCupcakeSize] = createSignal(0);
+  let [regular, setRegular] = createSignal(true);
 
-  width += Math.ceil(Math.sqrt(props.box.type.quantity)) * cupcakeSize;
-  height += Math.floor(Math.sqrt(props.box.type.quantity)) * cupcakeSize;
+  createEffect(() => {
+    console.log('reloading box');
+    let width = 20 * props.scale;
+    let height = 20 * props.scale;
+    setRegular(props.box.type.regular);
+    setCupcakeSize(regular() ? regularSize() : miniSize());
 
-  let flavorArray2D = transformBox(props.box);
+    width += Math.ceil(Math.sqrt(props.box.type.quantity)) * cupcakeSize();
+    height += Math.floor(Math.sqrt(props.box.type.quantity)) * cupcakeSize();
+    setWidth(width);
+    setHeight(height);
+
+    setFlavorArray2D(transformBox(props.box));
+  });
 
   return (
     <div>
-      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+      <svg
+        width={width()}
+        height={height()}
+        viewBox={`0 0 ${width()} ${height()}`}
+      >
         <rect width="100%" height="100%" fill="#cccccc" />
         <rect
-          width={width - 20}
-          height={height - 20}
+          width={width() - 20 * props.scale}
+          height={height() - 20 * props.scale}
           fill="white"
-          x={10}
-          y={10}
+          x={10 * props.scale}
+          y={10 * props.scale}
         />
-        <For each={flavorArray2D}>
+        <For each={flavorArray2D()}>
           {(row, i) => (
             <>
               <For each={row}>
                 {(cupcake, j) => (
                   <>
                     <circle
-                      r={cupcakeSize / 2 - 5}
-                      cx={`${10 + cupcakeSize / 2 + cupcakeSize * j()}`}
-                      cy={`${10 + cupcakeSize / 2 + cupcakeSize * i()}`}
+                      r={cupcakeSize() / 2 - 5 * props.scale}
+                      cx={`${
+                        10 * props.scale +
+                        cupcakeSize() / 2 +
+                        cupcakeSize() * j()
+                      }`}
+                      cy={`${
+                        10 * props.scale +
+                        cupcakeSize() / 2 +
+                        cupcakeSize() * i()
+                      }`}
                       fill="#eeeeee"
                     />
                   </>

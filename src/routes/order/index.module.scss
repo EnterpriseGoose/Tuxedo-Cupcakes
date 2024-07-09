@@ -159,6 +159,7 @@
 		flex-direction: row;
 		width: 100%;
 		justify-content: center;
+		gap: calc(10 * $wru);
 	}
 
 	.boxChoice {
@@ -170,6 +171,16 @@
 			align-content: center;
 			justify-content: center;
 			align-items: center;
+
+			.boxSelect {
+				&:hover {
+					filter: brightness(95%);
+				}
+
+				&:active {
+					filter: brightness(90%);
+				}
+			}
 		}
 	}
 

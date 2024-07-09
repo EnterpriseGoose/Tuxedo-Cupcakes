@@ -157,15 +157,16 @@ let activeMarkets: Market[] = [];
 
 export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
-  let [state, setState] = createSignal(1);
+  let [state, setState] = createSignal(0);
   let [marketSelect, setMarketSelect] = createSignal(0);
   let [order, updateOrder] = createSignal<Order>();
   let [activeBox, setActiveBox] = createSignal<Box>();
 
+  activeMarkets = [];
   if (activeMarkets.length == 0) {
     for (let market of MARKETS) {
       if (activeMarkets.length >= 3) continue;
-      if (market.week.getUTCMilliseconds() < Date.now()) {
+      if (market.week.getTime() + 345600000 > Date.now()) {
         activeMarkets.push(market);
       }
     }
@@ -307,6 +308,8 @@ export default function Order() {
                             }}
                             onClick={() => {
                               setActiveBox({ type: boxSize, cupcakes: [] });
+                              console.log({ type: boxSize, cupcakes: [] });
+                              console.log(activeBox());
                             }}
                           >
                             <CupcakeBox
@@ -322,6 +325,19 @@ export default function Order() {
                   </div>
                   <div class={styles.flavorChoice}>
                     <h2>2. Select Flavors</h2>
+                    <div class={styles.boxInfo}>
+                      <Show when={activeBox() != undefined}>
+                        <p>{`${activeBox().type.quantity} ${
+                          activeBox().type.regular ? 'Regular' : 'Mini'
+                        } - \$${activeBox().type.price}`}</p>
+                        <CupcakeBox
+                          box={activeBox()}
+                          editable={true}
+                          scale={1.5}
+                          brush=""
+                        />
+                      </Show>
+                    </div>
                   </div>
                 </div>
               </div>
