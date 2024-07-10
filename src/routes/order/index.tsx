@@ -83,6 +83,7 @@ const MARKETS: Market[] = [
       FLAVORS.LEMON_PISTACHIO,
       FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
+    title: 'July 8-14',
   },
   {
     week: new Date(2024, 6, 15, 0, 0),
@@ -98,6 +99,7 @@ const MARKETS: Market[] = [
       FLAVORS.LEMON_PISTACHIO,
       FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
+    title: 'July 15-21',
   },
 ];
 
@@ -107,6 +109,7 @@ export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
   let [state, setState] = createSignal(1);
   let [marketSelect, setMarketSelect] = createSignal(0);
+  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
   let [order, setOrder] = createSignal<Order>(
     {
       market: { week: new Date(), times: [], names: [], flavors: [] },
@@ -212,50 +215,55 @@ export default function Order() {
                   {(market, i) => (
                     <>
                       <div class={styles.marketGroup}>
-                        <div class={styles.names}>
-                          <For each={market.names}>
-                            {(name, j) => (
-                              <button
-                                class={`${styles.button} ${
-                                  market.times[j()] == order().time
-                                    ? styles.selected
-                                    : ''
-                                }`}
-                                onClick={() => {
-                                  console.log(
-                                    'selected market: ' +
-                                      name +
-                                      ' ' +
-                                      market.times[j()]
-                                  );
-                                  updateOrder({
-                                    market,
-                                    name,
-                                    time: market.times[j()],
-                                  });
-                                  console.log(order());
-                                  console.log(
+                        <Show when={market.title}>
+                          <h3>Week of {market.title}</h3>
+                        </Show>
+                        <div class={styles.divider}>
+                          <div class={styles.names}>
+                            <For each={market.names}>
+                              {(name, j) => (
+                                <button
+                                  class={`${styles.button} ${
                                     market.times[j()] == order().time
-                                  );
-                                }}
-                              >
-                                {name} -
-                                <br />
-                                <span>{market.times[j()]}</span>
-                              </button>
-                            )}
-                          </For>
-                        </div>
-                        <div class={styles.flavors}>
-                          <h3>Flavors:</h3>
-                          <For each={market.flavors}>
-                            {(flavor, j) => (
-                              <>
-                                {flavor.name}
-                                <br />
-                              </>
-                            )}
-                          </For>
+                                      ? styles.selected
+                                      : ''
+                                  }`}
+                                  onClick={() => {
+                                    console.log(
+                                      'selected market: ' +
+                                        name +
+                                        ' ' +
+                                        market.times[j()]
+                                    );
+                                    updateOrder({
+                                      market,
+                                      name,
+                                      time: market.times[j()],
+                                    });
+                                    console.log(order());
+                                    console.log(
+                                      market.times[j()] == order().time
+                                    );
+                                  }}
+                                >
+                                  {name} -
+                                  <br />
+                                  <span>{market.times[j()]}</span>
+                                </button>
+                              )}
+                            </For>
+                          </div>
+                          <div class={styles.flavors}>
+                            <h3>Flavors:</h3>
+                            <For each={market.flavors}>
+                              {(flavor, j) => (
+                                <>
+                                  {flavor.name}
+                                  <br />
+                                </>
+                              )}
+                            </For>
+                          </div>
                         </div>
                       </div>
                       <Show when={i() < activeMarkets.length - 1}>
@@ -307,8 +315,11 @@ export default function Order() {
               id="state1"
             >
               <h2>Choose your cupcakes</h2>
-              <div class={styles.divider}>
-                <div class={styles.boxChoice}>
+              <div
+                class={styles.stepGrid}
+                style={{ left: `calc(15vw - ${cupcakeSelectStep() * 82.5}vw)` }}
+              >
+                <div class={`${styles.boxChoice} ${styles.step}`}>
                   <h2>1. Select Box</h2>
                   <div class={styles.boxGrid}>
                     <For each={AVAILABLE_SIZES}>
@@ -329,15 +340,9 @@ export default function Order() {
                           onClick={() => {
                             setActiveBox({
                               type: boxSize,
-                              cupcakes: [
-                                FLAVORS.VANILLA_VANILLA,
-                                FLAVORS.VANILLA_CHOCOLATE,
-                                FLAVORS.CHOCOLATE_VANILLA,
-                                FLAVORS.CHOCOLATE_CHOCOLATE,
-                              ],
+                              cupcakes: activeBox() ? activeBox().cupcakes : [],
                             });
-                            console.log({ type: boxSize, cupcakes: [] });
-                            console.log(activeBox());
+                            setCupcakeSelectStep(1);
                           }}
                         >
                           <CupcakeBox
@@ -345,13 +350,32 @@ export default function Order() {
                               type: boxSize,
                               cupcakes: [],
                             }}
+                            tooltip
                           />
                         </div>
                       )}
                     </For>
                   </div>
                 </div>
-                <div class={styles.flavorChoice}>
+
+                <div class={styles.nextButton}>
+                  <button
+                    onClick={() => {
+                      if (cupcakeSelectStep() > 0) {
+                        setCupcakeSelectStep(cupcakeSelectStep() - 1);
+                      } else {
+                        setCupcakeSelectStep(cupcakeSelectStep() + 1);
+                      }
+                    }}
+                  >
+                    <img
+                      class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
+                      src="/images/arrow.svg"
+                    />
+                  </button>
+                </div>
+
+                <div class={`${styles.flavorChoice} ${styles.step}`}>
                   <h2>2. Select Flavors</h2>
                   <div class={styles.boxInfo}>
                     <Show when={activeBox() != undefined}>
@@ -367,32 +391,49 @@ export default function Order() {
                       />
                     </Show>
                   </div>
-                  <div class={styles.nextPage}>
-                    <button
-                      class={`${styles.back} button`}
-                      onClick={async (e) => {
-                        e.target.classList.add('submitted');
-                        setState(0);
-                        await sleep(1000);
-                        e.target.classList.remove('submitted');
-                      }}
-                    >
-                      <img src="/images/arrow.svg" /> Back
-                    </button>
-                    <button
-                      class={`${styles.next} button`}
-                      disabled={order().boxes.length == 0}
-                      onClick={async (e) => {
-                        e.target.classList.add('submitted');
-                        setState(2);
-                        await sleep(1000);
-                        e.target.classList.remove('submitted');
-                      }}
-                    >
-                      Next <img src="/images/arrow.svg" />
-                    </button>
-                  </div>
                 </div>
+
+                <div class={styles.nextButton}>
+                  <button
+                    onClick={() => {
+                      if (cupcakeSelectStep() > 0) {
+                        setCupcakeSelectStep(cupcakeSelectStep() - 1);
+                      } else {
+                        setCupcakeSelectStep(cupcakeSelectStep() + 1);
+                      }
+                    }}
+                  >
+                    <img
+                      class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
+                      src="/images/arrow.svg"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div class={styles.nextPage}>
+                <button
+                  class={`${styles.back} button`}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(0);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  <img src="/images/arrow.svg" /> Back
+                </button>
+                <button
+                  class={`${styles.next} button`}
+                  disabled={order().boxes.length == 0}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(2);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  Next <img src="/images/arrow.svg" />
+                </button>
               </div>
             </div>
           </div>

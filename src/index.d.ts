@@ -27,6 +27,7 @@ declare global {
     times: string[];
     names: string[];
     flavors: Flavor[];
+    title?: string;
   }
 
   interface Order {

@@ -50,8 +50,8 @@
 		cursor: pointer;
 		width: 100%;
 		margin: 0;
-		padding: calc(0.3 * $tru) 0 calc(1 * $tru) 0;
-		margin-bottom: calc(0 * $ru);
+		padding: calc(0.3 * $tru) 0 calc(0.3 * $tru) 0;
+		margin-bottom: calc(0.5 * $ru);
 
 		img {
 			transform: rotate(90deg);
@@ -92,6 +92,44 @@
 	}
 }
 
+.nextButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 12.5vw;
+
+	button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: calc(0.25 * $tru);
+		border-radius: 100%;
+		border: none;
+		background: $yellow-orange;
+		cursor: pointer;
+
+		img {
+			background-color: white;
+			width: calc(4 * $tru);
+			height: calc(4 * $tru);
+			padding: calc(1 * $tru);
+			border-radius: 100%;
+			rotate: 0deg;
+			transition:
+				background-color ease-in-out 200ms,
+				rotate ease-in-out 0.5s;
+
+			&:hover {
+				background-color: transparent;
+			}
+
+			&.flipped {
+				rotate: 180deg;
+			}
+		}
+	}
+}
+
 .pageBox {
 	transition: all 1.5s cubic-bezier(0.65, 0.05, 0.36, 1);
 	height: 100%;
@@ -125,89 +163,62 @@
 
 		.marketGroup {
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
+			align-items: center;
 			width: 70vw;
 			height: 70vh;
-			justify-content: center;
-			gap: 10vw;
 			background-color: $cyan;
 			text-align: left;
 			border-radius: 3vw;
 
-			.names {
+			h3 {
+				margin-bottom: 0;
+				margin-top: calc(2 * $ru);
+			}
+
+			.divider {
 				display: flex;
-				flex-direction: column;
-				margin-top: calc(5 * $ru);
+				flex-direction: row;
+				justify-content: center;
+				gap: 10vw;
 
-				.button {
-					text-align: left;
-					background-color: rgba(255, 255, 255, 0.33);
-					border: none;
-					padding: calc(1 * $tru) calc(2 * $tru);
-					width: fit-content;
-					border-radius: calc(1.5 * $tru);
-					transition: all ease-in-out 200ms;
-					cursor: pointer;
+				.names {
+					display: flex;
+					flex-direction: column;
+					margin-top: calc(3 * $ru);
 
-					span {
-						display: inline-block;
-						padding-left: calc(10 * $tru);
-					}
+					.button {
+						text-align: left;
+						background-color: rgba(255, 255, 255, 0.33);
+						border: none;
+						padding: calc(1 * $tru) calc(2 * $tru);
+						width: fit-content;
+						border-radius: calc(1.5 * $tru);
+						transition: all ease-in-out 200ms;
+						cursor: pointer;
 
-					&:hover {
-						background-color: rgba(255, 255, 255, 0.5);
-					}
+						span {
+							display: inline-block;
+							padding-left: calc(10 * $tru);
+						}
 
-					&:focus {
-						background-color: rgba(255, 255, 255, 0.7);
-					}
+						&:hover {
+							background-color: rgba(255, 255, 255, 0.5);
+						}
 
-					&.selected {
-						outline: rgba(255, 255, 255, 1) solid 3px;
-						background-color: rgba(255, 255, 255, 0.5);
+						&:focus {
+							background-color: rgba(255, 255, 255, 0.7);
+						}
+
+						&.selected {
+							outline: rgba(255, 255, 255, 1) solid 3px;
+							background-color: rgba(255, 255, 255, 0.5);
+						}
 					}
 				}
-			}
 
-			.flavors {
-				margin-top: calc(5 * $ru);
-			}
-		}
-	}
-
-	.nextButton {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 12.5vw;
-
-		button {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			padding: calc(0.25 * $tru);
-			border-radius: 100%;
-			border: none;
-			background: $yellow-orange;
-			cursor: pointer;
-
-			img {
-				background-color: white;
-				width: calc(4 * $tru);
-				height: calc(4 * $tru);
-				padding: calc(1 * $tru);
-				border-radius: 100%;
-				rotate: 0deg;
-				transition:
-					background-color ease-in-out 200ms,
-					rotate ease-in-out 0.5s;
-
-				&:hover {
-					background-color: transparent;
-				}
-
-				&.flipped {
-					rotate: 180deg;
+				.flavors {
+					margin-top: calc(3 * $ru);
 				}
 			}
 		}
@@ -215,18 +226,31 @@
 }
 
 .cupcakeChoice {
-	.divider {
+	h2 {
+		margin-bottom: calc(1 * $ru);
+	}
+
+	.stepGrid {
 		display: flex;
+		position: absolute;
 		flex-direction: row;
-		width: 100%;
-		justify-content: center;
-		gap: calc(10 * $wru);
+		flex-wrap: nowrap;
+		left: 15vw;
+		transition: left ease-in-out 0.5s;
+
+		.step {
+			width: 70vw;
+			height: 70vh;
+		}
 	}
 
 	.boxChoice {
-		width: calc(40 * $wru);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
 		.boxGrid {
+			width: fit-content;
 			display: grid;
 			grid: auto-flow / repeat(7, 1fr);
 			align-content: center;

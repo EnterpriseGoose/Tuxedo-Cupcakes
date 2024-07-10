@@ -117,6 +117,7 @@ export default function CupcakeBox(props: {
   brush?: Flavor;
   scale?: number;
   setActiveBox?: Setter<Box>;
+  tooltip?: boolean;
 }) {
   if (props.scale == undefined) props.scale = 1;
   let [regularSize, setRegularSize] = createSignal(65 * props.scale);
@@ -156,7 +157,12 @@ export default function CupcakeBox(props: {
   };
 
   return (
-    <div>
+    <div class="tooltip">
+      <Show when={props.tooltip}>
+        <span class="tooltip-text">{`${props.box.type.quantity} ${
+          props.box.type.regular ? 'Regular' : 'Mini'
+        } - \$${props.box.type.price}`}</span>
+      </Show>
       <svg
         width={width()}
         height={height()}

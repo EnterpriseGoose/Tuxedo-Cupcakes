@@ -77,3 +77,40 @@ a:hover {
 		box-shadow: inset 0 -2em $cyan;
 	}
 }
+
+.tooltip {
+	position: relative;
+}
+
+.tooltip .tooltip-text {
+	visibility: hidden;
+	font-size: calc(2 * $tru);
+	width: max-content;
+	padding: calc(0.2 * $ru) calc(0.7 * $ru);
+	background-color: black;
+	color: $text-light;
+	text-align: center;
+	border-radius: 6px;
+	position: absolute;
+	z-index: 5;
+	bottom: 100%;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+}
+
+.tooltip .tooltip-text::after {
+	content: " ";
+	position: absolute;
+	top: 100%; /* At the bottom of the tooltip */
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
