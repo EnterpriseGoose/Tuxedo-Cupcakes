@@ -6,6 +6,10 @@ import type { Flavor, Box, BoxType } from '~/components/CupcakeBox';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
 interface Market {
   week: Date;
   times: string[];
@@ -159,7 +163,27 @@ export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
   let [state, setState] = createSignal(0);
   let [marketSelect, setMarketSelect] = createSignal(0);
-  let [order, updateOrder] = createSignal<Order>();
+  let [order, setOrder] = createSignal<Order>(
+    {
+      market: { week: new Date(), times: [], names: [], flavors: [] },
+      time: '',
+      name: '',
+      boxes: [],
+      info: {
+        name: '',
+        email: '',
+        phone: '',
+        extra: '',
+        newsletter: false,
+        save: false,
+        discount: false,
+      },
+    },
+    { equals: false }
+  );
+  const updateOrder = (partialOrder: DeepPartial<Order>) => {
+    setOrder(Object.assign(order(), partialOrder));
+  };
   let [activeBox, setActiveBox] = createSignal<Box>();
 
   activeMarkets = [];
@@ -225,7 +249,7 @@ export default function Order() {
           </button>
           <Switch>
             <Match when={state() == 0}>
-              <div class={styles.marketChoice}>
+              <div class={`${styles.marketChoice} state0`}>
                 <h2>Choose Your Pickup Market</h2>
                 <div
                   class={styles.marketGrid}
@@ -238,7 +262,30 @@ export default function Order() {
                           <div class={styles.names}>
                             <For each={market.names}>
                               {(name, j) => (
-                                <button class={styles.button}>
+                                <button
+                                  class={`${styles.button} ${
+                                    market.times[j()] == order().time
+                                      ? styles.selected
+                                      : ''
+                                  }`}
+                                  onClick={() => {
+                                    console.log(
+                                      'selected market: ' +
+                                        name +
+                                        ' ' +
+                                        market.times[j()]
+                                    );
+                                    updateOrder({
+                                      market,
+                                      name,
+                                      time: market.times[j()],
+                                    });
+                                    console.log(order());
+                                    console.log(
+                                      market.times[j()] == order().time
+                                    );
+                                  }}
+                                >
                                   {name} -
                                   <br />
                                   <span>{market.times[j()]}</span>
@@ -282,10 +329,33 @@ export default function Order() {
                     )}
                   </For>
                 </div>
+                <div class={styles.nextPage}>
+                  <button
+                    class="button"
+                    disabled={order().time == ''}
+                    onClick={async (e) => {
+                      e.target.classList.add('submitted');
+
+                      let state0 = document.getElementById('state0');
+                      state0.animate(
+                        [
+                          { transform: 'translateX(0)' },
+                          { transform: 'translateX(-100%)' },
+                        ],
+                        { duration: 5, fill: 'forwards' }
+                      );
+
+                      await sleep(1000);
+                      e.target.classList.remove('submitted');
+                    }}
+                  >
+                    Next <img src="/images/arrow.svg" />
+                  </button>
+                </div>
               </div>
             </Match>
             <Match when={state() >= 1 && state() < 2}>
-              <div class={styles.cupcakeChoice}>
+              <div class={`${styles.cupcakeChoice} state1`}>
                 <h2>Choose your cupcakes</h2>
                 <div class={styles.divider}>
                   <div class={styles.boxChoice}>
