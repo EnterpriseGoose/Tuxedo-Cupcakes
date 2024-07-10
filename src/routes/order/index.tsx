@@ -1,80 +1,9 @@
 import Layout from '~/components/Layout';
 import styles from './index.module.scss';
 import { For, Match, Show, Switch, createSignal, onMount } from 'solid-js';
-import CupcakeBox, { availableSizes } from '~/components/CupcakeBox';
-import type { Flavor, Box, BoxType } from '~/components/CupcakeBox';
+import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from '~/components/CupcakeBox';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
-type DeepPartial<T> = {
-  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
-};
-
-interface Market {
-  week: Date;
-  times: string[];
-  names: string[];
-  flavors: Flavor[];
-}
-
-interface Order {
-  market: Market;
-  time: string;
-  name: string;
-  boxes: Box[];
-  info: {
-    name: string;
-    email: string;
-    phone: string;
-    extra: string;
-    newsletter: boolean;
-    save: boolean;
-    discount: boolean;
-  };
-}
-
-const FLAVORS: { [id: string]: Flavor } = {
-  VANILLA_VANILLA: { id: 'VANILLA_VANILLA', name: 'Vanilla Vanilla' },
-  VANILLA_CHOCOLATE: { id: 'VANILLA_CHOCOLATE', name: 'Vanilla Chocolate' },
-  CHOCOLATE_VANILLA: { id: 'CHOCOLATE_VANILLA', name: 'Chocolate Vanilla' },
-  CHOCOLATE_CHOCOLATE: {
-    id: 'CHOCOLATE_CHOCOLATE',
-    name: 'Chocolate Chocolate',
-  },
-  STRAWBERRY: {
-    id: 'STRAWBERRY',
-    name: 'Strawberry',
-  },
-  CHOCOLATE_STRAWBERRY: {
-    id: 'CHOCOLATE_STRAWBERRY',
-    name: 'Chocolate Strawberry',
-  },
-  MOCHA: { id: 'MOCHA', name: 'Mocha' },
-  COCONUT_PASSION_FRUIT: {
-    id: 'COCONUT_PASSION_FRUIT',
-    name: 'Coconut Passion Fruit',
-  },
-  SALTED_CARAMEL_CASHEW: {
-    id: 'SALTED_CARAMEL_CASHEW',
-    name: 'Salted Caramel Cashew',
-  },
-  CHOCOLATE_RASPBERRY: {
-    id: 'CHOCOLATE_RASPBERRY',
-    name: 'Chocolate Raspberry',
-  },
-  CHOCOLATE_CHERRY: {
-    id: 'CHOCOLATE_CHERRY',
-    name: 'Chocolate Cherry',
-  },
-  LEMON_PISTACHIO: {
-    id: 'LEMON_PISTACHIO',
-    name: 'Lemon Pistachio',
-  },
-  COCONUT_RASPBERRY: {
-    id: 'COCONUT_RASPBERRY',
-    name: 'Coconut Raspberry',
-  },
-};
 
 const MARKETS: Market[] = [
   {
@@ -176,7 +105,7 @@ let activeMarkets: Market[] = [];
 
 export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
-  let [state, setState] = createSignal(0);
+  let [state, setState] = createSignal(1);
   let [marketSelect, setMarketSelect] = createSignal(0);
   let [order, setOrder] = createSignal<Order>(
     {
@@ -274,7 +203,7 @@ export default function Order() {
               }`}
               id="state0"
             >
-              <h2>Choose Your Pickup Market</h2>
+              <h2>Choose Your Pickup Market (& Date)</h2>
               <div
                 class={styles.marketGrid}
                 style={{ left: `calc(15vw - ${marketSelect() * 82.5}vw)` }}
@@ -382,7 +311,7 @@ export default function Order() {
                 <div class={styles.boxChoice}>
                   <h2>1. Select Box</h2>
                   <div class={styles.boxGrid}>
-                    <For each={availableSizes}>
+                    <For each={AVAILABLE_SIZES}>
                       {(boxSize) => (
                         <div
                           class={styles.boxSelect}
@@ -398,7 +327,15 @@ export default function Order() {
                                   )),
                           }}
                           onClick={() => {
-                            setActiveBox({ type: boxSize, cupcakes: [] });
+                            setActiveBox({
+                              type: boxSize,
+                              cupcakes: [
+                                FLAVORS.VANILLA_VANILLA,
+                                FLAVORS.VANILLA_CHOCOLATE,
+                                FLAVORS.CHOCOLATE_VANILLA,
+                                FLAVORS.CHOCOLATE_CHOCOLATE,
+                              ],
+                            });
                             console.log({ type: boxSize, cupcakes: [] });
                             console.log(activeBox());
                           }}
@@ -425,14 +362,14 @@ export default function Order() {
                         box={activeBox()}
                         editable={true}
                         scale={1.5}
-                        brush=""
+                        brush={FLAVORS.CHOCOLATE_RASPBERRY}
+                        setActiveBox={setActiveBox}
                       />
                     </Show>
                   </div>
                   <div class={styles.nextPage}>
                     <button
                       class={`${styles.back} button`}
-                      disabled={order().time == ''}
                       onClick={async (e) => {
                         e.target.classList.add('submitted');
                         setState(0);
@@ -444,7 +381,7 @@ export default function Order() {
                     </button>
                     <button
                       class={`${styles.next} button`}
-                      disabled={order().time == ''}
+                      disabled={order().boxes.length == 0}
                       onClick={async (e) => {
                         e.target.classList.add('submitted');
                         setState(2);

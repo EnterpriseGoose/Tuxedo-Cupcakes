@@ -1,23 +1,8 @@
-import { createEffect, createSignal, For } from 'solid-js';
+import { createEffect, createSignal, For, Setter, Show } from 'solid-js';
 import styles from './CupcakeBox.module.scss';
+import Cupcake from '../Cupcake/Cupcake';
 
-export interface Flavor {
-  id: string;
-  name: string;
-}
-
-export interface BoxType {
-  quantity: number;
-  regular: boolean;
-  price: number;
-}
-
-export interface Box {
-  type: BoxType;
-  cupcakes: Flavor[];
-}
-
-export const availableSizes: BoxType[] = [
+export const AVAILABLE_SIZES: BoxType[] = [
   { quantity: 1, regular: true, price: 4 },
   { quantity: 2, regular: true, price: 8 },
   { quantity: 4, regular: true, price: 16 },
@@ -27,18 +12,118 @@ export const availableSizes: BoxType[] = [
   { quantity: 12, regular: false, price: 20 },
 ];
 
+const CHOCOLATE_CAKE = '#512D1E';
+const VANILLA_CAKE = '#F8ECD4';
+const LEMON_CAKE = '#FFDFA1';
+const CINNAMON_CAKE = '#E3BB8B';
+
+export const FLAVORS: { [id: string]: Flavor } = {
+  VANILLA_VANILLA: {
+    id: 'VANILLA_VANILLA',
+    name: 'Vanilla Vanilla',
+    cake: VANILLA_CAKE,
+    frosting: '#F0ECE3',
+    frosting_outline: '#EEE9DF',
+  },
+  VANILLA_CHOCOLATE: {
+    id: 'VANILLA_CHOCOLATE',
+    name: 'Vanilla Chocolate',
+    cake: VANILLA_CAKE,
+    frosting: '#7E5E50',
+    frosting_outline: '#6F5144',
+  },
+  CHOCOLATE_VANILLA: {
+    id: 'CHOCOLATE_VANILLA',
+    name: 'Chocolate Vanilla',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#F0ECE3',
+    frosting_outline: '#EEE9DF',
+  },
+  CHOCOLATE_CHOCOLATE: {
+    id: 'CHOCOLATE_CHOCOLATE',
+    name: 'Chocolate Chocolate',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#7E5E50',
+    frosting_outline: '#6F5144',
+  },
+  STRAWBERRY: {
+    id: 'STRAWBERRY',
+    name: 'Strawberry',
+    cake: VANILLA_CAKE,
+    frosting: '#ECBDC2',
+    frosting_outline: '#E9B7BD',
+  },
+  CHOCOLATE_STRAWBERRY: {
+    id: 'CHOCOLATE_STRAWBERRY',
+    name: 'Chocolate Strawberry',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#ECBDC2',
+    frosting_outline: '#E9B7BD',
+  },
+  MOCHA: {
+    id: 'MOCHA',
+    name: 'Mocha',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#A67C6A',
+    frosting_outline: '#9E7766',
+  },
+  COCONUT_PASSION_FRUIT: {
+    id: 'COCONUT_PASSION_FRUIT',
+    name: 'Coconut Passion Fruit',
+    cake: VANILLA_CAKE,
+    frosting: '#FEE9C0',
+    frosting_outline: '#F8DEAC',
+  },
+  SALTED_CARAMEL_CASHEW: {
+    id: 'SALTED_CARAMEL_CASHEW',
+    name: 'Salted Caramel Cashew',
+    cake: VANILLA_CAKE,
+    frosting: '#E9C9A4',
+    frosting_outline: '#D8BC9B',
+  },
+  CHOCOLATE_RASPBERRY: {
+    id: 'CHOCOLATE_RASPBERRY',
+    name: 'Chocolate Raspberry',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#DF779C',
+    frosting_outline: '#D36A8F',
+  },
+  CHOCOLATE_CHERRY: {
+    id: 'CHOCOLATE_CHERRY',
+    name: 'Chocolate Cherry',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#E0A5DE',
+    frosting_outline: '#CC96CA',
+  },
+  LEMON_PISTACHIO: {
+    id: 'LEMON_PISTACHIO',
+    name: 'Lemon Pistachio',
+    cake: LEMON_CAKE,
+    frosting: '#FEE9C0',
+    frosting_outline: '#BEE0A2',
+  },
+  COCONUT_RASPBERRY: {
+    id: 'COCONUT_RASPBERRY',
+    name: 'Coconut Raspberry',
+    cake: VANILLA_CAKE,
+    frosting: '#DF779C',
+    frosting_outline: '#D36A8F',
+  },
+};
+
 export default function CupcakeBox(props: {
   box: Box;
   editable?: boolean;
-  brush?: string;
+  brush?: Flavor;
   scale?: number;
+  setActiveBox?: Setter<Box>;
 }) {
   if (props.scale == undefined) props.scale = 1;
   let [regularSize, setRegularSize] = createSignal(65 * props.scale);
   let [miniSize, setMiniSize] = createSignal(40 * props.scale);
   let [width, setWidth] = createSignal(20);
   let [height, setHeight] = createSignal(20);
-  let [flavorArray2D, setFlavorArray2D] = createSignal([]);
+  let [flavorArray2D, setFlavorArray2D] = createSignal<Flavor[][]>([]);
   let [cupcakeSize, setCupcakeSize] = createSignal(0);
   let [regular, setRegular] = createSignal(true);
 
@@ -56,6 +141,19 @@ export default function CupcakeBox(props: {
 
     setFlavorArray2D(transformBox(props.box));
   });
+
+  const brushFlavor = (x: number, y: number) => {
+    if (props.editable && props.brush && props.setActiveBox != undefined) {
+      setFlavorArray2D((flavorArray) => {
+        flavorArray[x][y] = props.brush;
+        return flavorArray;
+      });
+      props.setActiveBox({
+        type: props.box.type,
+        cupcakes: flavorArray2D().flat(),
+      });
+    }
+  };
 
   return (
     <div>
@@ -80,18 +178,33 @@ export default function CupcakeBox(props: {
                   <>
                     <circle
                       r={cupcakeSize() / 2 - 5 * props.scale}
-                      cx={`${
+                      cx={
                         10 * props.scale +
                         cupcakeSize() / 2 +
                         cupcakeSize() * j()
-                      }`}
-                      cy={`${
+                      }
+                      cy={
                         10 * props.scale +
                         cupcakeSize() / 2 +
                         cupcakeSize() * i()
-                      }`}
+                      }
                       fill="#eeeeee"
+                      onClick={() => {
+                        brushFlavor(i(), j());
+                      }}
                     />
+                    <Show when={cupcake}>
+                      <Cupcake
+                        flavor={cupcake}
+                        scale={props.scale}
+                        size={cupcakeSize() / props.scale}
+                        x={10 * props.scale + cupcakeSize() * j()}
+                        y={10 * props.scale + cupcakeSize() * i()}
+                        onClick={() => {
+                          brushFlavor(i(), j());
+                        }}
+                      />
+                    </Show>
                   </>
                 )}
               </For>

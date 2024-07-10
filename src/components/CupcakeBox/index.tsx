@@ -1,5 +1,5 @@
-import CupcakeBox, { availableSizes } from './CupcakeBox';
+import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from './CupcakeBox';
 import type { Flavor, BoxType, Box } from './CupcakeBox';
 export default CupcakeBox;
 export type { Flavor, BoxType, Box };
-export { availableSizes };
+export { AVAILABLE_SIZES, FLAVORS };
