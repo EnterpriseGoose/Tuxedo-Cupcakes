@@ -142,7 +142,22 @@ const MARKETS: Market[] = [
   },
   {
     week: new Date(2024, 6, 8, 0, 0),
-    times: ['Friday 7/5, 3 - 8PM', 'Saturday 7/6, 8AM - 1PM'],
+    times: ['Friday 7/12, 3 - 8PM', 'Saturday 7/13, 8AM - 1PM'],
+    names: ['Parsippany Farmers Market', 'Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.LEMON_PISTACHIO,
+      FLAVORS.SALTED_CARAMEL_CASHEW,
+    ],
+  },
+  {
+    week: new Date(2024, 6, 15, 0, 0),
+    times: ['Friday 7/19, 3 - 8PM', 'Saturday 7/20, 8AM - 1PM'],
     names: ['Parsippany Farmers Market', 'Chatham Farmers Market'],
     flavors: [
       FLAVORS.VANILLA_VANILLA,
@@ -240,179 +255,210 @@ export default function Order() {
           id="orderPage"
         >
           <button
-            class={styles.back}
+            class={styles.closeOrderPage}
             onClick={() => {
               setPageUp(false);
             }}
           >
             <img src="/images/arrow.svg" />
           </button>
-          <Switch>
-            <Match when={state() == 0}>
-              <div class={`${styles.marketChoice} state0`}>
-                <h2>Choose Your Pickup Market</h2>
-                <div
-                  class={styles.marketGrid}
-                  style={{ left: `calc(15vw - ${marketSelect() * 82.5}vw)` }}
-                >
-                  <For each={activeMarkets}>
-                    {(market, i) => (
-                      <>
-                        <div class={styles.marketGroup}>
-                          <div class={styles.names}>
-                            <For each={market.names}>
-                              {(name, j) => (
-                                <button
-                                  class={`${styles.button} ${
+
+          <div class={styles.orderPageContent}>
+            <div
+              class={`${styles.pageBox} ${styles.marketChoice} ${
+                state() < 0
+                  ? styles.right
+                  : state() > 0
+                  ? styles.left
+                  : styles.active
+              }`}
+              id="state0"
+            >
+              <h2>Choose Your Pickup Market</h2>
+              <div
+                class={styles.marketGrid}
+                style={{ left: `calc(15vw - ${marketSelect() * 82.5}vw)` }}
+              >
+                <For each={activeMarkets}>
+                  {(market, i) => (
+                    <>
+                      <div class={styles.marketGroup}>
+                        <div class={styles.names}>
+                          <For each={market.names}>
+                            {(name, j) => (
+                              <button
+                                class={`${styles.button} ${
+                                  market.times[j()] == order().time
+                                    ? styles.selected
+                                    : ''
+                                }`}
+                                onClick={() => {
+                                  console.log(
+                                    'selected market: ' +
+                                      name +
+                                      ' ' +
+                                      market.times[j()]
+                                  );
+                                  updateOrder({
+                                    market,
+                                    name,
+                                    time: market.times[j()],
+                                  });
+                                  console.log(order());
+                                  console.log(
                                     market.times[j()] == order().time
-                                      ? styles.selected
-                                      : ''
-                                  }`}
-                                  onClick={() => {
-                                    console.log(
-                                      'selected market: ' +
-                                        name +
-                                        ' ' +
-                                        market.times[j()]
-                                    );
-                                    updateOrder({
-                                      market,
-                                      name,
-                                      time: market.times[j()],
-                                    });
-                                    console.log(order());
-                                    console.log(
-                                      market.times[j()] == order().time
-                                    );
-                                  }}
-                                >
-                                  {name} -
-                                  <br />
-                                  <span>{market.times[j()]}</span>
-                                </button>
-                              )}
-                            </For>
-                          </div>
-                          <div class={styles.flavors}>
-                            <h3>Flavors:</h3>
-                            <For each={market.flavors}>
-                              {(flavor, j) => (
-                                <>
-                                  {flavor.name}
-                                  <br />
-                                </>
-                              )}
-                            </For>
-                          </div>
+                                  );
+                                }}
+                              >
+                                {name} -
+                                <br />
+                                <span>{market.times[j()]}</span>
+                              </button>
+                            )}
+                          </For>
                         </div>
-                        <Show when={i() < activeMarkets.length - 1}>
-                          <div class={styles.nextButton}>
-                            <button
-                              onClick={() => {
-                                if (i() < marketSelect()) {
-                                  setMarketSelect(marketSelect() - 1);
-                                } else {
-                                  setMarketSelect(marketSelect() + 1);
-                                }
-                              }}
-                            >
-                              <img
-                                class={
-                                  i() < marketSelect() ? styles.flipped : ''
-                                }
-                                src="/images/arrow.svg"
-                              />
-                            </button>
-                          </div>
-                        </Show>
-                      </>
-                    )}
-                  </For>
-                </div>
-                <div class={styles.nextPage}>
-                  <button
-                    class="button"
-                    disabled={order().time == ''}
-                    onClick={async (e) => {
-                      e.target.classList.add('submitted');
-
-                      let state0 = document.getElementById('state0');
-                      state0.animate(
-                        [
-                          { transform: 'translateX(0)' },
-                          { transform: 'translateX(-100%)' },
-                        ],
-                        { duration: 5, fill: 'forwards' }
-                      );
-
-                      await sleep(1000);
-                      e.target.classList.remove('submitted');
-                    }}
-                  >
-                    Next <img src="/images/arrow.svg" />
-                  </button>
-                </div>
-              </div>
-            </Match>
-            <Match when={state() >= 1 && state() < 2}>
-              <div class={`${styles.cupcakeChoice} state1`}>
-                <h2>Choose your cupcakes</h2>
-                <div class={styles.divider}>
-                  <div class={styles.boxChoice}>
-                    <h2>1. Select Box</h2>
-                    <div class={styles.boxGrid}>
-                      <For each={availableSizes}>
-                        {(boxSize) => (
-                          <div
-                            class={styles.boxSelect}
-                            style={{
-                              'grid-column':
-                                'span ' +
-                                (boxSize.regular
-                                  ? Math.ceil(Math.sqrt(boxSize.quantity))
-                                  : Math.round(
-                                      (Math.ceil(Math.sqrt(boxSize.quantity)) *
-                                        2) /
-                                        3
-                                    )),
-                            }}
+                        <div class={styles.flavors}>
+                          <h3>Flavors:</h3>
+                          <For each={market.flavors}>
+                            {(flavor, j) => (
+                              <>
+                                {flavor.name}
+                                <br />
+                              </>
+                            )}
+                          </For>
+                        </div>
+                      </div>
+                      <Show when={i() < activeMarkets.length - 1}>
+                        <div class={styles.nextButton}>
+                          <button
                             onClick={() => {
-                              setActiveBox({ type: boxSize, cupcakes: [] });
-                              console.log({ type: boxSize, cupcakes: [] });
-                              console.log(activeBox());
+                              if (i() < marketSelect()) {
+                                setMarketSelect(marketSelect() - 1);
+                              } else {
+                                setMarketSelect(marketSelect() + 1);
+                              }
                             }}
                           >
-                            <CupcakeBox
-                              box={{
-                                type: boxSize,
-                                cupcakes: [],
-                              }}
+                            <img
+                              class={i() < marketSelect() ? styles.flipped : ''}
+                              src="/images/arrow.svg"
                             />
-                          </div>
-                        )}
-                      </For>
-                    </div>
-                  </div>
-                  <div class={styles.flavorChoice}>
-                    <h2>2. Select Flavors</h2>
-                    <div class={styles.boxInfo}>
-                      <Show when={activeBox() != undefined}>
-                        <p>{`${activeBox().type.quantity} ${
-                          activeBox().type.regular ? 'Regular' : 'Mini'
-                        } - \$${activeBox().type.price}`}</p>
-                        <CupcakeBox
-                          box={activeBox()}
-                          editable={true}
-                          scale={1.5}
-                          brush=""
-                        />
+                          </button>
+                        </div>
                       </Show>
-                    </div>
+                    </>
+                  )}
+                </For>
+              </div>
+              <div class={styles.nextPage}>
+                <button
+                  class="button"
+                  disabled={order().time == ''}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(1);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  Next <img src="/images/arrow.svg" />
+                </button>
+              </div>
+            </div>
+
+            <div
+              class={`${styles.pageBox} ${styles.cupcakeChoice} ${
+                state() < 1
+                  ? styles.right
+                  : state() >= 2
+                  ? styles.left
+                  : styles.active
+              }`}
+              id="state1"
+            >
+              <h2>Choose your cupcakes</h2>
+              <div class={styles.divider}>
+                <div class={styles.boxChoice}>
+                  <h2>1. Select Box</h2>
+                  <div class={styles.boxGrid}>
+                    <For each={availableSizes}>
+                      {(boxSize) => (
+                        <div
+                          class={styles.boxSelect}
+                          style={{
+                            'grid-column':
+                              'span ' +
+                              (boxSize.regular
+                                ? Math.ceil(Math.sqrt(boxSize.quantity))
+                                : Math.round(
+                                    (Math.ceil(Math.sqrt(boxSize.quantity)) *
+                                      2) /
+                                      3
+                                  )),
+                          }}
+                          onClick={() => {
+                            setActiveBox({ type: boxSize, cupcakes: [] });
+                            console.log({ type: boxSize, cupcakes: [] });
+                            console.log(activeBox());
+                          }}
+                        >
+                          <CupcakeBox
+                            box={{
+                              type: boxSize,
+                              cupcakes: [],
+                            }}
+                          />
+                        </div>
+                      )}
+                    </For>
+                  </div>
+                </div>
+                <div class={styles.flavorChoice}>
+                  <h2>2. Select Flavors</h2>
+                  <div class={styles.boxInfo}>
+                    <Show when={activeBox() != undefined}>
+                      <p>{`${activeBox().type.quantity} ${
+                        activeBox().type.regular ? 'Regular' : 'Mini'
+                      } - \$${activeBox().type.price}`}</p>
+                      <CupcakeBox
+                        box={activeBox()}
+                        editable={true}
+                        scale={1.5}
+                        brush=""
+                      />
+                    </Show>
+                  </div>
+                  <div class={styles.nextPage}>
+                    <button
+                      class={`${styles.back} button`}
+                      disabled={order().time == ''}
+                      onClick={async (e) => {
+                        e.target.classList.add('submitted');
+                        setState(0);
+                        await sleep(1000);
+                        e.target.classList.remove('submitted');
+                      }}
+                    >
+                      <img src="/images/arrow.svg" /> Back
+                    </button>
+                    <button
+                      class={`${styles.next} button`}
+                      disabled={order().time == ''}
+                      onClick={async (e) => {
+                        e.target.classList.add('submitted');
+                        setState(2);
+                        await sleep(1000);
+                        e.target.classList.remove('submitted');
+                      }}
+                    >
+                      Next <img src="/images/arrow.svg" />
+                    </button>
                   </div>
                 </div>
               </div>
-            </Match>
-          </Switch>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
