@@ -27,37 +27,37 @@ export default function Cupcake(props: {
         fill={props.flavor.cake}
       />
       <circle
-        r={((scaledSize * 0.5) / 2) * props.scale}
+        r={(scaledSize * 0.75) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting_outline}
       />
       <circle
-        r={((scaledSize * 0.45) / 2) * props.scale}
+        r={(scaledSize * 0.7) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting}
       />
       <circle
-        r={((scaledSize * 0.35) / 2) * props.scale}
+        r={(scaledSize * 0.5) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting_outline}
       />
       <circle
-        r={((scaledSize * 0.3) / 2) * props.scale}
+        r={(scaledSize * 0.45) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting}
       />
       <circle
-        r={((scaledSize * 0.15) / 2) * props.scale}
+        r={(scaledSize * 0.25) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting_outline}
       />
       <circle
-        r={((scaledSize * 0.1) / 2) * props.scale}
+        r={(scaledSize * 0.2) / 2 - 1 * props.scale}
         cx={scaledSize / 2}
         cy={scaledSize / 2}
         fill={props.flavor.frosting}

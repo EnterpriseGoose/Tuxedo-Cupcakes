@@ -99,8 +99,8 @@ export const FLAVORS: { [id: string]: Flavor } = {
     id: 'LEMON_PISTACHIO',
     name: 'Lemon Pistachio',
     cake: LEMON_CAKE,
-    frosting: '#FEE9C0',
-    frosting_outline: '#BEE0A2',
+    frosting: '#D5F5BB',
+    frosting_outline: '#C9ECAD',
   },
   COCONUT_RASPBERRY: {
     id: 'COCONUT_RASPBERRY',

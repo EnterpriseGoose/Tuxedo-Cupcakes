@@ -283,40 +283,65 @@
 			align-items: center;
 			gap: calc(10 * $ru);
 
-			.brushSelect {
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				gap: calc(1 * $ru);
+			.palette {
+				display: flex;
+				flex-direction: column;
+				gap: calc(2 * $ru);
 
-				.cupcake {
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					padding: -2px;
-					cursor: pointer;
-					border-radius: 100%;
-					padding: 0;
+				.brushSelect {
+					display: grid;
+					grid-template-columns: repeat(4, 1fr);
+					gap: calc(1 * $ru);
 
-					&:hover {
-						filter: brightness(0.95);
-					}
+					.cupcake {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						padding: -2px;
+						cursor: pointer;
+						border-radius: 100%;
+						padding: 0;
 
-					&:active {
-						filter: brightness(0.9);
-					}
+						&:hover {
+							filter: brightness(0.95);
+						}
 
-					&.selected {
-						&::before {
-							content: "";
-							position: absolute;
-							width: 105%;
-							height: 105%;
-							background-image: $orange-red;
-							border-radius: 100%;
-							z-index: -1;
+						&:active {
+							filter: brightness(0.9);
+						}
+
+						&.selected {
+							&::before {
+								content: "";
+								position: absolute;
+								width: 105%;
+								height: 105%;
+								background-image: $orange-red;
+								border-radius: 100%;
+								z-index: -1;
+							}
 						}
 					}
 				}
+
+				.buttons {
+					display: flex;
+					flex-direction: row;
+					width: 100%;
+					justify-content: center;
+					gap: calc(4 * $ru);
+				}
+			}
+		}
+	}
+
+	.cart {
+		.cartGrid {
+			display: grid;
+
+			.itemRow {
+				display: flex;
+				flex-direction: row;
 			}
 		}
 	}

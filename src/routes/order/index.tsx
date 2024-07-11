@@ -110,7 +110,7 @@ export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
   let [state, setState] = createSignal(1);
   let [marketSelect, setMarketSelect] = createSignal(0);
-  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(1);
+  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(2);
   let [order, setOrder] = createSignal<Order>(
     {
       market: { week: new Date(), times: [], names: [], flavors: [] },
@@ -132,11 +132,23 @@ export default function Order() {
   const updateOrder = (partialOrder: DeepPartial<Order>) => {
     setOrder(Object.assign(order(), partialOrder));
   };
-  updateOrder({ market: MARKETS[3] });
-  let [activeBox, setActiveBox] = createSignal<Box>({
-    cupcakes: [],
-    type: { price: 100, quantity: 12, regular: true },
+  updateOrder({
+    market: MARKETS[3],
+    boxes: [
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: new Array(12).fill(FLAVORS.STRAWBERRY),
+      },
+    ],
   });
+  let [activeBox, setActiveBox] = createSignal<Box>(
+    {
+      cupcakes: [],
+      type: { price: 0, quantity: 0, regular: true },
+    },
+    { equals: false }
+  );
+  setActiveBox();
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
 
   activeMarkets = [];
@@ -406,27 +418,88 @@ export default function Order() {
                           brush={activeBrush()}
                           setActiveBox={setActiveBox}
                         />
+                        <button
+                          class={`button ${styles.addToCart}`}
+                          disabled={
+                            activeBox().cupcakes.filter((v) => v == undefined)
+                              .length > 0 || activeBox().cupcakes.length == 0
+                          }
+                          onClick={async () => {
+                            let boxesArray = order().boxes;
+                            boxesArray.push(activeBox());
+                            updateOrder({ boxes: boxesArray });
+                            setCupcakeSelectStep(2);
+                            await sleep(1000);
+                            setActiveBox();
+                            setActiveBrush();
+                          }}
+                        >
+                          Put in cart
+                        </button>
                       </Show>
                     </div>
-                    <div class={styles.brushSelect}>
-                      <For each={order().market.flavors}>
-                        {(flavor) => (
-                          <div
-                            class={`${styles.cupcake} tooltip ${
-                              activeBrush() != undefined &&
-                              activeBrush().id == flavor.id
-                                ? styles.selected
-                                : ''
-                            }`}
-                            onClick={() => {
-                              setActiveBrush(flavor);
-                            }}
-                          >
-                            <span class="tooltip-text">{flavor.name}</span>
-                            <Cupcake flavor={flavor} scale={1.5} size={75} />
-                          </div>
-                        )}
-                      </For>
+                    <div class={styles.palette}>
+                      <div class={styles.brushSelect}>
+                        <For each={order().market.flavors}>
+                          {(flavor) => (
+                            <div
+                              class={`${styles.cupcake} tooltip ${
+                                activeBrush() != undefined &&
+                                activeBrush().id == flavor.id
+                                  ? styles.selected
+                                  : ''
+                              }`}
+                              onClick={() => {
+                                setActiveBrush(flavor);
+                              }}
+                            >
+                              <span class="tooltip-text">{flavor.name}</span>
+                              <Cupcake flavor={flavor} scale={1.5} size={75} />
+                            </div>
+                          )}
+                        </For>
+                      </div>
+                      <div class={styles.buttons}>
+                        <button
+                          class="button"
+                          disabled={
+                            activeBox() == undefined ||
+                            (activeBox().cupcakes.filter((v) => v == undefined)
+                              .length == 0 &&
+                              activeBox().cupcakes.length != 0) ||
+                            activeBrush() == undefined
+                          }
+                          onClick={() => {
+                            setActiveBox((box) => {
+                              box.cupcakes = new Array(box.type.quantity).fill(
+                                activeBrush()
+                              );
+                              console.log(box);
+                              return box;
+                            });
+                            console.log(activeBox());
+                          }}
+                        >
+                          Fill box
+                        </button>
+                        <button
+                          class="button"
+                          disabled={
+                            activeBox() == undefined ||
+                            activeBox().cupcakes.filter((v) => v != undefined)
+                              .length == 0 ||
+                            activeBox().cupcakes.length == 0
+                          }
+                          onClick={() => {
+                            setActiveBox({
+                              type: activeBox().type,
+                              cupcakes: [],
+                            });
+                          }}
+                        >
+                          Empty box
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -440,12 +513,30 @@ export default function Order() {
                         setCupcakeSelectStep(cupcakeSelectStep() + 1);
                       }
                     }}
+                    disabled={
+                      order().boxes.length == 0 && cupcakeSelectStep() < 2
+                    }
                   >
                     <img
                       class={cupcakeSelectStep() > 1 ? styles.flipped : ''}
                       src="/images/arrow.svg"
                     />
                   </button>
+                </div>
+
+                <div class={`${styles.cart} ${styles.step}`}>
+                  <h2>3. Review Cart</h2>
+                  <div class={styles.cartGrid}>
+                    <For each={order().boxes}>
+                      {(box) => (
+                        <>
+                          <div class={styles.cupcakeBox}>
+                            <CupcakeBox box={box} />
+                          </div>
+                        </>
+                      )}
+                    </For>
+                  </div>
                 </div>
               </div>
               <div class={styles.nextPage}>
