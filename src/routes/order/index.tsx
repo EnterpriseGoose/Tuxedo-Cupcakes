@@ -2,6 +2,7 @@ import Layout from '~/components/Layout';
 import styles from './index.module.scss';
 import { For, Match, Show, Switch, createSignal, onMount } from 'solid-js';
 import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from '~/components/CupcakeBox';
+import Cupcake from '~/components/Cupcake/Cupcake';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -81,7 +82,7 @@ const MARKETS: Market[] = [
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
       FLAVORS.LEMON_PISTACHIO,
-      FLAVORS.SALTED_CARAMEL_CASHEW,
+      FLAVORS.COCONUT_RASPBERRY,
     ],
     title: 'July 8-14',
   },
@@ -109,7 +110,7 @@ export default function Order() {
   let [pageUp, setPageUp] = createSignal(true);
   let [state, setState] = createSignal(1);
   let [marketSelect, setMarketSelect] = createSignal(0);
-  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
+  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(1);
   let [order, setOrder] = createSignal<Order>(
     {
       market: { week: new Date(), times: [], names: [], flavors: [] },
@@ -131,7 +132,12 @@ export default function Order() {
   const updateOrder = (partialOrder: DeepPartial<Order>) => {
     setOrder(Object.assign(order(), partialOrder));
   };
-  let [activeBox, setActiveBox] = createSignal<Box>();
+  updateOrder({ market: MARKETS[3] });
+  let [activeBox, setActiveBox] = createSignal<Box>({
+    cupcakes: [],
+    type: { price: 100, quantity: 12, regular: true },
+  });
+  let [activeBrush, setActiveBrush] = createSignal<Flavor>();
 
   activeMarkets = [];
   if (activeMarkets.length == 0) {
@@ -367,6 +373,9 @@ export default function Order() {
                         setCupcakeSelectStep(cupcakeSelectStep() + 1);
                       }
                     }}
+                    disabled={
+                      activeBox() === undefined && order().boxes.length === 0
+                    }
                   >
                     <img
                       class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
@@ -377,26 +386,55 @@ export default function Order() {
 
                 <div class={`${styles.flavorChoice} ${styles.step}`}>
                   <h2>2. Select Flavors</h2>
-                  <div class={styles.boxInfo}>
-                    <Show when={activeBox() != undefined}>
-                      <p>{`${activeBox().type.quantity} ${
-                        activeBox().type.regular ? 'Regular' : 'Mini'
-                      } - \$${activeBox().type.price}`}</p>
-                      <CupcakeBox
-                        box={activeBox()}
-                        editable={true}
-                        scale={1.5}
-                        brush={FLAVORS.CHOCOLATE_RASPBERRY}
-                        setActiveBox={setActiveBox}
-                      />
-                    </Show>
+                  <div class={styles.divider}>
+                    <div class={styles.boxInfo}>
+                      <Show
+                        when={activeBox() != undefined}
+                        fallback={
+                          <>
+                            <h3>Select a box to continue</h3>
+                          </>
+                        }
+                      >
+                        <p>{`${activeBox().type.quantity} ${
+                          activeBox().type.regular ? 'Regular' : 'Mini'
+                        } - $${activeBox().type.price}`}</p>
+                        <CupcakeBox
+                          box={activeBox()}
+                          editable={true}
+                          scale={1.5}
+                          brush={activeBrush()}
+                          setActiveBox={setActiveBox}
+                        />
+                      </Show>
+                    </div>
+                    <div class={styles.brushSelect}>
+                      <For each={order().market.flavors}>
+                        {(flavor) => (
+                          <div
+                            class={`${styles.cupcake} tooltip ${
+                              activeBrush() != undefined &&
+                              activeBrush().id == flavor.id
+                                ? styles.selected
+                                : ''
+                            }`}
+                            onClick={() => {
+                              setActiveBrush(flavor);
+                            }}
+                          >
+                            <span class="tooltip-text">{flavor.name}</span>
+                            <Cupcake flavor={flavor} scale={1.5} size={75} />
+                          </div>
+                        )}
+                      </For>
+                    </div>
                   </div>
                 </div>
 
                 <div class={styles.nextButton}>
                   <button
                     onClick={() => {
-                      if (cupcakeSelectStep() > 0) {
+                      if (cupcakeSelectStep() > 1) {
                         setCupcakeSelectStep(cupcakeSelectStep() - 1);
                       } else {
                         setCupcakeSelectStep(cupcakeSelectStep() + 1);
@@ -404,7 +442,7 @@ export default function Order() {
                     }}
                   >
                     <img
-                      class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
+                      class={cupcakeSelectStep() > 1 ? styles.flipped : ''}
                       src="/images/arrow.svg"
                     />
                   </button>

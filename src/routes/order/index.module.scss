@@ -107,6 +107,7 @@
 		border: none;
 		background: $yellow-orange;
 		cursor: pointer;
+		transition: all 0.3s ease-in-out;
 
 		img {
 			background-color: white;
@@ -126,6 +127,11 @@
 			&.flipped {
 				rotate: 180deg;
 			}
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			filter: grayscale(100%);
 		}
 	}
 }
@@ -270,6 +276,48 @@
 	}
 
 	.flavorChoice {
-		width: calc(40 * $wru);
+		.divider {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			gap: calc(10 * $ru);
+
+			.brushSelect {
+				display: grid;
+				grid-template-columns: repeat(4, 1fr);
+				gap: calc(1 * $ru);
+
+				.cupcake {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					padding: -2px;
+					cursor: pointer;
+					border-radius: 100%;
+					padding: 0;
+
+					&:hover {
+						filter: brightness(0.95);
+					}
+
+					&:active {
+						filter: brightness(0.9);
+					}
+
+					&.selected {
+						&::before {
+							content: "";
+							position: absolute;
+							width: 105%;
+							height: 105%;
+							background-image: $orange-red;
+							border-radius: 100%;
+							z-index: -1;
+						}
+					}
+				}
+			}
+		}
 	}
 }

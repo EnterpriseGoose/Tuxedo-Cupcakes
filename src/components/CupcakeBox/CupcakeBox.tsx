@@ -208,6 +208,7 @@ export default function CupcakeBox(props: {
                         y={10 * props.scale + cupcakeSize() * i()}
                         onClick={() => {
                           brushFlavor(i(), j());
+                          console.dir(flavorArray2D());
                         }}
                       />
                     </Show>
