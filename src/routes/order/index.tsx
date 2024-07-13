@@ -137,7 +137,31 @@ export default function Order() {
     boxes: [
       {
         type: { price: 100, quantity: 12, regular: true },
-        cupcakes: new Array(12).fill(FLAVORS.STRAWBERRY),
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
       },
     ],
   });
@@ -148,6 +172,7 @@ export default function Order() {
     },
     { equals: false }
   );
+  let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
   setActiveBox();
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
 
@@ -386,7 +411,9 @@ export default function Order() {
                       }
                     }}
                     disabled={
-                      activeBox() === undefined && order().boxes.length === 0
+                      activeBox() === undefined &&
+                      order().boxes.length === 0 &&
+                      cupcakeSelectStep() == 0
                     }
                   >
                     <img
@@ -432,6 +459,10 @@ export default function Order() {
                             await sleep(1000);
                             setActiveBox();
                             setActiveBrush();
+                            if (activeBoxEditBuffer() != undefined) {
+                              setActiveBox(activeBoxEditBuffer());
+                              setActiveBoxEditBuffer();
+                            }
                           }}
                         >
                           Put in cart
@@ -471,8 +502,8 @@ export default function Order() {
                           }
                           onClick={() => {
                             setActiveBox((box) => {
-                              box.cupcakes = new Array(box.type.quantity).fill(
-                                activeBrush()
+                              box.cupcakes = box.cupcakes.map((flavor) =>
+                                flavor == undefined ? activeBrush() : flavor
                               );
                               console.log(box);
                               return box;
@@ -528,15 +559,94 @@ export default function Order() {
                   <h2>3. Review Cart</h2>
                   <div class={styles.cartGrid}>
                     <For each={order().boxes}>
-                      {(box) => (
+                      {(box, i) => (
                         <>
                           <div class={styles.cupcakeBox}>
                             <CupcakeBox box={box} />
+                          </div>
+                          <div class={styles.divider} />
+                          <div class={styles.boxInfo}>{`${box.type.quantity} ${
+                            box.type.regular ? 'Regular' : 'Mini'
+                          } - $${box.type.price}`}</div>
+                          <div class={styles.divider} />
+                          <div class={styles.flavors}>
+                            {Object.entries(
+                              box.cupcakes.reduce((flavorList, nextFlavor) => {
+                                if (
+                                  Object.keys(flavorList).includes(
+                                    nextFlavor.name
+                                  )
+                                )
+                                  flavorList[nextFlavor.name] += 1;
+                                else flavorList[nextFlavor.name] = 1;
+                                return flavorList;
+                              }, {})
+                            ).reduce(
+                              (currString, flavor) =>
+                                currString +
+                                flavor[0] +
+                                ' ×' +
+                                flavor[1] +
+                                `\n`,
+                              ''
+                            )}
+                          </div>
+                          <div class={styles.divider} />
+                          <div class={styles.buttons}>
+                            <button
+                              class="button"
+                              onClick={() => {
+                                updateOrder({
+                                  boxes: order().boxes.toSpliced(i(), 1),
+                                });
+                                if (order().boxes.length == 0) {
+                                  setCupcakeSelectStep(0);
+                                }
+                              }}
+                            >
+                              Remove
+                            </button>
+                            <button
+                              class="button"
+                              onClick={() => {
+                                if (activeBox() != undefined) {
+                                  setActiveBoxEditBuffer(activeBox());
+                                }
+                                setActiveBox(box);
+                                setCupcakeSelectStep(1);
+                                updateOrder({
+                                  boxes: order().boxes.toSpliced(i(), 1),
+                                });
+                              }}
+                            >
+                              Edit
+                            </button>
+                            <button
+                              class="button"
+                              onClick={() => {
+                                updateOrder({
+                                  boxes: [
+                                    ...order().boxes,
+                                    structuredClone(box),
+                                  ],
+                                });
+                              }}
+                            >
+                              Duplicate
+                            </button>
                           </div>
                         </>
                       )}
                     </For>
                   </div>
+                  <button
+                    class={`button ${styles.addBox}`}
+                    onClick={() => {
+                      setCupcakeSelectStep(0);
+                    }}
+                  >
+                    Add Another Box
+                  </button>
                 </div>
               </div>
               <div class={styles.nextPage}>
