@@ -1,6 +1,6 @@
 import { createEffect, createSignal, For, Setter, Show } from 'solid-js';
 import styles from './CupcakeBox.module.scss';
-import Cupcake from '../Cupcake/Cupcake';
+import Cupcake from '../Cupcake';
 
 export const AVAILABLE_SIZES: BoxType[] = [
   { quantity: 1, regular: true, price: 4 },
