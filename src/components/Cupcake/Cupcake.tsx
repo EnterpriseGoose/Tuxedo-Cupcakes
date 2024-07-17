@@ -1,5 +1,4 @@
 import { JSX } from 'solid-js';
-import { Flavor } from '../CupcakeBox';
 
 export default function Cupcake(props: {
   flavor: Flavor;

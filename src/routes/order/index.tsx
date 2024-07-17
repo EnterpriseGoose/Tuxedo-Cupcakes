@@ -4,6 +4,7 @@ import { For, Match, Show, Switch, createSignal, onMount } from 'solid-js';
 import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from '~/components/CupcakeBox';
 import Cupcake from '~/components/Cupcake';
 import { createClient } from '@supabase/supabase-js';
+import { createStore, unwrap } from 'solid-js/store';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const EMAIL_VALIDATION_REGEX =
@@ -136,36 +137,30 @@ export default function Order() {
     setMobileBrowser(mobileCheck());
   });
   let [pageUp, setPageUp] = createSignal(true);
-  let [state, setState] = createSignal(2);
+  let [state, setState] = createSignal(3);
   let [marketSelect, setMarketSelect] = createSignal(0);
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(2);
-  let [order, setOrder] = createSignal<Order>(
-    {
-      market: { week: new Date(), times: [], names: [], flavors: [] },
-      time: '',
+  let [order, setOrder] = createStore<Order>({
+    market: { week: new Date(), times: [], names: [], flavors: [] },
+    time: '',
+    name: '',
+    boxes: [],
+    info: {
       name: '',
-      boxes: [],
-      info: {
-        name: '',
-        email: '',
-        phone: '',
-        extra: '',
-        newsletter: false,
-        save: false,
-        discount: {
-          code: '',
-          discount: 0,
-          type: '',
-          used: true,
-        },
+      email: '',
+      phone: '',
+      extra: '',
+      newsletter: false,
+      save: false,
+      discount: {
+        code: '',
+        discount: 0,
+        type: '',
+        used: true,
       },
     },
-    { equals: false }
-  );
-  const updateOrder = (partialOrder: DeepPartial<Order>) => {
-    setOrder(Object.assign(order(), partialOrder));
-  };
-  updateOrder({
+  });
+  setOrder({
     market: MARKETS[3],
     boxes: [
       {
@@ -197,11 +192,11 @@ export default function Order() {
         ],
       },
     ],
-    info: {
-      name: 'Olive',
-      email: 'olive@tuxedocupcakes.com',
-      phone: '8622060280',
-    },
+  });
+  setOrder('info', {
+    name: 'Olive',
+    email: 'olive@tuxedocupcakes.com',
+    phone: '8622060280',
   });
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
@@ -280,16 +275,13 @@ export default function Order() {
       setExtraDetailsValid(false);
     }
 
-    updateOrder({
-      info: {
-        email: emailInput.value,
-        name: nameInput.value,
-        phone: phoneInput.value,
-        extra: toAddInput.value,
-        newsletter: newsletterInput.checked,
-        save: saveDetailsInput.checked,
-        discount: order().info.discount,
-      },
+    setOrder('info', {
+      email: emailInput.value,
+      name: nameInput.value,
+      phone: phoneInput.value,
+      extra: toAddInput.value,
+      newsletter: newsletterInput.checked,
+      save: saveDetailsInput.checked,
     });
   };
 
@@ -312,11 +304,8 @@ export default function Order() {
 
     if (parseInt(code).toString().length !== 9) {
       successElem.textContent = '';
-      updateOrder({
-        info: {
-          ...order().info,
-          discount: { code, discount: 0, type: '', used: true },
-        },
+      setOrder('info', {
+        discount: { code, discount: 0, type: '', used: true },
       });
       return;
     }
@@ -337,11 +326,8 @@ export default function Order() {
         '\nTry refreshing and trying again';
       target.parentElement.after(errorNode);
       console.log(error);
-      updateOrder({
-        info: {
-          ...order().info,
-          discount: { code, discount: 0, type: '', used: true },
-        },
+      setOrder('info', {
+        discount: { code, discount: 0, type: '', used: true },
       });
     }
     if (discount) {
@@ -357,17 +343,12 @@ export default function Order() {
         successElem.textContent = '✓';
       }
 
-      updateOrder({
-        info: {
-          ...order().info,
-          discount,
-        },
-      });
+      setOrder('info', { discount });
     } else {
       target.setAttribute('valid', 'false');
       successElem.textContent = '✖';
     }
-    console.log(order().info);
+    console.log(order.info);
   };
 
   return (
@@ -458,7 +439,7 @@ export default function Order() {
                               {(name, j) => (
                                 <button
                                   class={`${styles.button} ${
-                                    market.times[j()] == order().time
+                                    market.times[j()] == order.time
                                       ? styles.selected
                                       : ''
                                   }`}
@@ -469,14 +450,14 @@ export default function Order() {
                                         ' ' +
                                         market.times[j()]
                                     );
-                                    updateOrder({
+                                    setOrder({
                                       market,
                                       name,
                                       time: market.times[j()],
                                     });
-                                    console.log(order());
+                                    console.log(order);
                                     console.log(
-                                      market.times[j()] == order().time
+                                      market.times[j()] == order.time
                                     );
                                   }}
                                 >
@@ -525,7 +506,7 @@ export default function Order() {
               <div class={styles.nextPage}>
                 <button
                   class="button"
-                  disabled={order().time == ''}
+                  disabled={order.time == ''}
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(1);
@@ -542,7 +523,7 @@ export default function Order() {
               class={`${styles.pageBox} ${styles.cupcakeChoice} ${
                 state() < 1
                   ? styles.right
-                  : state() >= 2
+                  : state() > 1
                   ? styles.left
                   : styles.active
               }`}
@@ -603,7 +584,7 @@ export default function Order() {
                     }}
                     disabled={
                       activeBox() === undefined &&
-                      order().boxes.length === 0 &&
+                      order.boxes.length === 0 &&
                       cupcakeSelectStep() == 0
                     }
                   >
@@ -643,9 +624,7 @@ export default function Order() {
                               .length > 0 || activeBox().cupcakes.length == 0
                           }
                           onClick={async () => {
-                            let boxesArray = order().boxes;
-                            boxesArray.push(activeBox());
-                            updateOrder({ boxes: boxesArray });
+                            setOrder('boxes', order.boxes.length, activeBox());
                             setCupcakeSelectStep(2);
                             await sleep(1000);
                             setActiveBox();
@@ -663,7 +642,7 @@ export default function Order() {
                     <div class={styles.palette}>
                       <h3>Select flavor to place in box</h3>
                       <div class={styles.brushSelect}>
-                        <For each={order().market.flavors}>
+                        <For each={order.market.flavors}>
                           {(flavor) => (
                             <div
                               class={`${styles.cupcake} tooltip ${
@@ -742,7 +721,7 @@ export default function Order() {
                       }
                     }}
                     disabled={
-                      order().boxes.length == 0 && cupcakeSelectStep() < 2
+                      order.boxes.length == 0 && cupcakeSelectStep() < 2
                     }
                   >
                     <img
@@ -755,7 +734,7 @@ export default function Order() {
                 <div class={`${styles.cart} ${styles.step}`}>
                   <h2>3. Review Cart</h2>
                   <div class={styles.cartGrid}>
-                    <For each={order().boxes}>
+                    <For each={order.boxes}>
                       {(box, i) => (
                         <>
                           <div class={styles.cupcakeBox}>
@@ -793,10 +772,12 @@ export default function Order() {
                             <button
                               class="button"
                               onClick={() => {
-                                updateOrder({
-                                  boxes: order().boxes.toSpliced(i(), 1),
-                                });
-                                if (order().boxes.length == 0) {
+                                setOrder(
+                                  'boxes',
+                                  order.boxes.toSpliced(i(), 1)
+                                );
+
+                                if (order.boxes.length == 0) {
                                   setCupcakeSelectStep(0);
                                 }
                               }}
@@ -811,9 +792,10 @@ export default function Order() {
                                 }
                                 setActiveBox(box);
                                 setCupcakeSelectStep(1);
-                                updateOrder({
-                                  boxes: order().boxes.toSpliced(i(), 1),
-                                });
+                                setOrder(
+                                  'boxes',
+                                  order.boxes.toSpliced(i(), 1)
+                                );
                               }}
                             >
                               Edit
@@ -821,12 +803,12 @@ export default function Order() {
                             <button
                               class="button"
                               onClick={() => {
-                                updateOrder({
-                                  boxes: [
-                                    ...order().boxes,
-                                    structuredClone(box),
-                                  ],
-                                });
+                                console.log(box);
+                                setOrder(
+                                  'boxes',
+                                  order.boxes.length,
+                                  structuredClone(unwrap(box))
+                                );
                               }}
                             >
                               Duplicate
@@ -860,7 +842,7 @@ export default function Order() {
                 </button>
                 <button
                   class={`${styles.next} button`}
-                  disabled={order().boxes.length == 0}
+                  disabled={order.boxes.length == 0}
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(2);
@@ -876,7 +858,7 @@ export default function Order() {
               class={`${styles.pageBox} ${styles.extraDetails} ${
                 state() < 2
                   ? styles.right
-                  : state() >= 3
+                  : state() > 2
                   ? styles.left
                   : styles.active
               }`}
@@ -891,7 +873,7 @@ export default function Order() {
                     id="nameInput"
                     oninput={checkDetailInputs}
                     placeholder="(required)"
-                    value={order().info.name}
+                    value={order.info.name}
                   />
                 </div>
                 <label>Email</label>
@@ -901,7 +883,7 @@ export default function Order() {
                     id="emailInput"
                     oninput={checkDetailInputs}
                     placeholder="(required)"
-                    value={order().info.email}
+                    value={order.info.email}
                   />
                 </div>
                 <label>Phone</label>
@@ -910,7 +892,7 @@ export default function Order() {
                     type="tel"
                     id="phoneInput"
                     oninput={checkDetailInputs}
-                    value={order().info.phone}
+                    value={order.info.phone}
                   />
                 </div>
                 <div class={styles.toAdd}>
@@ -918,7 +900,7 @@ export default function Order() {
                   <textarea
                     id="toAddInput"
                     oninput={checkDetailInputs}
-                    value={order().info.extra}
+                    value={order.info.extra}
                   />
                 </div>
                 <div class={styles.newsletter}>
@@ -931,7 +913,7 @@ export default function Order() {
                     type="checkbox"
                     id="newsletterInput"
                     oninput={checkDetailInputs}
-                    checked={order().info.newsletter}
+                    checked={order.info.newsletter}
                   ></input>
                 </div>
                 <div class={styles.saveDetails}>
@@ -941,7 +923,7 @@ export default function Order() {
                     type="checkbox"
                     id="saveInput"
                     oninput={checkDetailInputs}
-                    checked={order().info.save}
+                    checked={order.info.save}
                   ></input>
                 </div>
               </div>
@@ -972,76 +954,96 @@ export default function Order() {
               </div>
             </div>
             <div
-              class={`${styles.pageBox} ${styles.extraDetails} ${
+              class={`${styles.pageBox} ${styles.reviewOrder} ${
                 state() < 3
                   ? styles.right
-                  : state() >= 4
+                  : state() > 3
                   ? styles.left
                   : styles.active
               }`}
               id="state3"
             >
               <h2>Review order</h2>
-              <div class={styles.detailsGrid}>
-                <label>Name</label>
-                <div class={styles.textInput}>
-                  <input
-                    type="text"
-                    id="nameInput"
-                    oninput={checkDetailInputs}
-                    placeholder="(required)"
-                    value={order().info.name}
-                  />
-                </div>
-                <label>Email</label>
-                <div class={styles.textInput}>
-                  <input
-                    type="email"
-                    id="emailInput"
-                    oninput={checkDetailInputs}
-                    placeholder="(required)"
-                    value={order().info.email}
-                  />
-                </div>
-                <label>Phone</label>
-                <div class={styles.textInput}>
-                  <input
-                    type="tel"
-                    id="phoneInput"
-                    oninput={checkDetailInputs}
-                    value={order().info.phone}
-                  />
-                </div>
-                <div class={styles.toAdd}>
-                  <label>Anything else you wish to add?</label>
-                  <textarea
-                    id="toAddInput"
-                    oninput={checkDetailInputs}
-                    value={order().info.extra}
-                  />
-                </div>
-                <div class={styles.newsletter}>
-                  <label>
-                    Do you want to recieve occasional
-                    <br /> email updates about Tuxedo Cupcakes?
-                  </label>
+              <div class={styles.divider}>
+                <div class={styles.cart}>
+                  <h3>Cart</h3>
+                  <div class={styles.cartGrid}>
+                    <For each={order.boxes}>
+                      {(box, i) => (
+                        <>
+                          <div class={styles.cupcakeBox}>
+                            <CupcakeBox box={box} />
+                          </div>
+                          <div class={styles.divider} />
+                          <div class={styles.flavors}>
+                            {Object.entries(
+                              box.cupcakes.reduce((flavorList, nextFlavor) => {
+                                if (
+                                  Object.keys(flavorList).includes(
+                                    nextFlavor.name
+                                  )
+                                )
+                                  flavorList[nextFlavor.name] += 1;
+                                else flavorList[nextFlavor.name] = 1;
+                                return flavorList;
+                              }, {})
+                            ).reduce(
+                              (currString, flavor) =>
+                                currString +
+                                flavor[0] +
+                                ' ×' +
+                                flavor[1] +
+                                `\n`,
+                              ''
+                            )}
+                          </div>
 
-                  <input
-                    type="checkbox"
-                    id="newsletterInput"
-                    oninput={checkDetailInputs}
-                    checked={order().info.newsletter}
-                  ></input>
+                          <div class={styles.divider} />
+                          <div class={styles.boxInfo}>{`${box.type.quantity} ${
+                            box.type.regular ? 'Regular' : 'Mini'
+                          } - $${box.type.price}`}</div>
+                        </>
+                      )}
+                    </For>
+                  </div>
+                  <div class={styles.cartFooter}>
+                    <p>
+                      Total: $
+                      {order.boxes.reduce(
+                        (total, box) => total + box.type.price,
+                        0
+                      )}
+                    </p>
+                    <button
+                      class="button"
+                      onClick={() => {
+                        setState(1);
+                        setCupcakeSelectStep(2);
+                      }}
+                    >
+                      Edit Cart
+                    </button>
+                  </div>
                 </div>
-                <div class={styles.saveDetails}>
-                  <label>Save my info for next time</label>
+                <div class={styles.details}>
+                  <h3>Details</h3>
+                  <p>Name: {order.info.name}</p>
+                  <p>Email: {order.info.email}</p>
+                  <Show when={order.info.phone}>
+                    <p>Phone: {order.info.phone}</p>
+                  </Show>
+                  <Show when={order.info.extra}>
+                    <p>Extra: {order.info.extra}</p>
+                  </Show>
+                  <p>Newsletter: {order.info.newsletter ? 'Yes' : 'No'}</p>
 
-                  <input
-                    type="checkbox"
-                    id="saveInput"
-                    oninput={checkDetailInputs}
-                    checked={order().info.save}
-                  ></input>
+                  <p class={styles.gap}>
+                    Pickup Market: {order.name} <br /> @ {order.time}
+                  </p>
+
+                  <button class={`button ${styles.placeOrder}`}>
+                    Place Order
+                  </button>
                 </div>
               </div>
               <div class={styles.nextPage}>
