@@ -2,7 +2,7 @@ import Layout from '~/components/Layout';
 import styles from './404.module.scss';
 import { HttpStatusCode } from 'solid-start/server';
 
-export default function Newsletter() {
+export default function FourOFour() {
   return (
     <Layout hideFooter>
       <div class={styles.error}>

@@ -3,8 +3,13 @@ import styles from './index.module.scss';
 import { For, Match, Show, Switch, createSignal, onMount } from 'solid-js';
 import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from '~/components/CupcakeBox';
 import Cupcake from '~/components/Cupcake';
+import { createClient } from '@supabase/supabase-js';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const EMAIL_VALIDATION_REGEX =
+  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const PHONE_VALIDATION_REGEX =
+  /^\+?(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)?\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*(\d{1,2})$/;
 
 const MARKETS: Market[] = [
   {
@@ -131,7 +136,7 @@ export default function Order() {
     setMobileBrowser(mobileCheck());
   });
   let [pageUp, setPageUp] = createSignal(true);
-  let [state, setState] = createSignal(1);
+  let [state, setState] = createSignal(2);
   let [marketSelect, setMarketSelect] = createSignal(0);
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(2);
   let [order, setOrder] = createSignal<Order>(
@@ -147,7 +152,12 @@ export default function Order() {
         extra: '',
         newsletter: false,
         save: false,
-        discount: false,
+        discount: {
+          code: '',
+          discount: 0,
+          type: '',
+          used: true,
+        },
       },
     },
     { equals: false }
@@ -187,6 +197,11 @@ export default function Order() {
         ],
       },
     ],
+    info: {
+      name: 'Olive',
+      email: 'olive@tuxedocupcakes.com',
+      phone: '8622060280',
+    },
   });
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
@@ -198,6 +213,7 @@ export default function Order() {
   let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
   setActiveBox();
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
+  let [extraDetailsValid, setExtraDetailsValid] = createSignal(false);
 
   activeMarkets = [];
   if (activeMarkets.length == 0) {
@@ -208,6 +224,151 @@ export default function Order() {
       }
     }
   }
+
+  const checkDetailInputs = () => {
+    let nameInput = document.getElementById('nameInput') as HTMLInputElement;
+    let emailInput = document.getElementById('emailInput') as HTMLInputElement;
+    let phoneInput = document.getElementById('phoneInput') as HTMLInputElement;
+    let toAddInput = document.getElementById(
+      'toAddInput'
+    ) as HTMLTextAreaElement;
+    let newsletterInput = document.getElementById(
+      'newsletterInput'
+    ) as HTMLInputElement;
+    let saveDetailsInput = document.getElementById(
+      'saveInput'
+    ) as HTMLInputElement;
+
+    if (
+      emailInput.value != '' &&
+      emailInput.value.match(EMAIL_VALIDATION_REGEX) == null
+    ) {
+      emailInput.setCustomValidity('Please enter a valid email address');
+      emailInput.setAttribute('valid', 'false');
+      console.log('invalid email');
+    } else {
+      emailInput.setCustomValidity('');
+      emailInput.setAttribute('valid', 'true');
+    }
+
+    let cleanPhone = phoneInput.value.replaceAll(/\D+/g, '');
+    if (cleanPhone.length > 10) cleanPhone = cleanPhone.substring(0, 10);
+    phoneInput.value = parsePhoneNumber(cleanPhone);
+    if (
+      phoneInput.value != '' &&
+      phoneInput.value.match(PHONE_VALIDATION_REGEX) == null
+    ) {
+      phoneInput.setCustomValidity(
+        'Please enter a valid phone number (or none at all)'
+      );
+      phoneInput.setAttribute('valid', 'false');
+
+      console.log('invalid phone');
+    } else {
+      phoneInput.setCustomValidity('');
+      phoneInput.setAttribute('valid', 'true');
+    }
+
+    if (
+      nameInput.value !== '' &&
+      emailInput.value.match(EMAIL_VALIDATION_REGEX) !== null &&
+      (phoneInput.value == '' ||
+        phoneInput.value.match(PHONE_VALIDATION_REGEX) !== null)
+    ) {
+      setExtraDetailsValid(true);
+    } else {
+      setExtraDetailsValid(false);
+    }
+
+    updateOrder({
+      info: {
+        email: emailInput.value,
+        name: nameInput.value,
+        phone: phoneInput.value,
+        extra: toAddInput.value,
+        newsletter: newsletterInput.checked,
+        save: saveDetailsInput.checked,
+        discount: order().info.discount,
+      },
+    });
+  };
+
+  let checkCode = async (tryCount?: number) => {
+    let target = document.getElementById('code') as HTMLInputElement;
+    if (!target && tryCount < 3) {
+      console.log('trying again to check code, try #: ' + tryCount);
+      setTimeout(() => {
+        checkCode(tryCount + 1);
+      }, 200);
+      return;
+    } else if (tryCount >= 3) {
+      console.log('Unable to check code');
+      return;
+    }
+    let successElem =
+      target.parentElement.getElementsByClassName('codeValid')[0];
+    let code = target.value.replaceAll(/\D/g, '').substring(0, 10);
+    target.value = parseDiscountCode(code);
+
+    if (parseInt(code).toString().length !== 9) {
+      successElem.textContent = '';
+      updateOrder({
+        info: {
+          ...order().info,
+          discount: { code, discount: 0, type: '', used: true },
+        },
+      });
+      return;
+    }
+    const supabase = createClient(
+      'https://rxznihvftodgtjdtzbyr.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
+    );
+    let { error, data } = await supabase.rpc('get_discount', {
+      testcode: code,
+    });
+    let discount = data as any as Discount;
+
+    if (error) {
+      let errorNode = document.createElement('p');
+      errorNode.textContent =
+        'Unknown error occured when checking code: ' +
+        error.code +
+        '\nTry refreshing and trying again';
+      target.parentElement.after(errorNode);
+      console.log(error);
+      updateOrder({
+        info: {
+          ...order().info,
+          discount: { code, discount: 0, type: '', used: true },
+        },
+      });
+    }
+    if (discount) {
+      target.setAttribute('valid', 'true');
+      if (discount.used) {
+        target.setAttribute('valid', 'used');
+        successElem.textContent = 'Code Already Used';
+      } else if (discount.type === 'AMOUNT') {
+        successElem.textContent = '-$' + discount.discount;
+      } else if (discount.type === 'PERCENT') {
+        successElem.textContent = '-' + discount.discount + '%';
+      } else {
+        successElem.textContent = '✓';
+      }
+
+      updateOrder({
+        info: {
+          ...order().info,
+          discount,
+        },
+      });
+    } else {
+      target.setAttribute('valid', 'false');
+      successElem.textContent = '✖';
+    }
+    console.log(order().info);
+  };
 
   return (
     <Layout
@@ -720,10 +881,211 @@ export default function Order() {
                   : styles.active
               }`}
               id="state2"
-            ></div>
+            >
+              <h2>Final details</h2>
+              <div class={styles.detailsGrid}>
+                <label>Name</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="text"
+                    id="nameInput"
+                    oninput={checkDetailInputs}
+                    placeholder="(required)"
+                    value={order().info.name}
+                  />
+                </div>
+                <label>Email</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="email"
+                    id="emailInput"
+                    oninput={checkDetailInputs}
+                    placeholder="(required)"
+                    value={order().info.email}
+                  />
+                </div>
+                <label>Phone</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="tel"
+                    id="phoneInput"
+                    oninput={checkDetailInputs}
+                    value={order().info.phone}
+                  />
+                </div>
+                <div class={styles.toAdd}>
+                  <label>Anything else you wish to add?</label>
+                  <textarea
+                    id="toAddInput"
+                    oninput={checkDetailInputs}
+                    value={order().info.extra}
+                  />
+                </div>
+                <div class={styles.newsletter}>
+                  <label>
+                    Do you want to recieve occasional
+                    <br /> email updates about Tuxedo Cupcakes?
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    id="newsletterInput"
+                    oninput={checkDetailInputs}
+                    checked={order().info.newsletter}
+                  ></input>
+                </div>
+                <div class={styles.saveDetails}>
+                  <label>Save my info for next time</label>
+
+                  <input
+                    type="checkbox"
+                    id="saveInput"
+                    oninput={checkDetailInputs}
+                    checked={order().info.save}
+                  ></input>
+                </div>
+              </div>
+              <div class={styles.nextPage}>
+                <button
+                  class={`${styles.back} button`}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(1);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  <img src="/images/arrow.svg" /> Back
+                </button>
+                <button
+                  class={`${styles.next} button`}
+                  disabled={!extraDetailsValid()}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(3);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  Next <img src="/images/arrow.svg" />
+                </button>
+              </div>
+            </div>
+            <div
+              class={`${styles.pageBox} ${styles.extraDetails} ${
+                state() < 3
+                  ? styles.right
+                  : state() >= 4
+                  ? styles.left
+                  : styles.active
+              }`}
+              id="state3"
+            >
+              <h2>Review order</h2>
+              <div class={styles.detailsGrid}>
+                <label>Name</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="text"
+                    id="nameInput"
+                    oninput={checkDetailInputs}
+                    placeholder="(required)"
+                    value={order().info.name}
+                  />
+                </div>
+                <label>Email</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="email"
+                    id="emailInput"
+                    oninput={checkDetailInputs}
+                    placeholder="(required)"
+                    value={order().info.email}
+                  />
+                </div>
+                <label>Phone</label>
+                <div class={styles.textInput}>
+                  <input
+                    type="tel"
+                    id="phoneInput"
+                    oninput={checkDetailInputs}
+                    value={order().info.phone}
+                  />
+                </div>
+                <div class={styles.toAdd}>
+                  <label>Anything else you wish to add?</label>
+                  <textarea
+                    id="toAddInput"
+                    oninput={checkDetailInputs}
+                    value={order().info.extra}
+                  />
+                </div>
+                <div class={styles.newsletter}>
+                  <label>
+                    Do you want to recieve occasional
+                    <br /> email updates about Tuxedo Cupcakes?
+                  </label>
+
+                  <input
+                    type="checkbox"
+                    id="newsletterInput"
+                    oninput={checkDetailInputs}
+                    checked={order().info.newsletter}
+                  ></input>
+                </div>
+                <div class={styles.saveDetails}>
+                  <label>Save my info for next time</label>
+
+                  <input
+                    type="checkbox"
+                    id="saveInput"
+                    oninput={checkDetailInputs}
+                    checked={order().info.save}
+                  ></input>
+                </div>
+              </div>
+              <div class={styles.nextPage}>
+                <button
+                  class={`${styles.back} button`}
+                  onClick={async (e) => {
+                    e.target.classList.add('submitted');
+                    setState(2);
+                    await sleep(1000);
+                    e.target.classList.remove('submitted');
+                  }}
+                >
+                  <img src="/images/arrow.svg" /> Back
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </Layout>
   );
+}
+
+function parseDiscountCode(code: string) {
+  let codeString = '';
+  code.split('').forEach((digit) => {
+    if (codeString.length === 3 || codeString.length === 7) {
+      codeString += '-';
+    }
+    codeString += digit;
+  });
+  return codeString;
+}
+
+function parsePhoneNumber(number: string) {
+  let numberString = number.replace(
+    /(\d{1,3})(\d{1,3})?(\d{1,4})?/,
+    '($1) $2-$3'
+  );
+  if (numberString.charAt(numberString.length - 1) == '-') {
+    numberString = numberString.split('-')[0];
+  }
+  if (numberString.charAt(numberString.length - 1) == ' ') {
+    numberString = numberString.split(')')[0];
+  }
+  return numberString;
 }

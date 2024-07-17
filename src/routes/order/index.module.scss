@@ -378,3 +378,113 @@
 		}
 	}
 }
+
+.extraDetails {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	.detailsGrid {
+		display: grid;
+		align-items: center;
+		width: max-content;
+		grid-template-columns: 1fr 3fr;
+		grid-template-rows: repeat(7, calc(6.5 * $tru));
+		grid-template-areas:
+			"nameLabel name"
+			"emailLabel email"
+			"phoneLabel phone"
+			"toAdd toAdd"
+			"toAdd toAdd"
+			"newsletter newsletter"
+			"saveDetails saveDetails";
+
+		font-size: calc(2.4 * $tru);
+
+		margin-bottom: calc(2 * $ru);
+
+		.textInput {
+			//margin-left: calc(3 * $ru);
+
+			input {
+				all: unset;
+				border: none;
+				border-bottom: 2px solid black;
+				background-color: #f7f7f7;
+				padding: 10px;
+				transition: all 300ms ease-in-out;
+				width: calc(100% - 20px);
+				max-width: 17em;
+				text-align: left;
+				margin: 10px 0;
+
+				font-size: calc(2 * $tru);
+
+				&:invalid,
+				&[valid="false"] {
+					border-bottom: 2px solid red;
+				}
+				&:focus {
+					border-bottom: 2px solid $cyan;
+				}
+			}
+		}
+
+		label {
+			font-size: calc(2.4 * $tru);
+		}
+
+		.toAdd {
+			grid-area: toAdd;
+			display: flex;
+			flex-direction: column;
+
+			textarea {
+				resize: none;
+				//all: unset;
+				border: none;
+				border-bottom: 2px solid black;
+				background-color: #f7f7f7;
+				padding: 10px;
+				transition: all 100ms ease-in-out;
+				text-align: left;
+
+				font-size: calc(1.5 * $tru);
+
+				&:focus {
+					outline: none;
+					border-bottom: 2px solid $cyan;
+				}
+			}
+		}
+
+		.newsletter {
+			grid-area: newsletter;
+		}
+		.saveDetails {
+			grid-area: saveDetails;
+
+			label {
+				margin-left: auto;
+			}
+		}
+
+		.newsletter,
+		.saveDetails {
+			display: flex;
+			flex-direction: row;
+			text-align: right;
+
+			input {
+				margin-left: calc(4 * $ru);
+				width: calc(2 * $tru);
+				height: calc(2 * $tru);
+
+				@media (max-width: 800px) {
+					width: calc(3 * $tru);
+					height: calc(3 * $tru);
+				}
+			}
+		}
+	}
+}

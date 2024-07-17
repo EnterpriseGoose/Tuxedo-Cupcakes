@@ -30,6 +30,13 @@ declare global {
     title?: string;
   }
 
+  interface Discount {
+    code: string;
+    discount: number;
+    type: string;
+    used: boolean;
+  }
+
   interface Order {
     market: Market;
     time: string;
@@ -42,7 +49,7 @@ declare global {
       extra: string;
       newsletter: boolean;
       save: boolean;
-      discount: boolean;
+      discount: Discount;
     };
   }
 }
