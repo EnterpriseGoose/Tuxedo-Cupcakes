@@ -108,6 +108,51 @@ const MARKETS: Market[] = [
     ],
     title: 'July 15-21',
   },
+  {
+    week: new Date(2024, 7, 26, 0, 0),
+    times: ['Saturday 8/31, 8AM - 1PM', 'Sunday 9/1, 8:30AM - 1PM'],
+    names: ['Chatham Farmers Market', 'Morristown Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.CHOCOLATE_PEANUT_BUTTER,
+      FLAVORS.SALTED_CARAMEL_CASHEW,
+    ],
+  },
+  {
+    week: new Date(2024, 8, 2, 0, 0),
+    times: ['Saturday 9/7, 8AM - 1PM', 'Sunday 9/8, 8:30AM - 1PM'],
+    names: ['Chatham Farmers Market', 'Morristown Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.CINNAMON_PEACH,
+      FLAVORS.CHOCOLATE_RASPBERRY,
+    ],
+  },
+  {
+    week: new Date(2024, 8, 9, 0, 0),
+    times: ['Saturday 9/14, 8AM - 1PM', 'Sunday 9/15, 8:30AM - 1PM'],
+    names: ['Chatham Farmers Market', 'Morristown Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.RED_BEAN,
+      FLAVORS.CHOCOLATE_BLACK_SESAME,
+    ],
+  },
 ];
 
 const mobileCheck = function () {
@@ -136,10 +181,10 @@ export default function Order() {
   onMount(() => {
     setMobileBrowser(mobileCheck());
   });
-  let [pageUp, setPageUp] = createSignal(true);
-  let [state, setState] = createSignal(3);
+  let [pageUp, setPageUp] = createSignal(false);
+  let [state, setState] = createSignal(0);
   let [marketSelect, setMarketSelect] = createSignal(0);
-  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(2);
+  let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
   let [order, setOrder] = createStore<Order>({
     market: { week: new Date(), times: [], names: [], flavors: [] },
     time: '',
@@ -160,44 +205,44 @@ export default function Order() {
       },
     },
   });
-  setOrder({
-    market: MARKETS[3],
-    boxes: [
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-    ],
-  });
-  setOrder('info', {
-    name: 'Olive',
-    email: 'olive@tuxedocupcakes.com',
-    phone: '8622060280',
-  });
+  // setOrder({
+  //   market: MARKETS[3],
+  //   boxes: [
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //   ],
+  // });
+  // setOrder('info', {
+  //   name: 'Olive',
+  //   email: 'olive@tuxedocupcakes.com',
+  //   phone: '8622060280',
+  // });
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
       cupcakes: [],
@@ -205,8 +250,9 @@ export default function Order() {
     },
     { equals: false }
   );
-  let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
   setActiveBox();
+  let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
+
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
   let [extraDetailsValid, setExtraDetailsValid] = createSignal(false);
 
@@ -905,7 +951,7 @@ export default function Order() {
                 </div>
                 <div class={styles.newsletter}>
                   <label>
-                    Do you want to recieve occasional
+                    Would you like to receive occasional
                     <br /> email updates about Tuxedo Cupcakes?
                   </label>
 
@@ -1041,7 +1087,65 @@ export default function Order() {
                     Pickup Market: {order.name} <br /> @ {order.time}
                   </p>
 
-                  <button class={`button ${styles.placeOrder}`}>
+                  <button
+                    class={`button ${styles.placeOrder}`}
+                    // onClick={async (e) => {
+                    //   e.target.classList.add('submitted');
+                    //   setState(4);
+
+                    //   const supabase = createClient(
+                    //     'https://rxznihvftodgtjdtzbyr.supabase.co',
+                    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
+                    //   );
+
+                    //   let response = await supabase.from('orders').insert({
+                    //     email: order.info.email,
+                    //     name: order.info.name,
+                    //     phone: order.info.phone,
+                    //     order: JSON.stringify(order.boxes),
+                    //     extraInfo: order.info.extra,
+                    //     newsletter: order.info.newsletter,
+                    //     discount: order.info.discount,
+                    //   });
+                    //   console.log(response.status);
+
+                    //   setSearchParams({ orderStatus: response.status });
+                    //   if (response.status == 201) {
+                    //     if (formData().discount && !formData().discount.used) {
+                    //       let result = await supabase.rpc('use_discount', {
+                    //         usecode: formData().discount.code,
+                    //       });
+                    //       console.log(result);
+                    //     }
+
+                    //     setCart([]);
+                    //     setFormState(5);
+                    //     if (!formData().saveData) {
+                    //       setFormData({
+                    //         email: '',
+                    //         name: '',
+                    //         phone: '',
+                    //         extra: '',
+                    //         newsletter: false,
+                    //         saveData: false,
+                    //         discount: undefined,
+                    //       });
+                    //     } else {
+                    //       setFormData({
+                    //         ...formData(),
+                    //         discount: {
+                    //           code: '',
+                    //           discount: 0,
+                    //           type: 'PERCENT',
+                    //           used: true,
+                    //         },
+                    //       });
+                    //     }
+                    //   }
+                    //   await sleep(1000);
+                    //   e.target.classList.remove('submitted');
+                    // }}
+                  >
                     Place Order
                   </button>
                 </div>

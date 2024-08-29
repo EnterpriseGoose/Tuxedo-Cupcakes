@@ -109,6 +109,34 @@ export const FLAVORS: { [id: string]: Flavor } = {
     frosting: '#DF779C',
     frosting_outline: '#D36A8F',
   },
+  CHOCOLATE_PEANUT_BUTTER: {
+    id: 'CHOCOLATE_PEANUT_BUTTER',
+    name: 'Chocolate Peanut Butter',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#F5DCBE',
+    frosting_outline: '#EED3B3',
+  },
+  CINNAMON_PEACH: {
+    id: 'CINNAMON_PEACH',
+    name: 'Cinnamon Peach',
+    cake: CINNAMON_CAKE,
+    frosting: '#F1C59D',
+    frosting_outline: '#EEB682',
+  },
+  CHOCOLATE_BLACK_SESAME: {
+    id: 'CHOCOLATE_BLACK_SESAME',
+    name: 'Chocolate Black Sesame',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#5A5550',
+    frosting_outline: '#393632',
+  },
+  RED_BEAN: {
+    id: 'RED_BEAN',
+    name: 'Red Bean',
+    cake: VANILLA_CAKE,
+    frosting: '#DBBBB1',
+    frosting_outline: '#C1A096',
+  },
 };
 
 export default function CupcakeBox(props: {
@@ -195,7 +223,12 @@ export default function CupcakeBox(props: {
                         cupcakeSize() * i()
                       }
                       fill="#eeeeee"
-                      onClick={() => {
+                      onMouseEnter={(e) => {
+                        if (e.buttons % 2 == 1) {
+                          brushFlavor(i(), j());
+                        }
+                      }}
+                      onMouseDown={() => {
                         brushFlavor(i(), j());
                       }}
                     />
@@ -206,9 +239,8 @@ export default function CupcakeBox(props: {
                         size={cupcakeSize() / props.scale}
                         x={10 * props.scale + cupcakeSize() * j()}
                         y={10 * props.scale + cupcakeSize() * i()}
-                        onClick={() => {
+                        onBrush={() => {
                           brushFlavor(i(), j());
-                          console.dir(flavorArray2D());
                         }}
                       />
                     </Show>

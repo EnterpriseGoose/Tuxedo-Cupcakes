@@ -6,7 +6,7 @@ export default function Cupcake(props: {
   scale: number;
   x?: number;
   y?: number;
-  onClick?: JSX.EventHandlerUnion<SVGSVGElement, MouseEvent>;
+  onBrush?: () => void;
 }) {
   let scaledSize = props.size * props.scale;
 
@@ -17,7 +17,13 @@ export default function Cupcake(props: {
       viewBox={`0 0 ${scaledSize} ${scaledSize}`}
       x={props.x || ''}
       y={props.y || ''}
-      onClick={props.onClick}
+      onMouseDown={props.onBrush}
+      onMouseEnter={(e) => {
+        console.log(e.buttons);
+        if (e.buttons % 2 == 1) {
+          props.onBrush();
+        }
+      }}
     >
       <circle
         r={scaledSize / 2 - 1 * props.scale}
