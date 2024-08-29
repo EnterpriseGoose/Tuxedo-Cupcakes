@@ -1,0 +1,55 @@
+@use "../../global-styles/variables.scss" as *;
+
+.gallery {
+	padding-top: calc(5 * $ru);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	a {
+		font-size: calc(3 * $tru);
+		text-align: start;
+		width: 100%;
+	}
+
+	p {
+		width: calc(80 * $wru);
+		margin-bottom: calc(2 * $ru);
+		margin-top: calc(2 * $ru);
+	}
+	text-align: center;
+
+	h1 {
+		margin-bottom: calc(2 * $ru);
+	}
+
+	.twoColumn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		width: calc(90 * $wru);
+		gap: calc(5 * $ru);
+
+		p {
+			width: calc(50 * $tru);
+		}
+
+		img {
+			width: calc(25 * $tru);
+		}
+
+		@media (max-width: 900px) {
+			flex-direction: column;
+
+			p {
+				width: calc(80 * $wru);
+			}
+
+			img {
+				width: calc(60 * $wru);
+			}
+		}
+	}
+}

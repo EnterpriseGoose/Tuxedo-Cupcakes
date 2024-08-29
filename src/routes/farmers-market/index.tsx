@@ -5,32 +5,42 @@ import styles from './index.module.scss';
 
 export default function FarmersMarket() {
   const [dates, setDates] = createSignal([
-    [new Date(2022, 7, 6), 'Chocolate Raspberry & Caramel Cashew'],
-    [new Date(2022, 7, 13), 'Mint Chocolate Chip & Salted Caramel'],
-    [new Date(2022, 7, 20), 'Cinnamon Peach & Chocolate Peanut Butter'],
-    [new Date(2022, 7, 27), 'Chocolate Raspberry & Strawberry'],
     [
-      new Date(2022, 8, 10),
-      'Red Bean, Chocolate Black Sesame & Pineapple Cake',
+      new Date(2023, 5, 17),
+      'Coconut Passion Fruit, Salted Caramel Cashew, & Chocolate Strawberry',
     ],
-    [new Date(2022, 8, 17), 'Chocolate Orange & Strawberry'],
-    [new Date(2022, 9, 1), 'Chocolate Matcha & Yuzu'],
-    [new Date(2022, 9, 8), 'Pumpkin Spice & Caramel Apple'],
-    [new Date(2022, 9, 15), 'Cinnamon Apple Cider & Smores'],
-    [new Date(2022, 9, 29), 'Chocolate Black Sesame & Pumpkin Spice'],
-    [new Date(2022, 10, 12), 'Mint Chocolate Chip & Chocolate Peanut Butter'],
-    [new Date(2022, 10, 19), 'Brown Sugar Sweet Potato & Apple Pie'],
+    [new Date(2023, 5, 24), 'Lemon Blueberry & Mint Chocolate Chip'],
+    [new Date(2023, 6, 1), 'Pomegranate & Chocolate Hazelnut'],
+    [new Date(2023, 6, 8), 'Lemon Raspberry & Chocolate Caramel'],
+    [new Date(2023, 6, 15), 'Coconut Passion Fruit & Chocolate Matcha'],
+    [new Date(2023, 6, 22), 'Mango & Salted Caramel Cashew'],
+    [
+      new Date(2023, 7, 5),
+      'Chocolate Raspberry & Mint Chocolate Chip *& Lilikoi Guava*',
+    ],
+    [new Date(2023, 7, 12), 'Pomegranate & Lemon Raspberry'],
+    [new Date(2023, 7, 19), 'Cinnamon Peach & Yuzu'],
+    [new Date(2023, 7, 26), 'Mint Chocolate Chip & Yuzu'],
+    [new Date(2023, 8, 2), 'Chocolate Matcha & Salted Caramel Cashew'],
+    [new Date(2023, 8, 9), 'Lemon Raspberry & Salted Caramel Cashew'],
+    [new Date(2023, 8, 16), 'Cinnamon Apple Cider & Pumpkin Spice'],
+    [new Date(2023, 8, 30), 'Chocolate Black Sesame & Red Bean'],
+    [new Date(2023, 9, 14), 'Pumpkin Spice & Red Bean'],
+    [new Date(2023, 10, 4), 'Red Bean & Mint Chocolate Chip'],
+    [new Date(2023, 10, 11), 'Lemon Raspberry & Salted Caramel Cashew'],
+    [new Date(2023, 10, 18), 'Red Bean & Lemon Raspberry'],
   ]);
   return (
-    <Layout>
+    <Layout desc="I appear at the Chatham Farmers’ Market every Saturday in the summer (June-August) and about every other week in the fall (September-November). Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as well as 2 rotating special flavors, in both regular and mini sizes.">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Get a Cupcake at the Farmers’ Market</h2>
           <p>
-            I appear at the Chatham Farmers’ Market on most Saturdays through
-            November.
-            <br />
-            Each week, I bring 4 classic flavors (chocolate and vanilla), as
+            We appear at the Chatham Farmers’ Market every Saturday in the summer
+            (June-August) and about every other week in the fall
+            (September-November).
+            <br /> <br />
+            Each week, we bring 4 classic flavors (chocolate and vanilla), as
             well as 2 rotating special flavors, in both regular and mini sizes.
           </p>
         </div>
@@ -40,26 +50,32 @@ export default function FarmersMarket() {
             fallback={
               <div>
                 <p>
-                  The 2022 farmers' market season has ended. Come back next year
-                  for the 2023 Chatham Farmers' Market dates!
+                  The 2023 farmers' market season has ended. Come back next year
+                  for the 2024 Chatham Farmers' Market dates!
                 </p>
-                <A href="/farmers-market/past-flavors">
-                  Click here to see past cupcake flavors
-                </A>
               </div>
             }
           >
             <Match
               when={
-                new Date().getMonth() > 4 &&
+                new Date().getMonth() > 2 &&
                 (new Date().getMonth() < 10 ||
                   (new Date().getMonth() == 10 && new Date().getDate() < 20))
               }
             >
               <p class={styles.desc}>
-                Here are the full list of dates I’m appearing at the farmers’
-                market, as well as the specials I will have available that day
-                (2022):
+                Here is the full list of dates we’re appearing at the farmers’
+                market, as well as the specials we will have available that day.
+                If you want to know the specials ahead of time, you can sign up
+                for <A href="/newsletter">the newsletter</A> or follow{' '}
+                <a
+                  href="https://www.instagram.com/tuxedo_cupcakes/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  our instagram
+                </a>
+                .
               </p>
               <ul>
                 <For each={dates()}>
@@ -68,7 +84,7 @@ export default function FarmersMarket() {
                       class={(() => {
                         let thisDate = (date as Date).setHours(0, 0, 0, 0);
                         let lastDate = (
-                          dates()[i() - 1] != undefined
+                          i() !== 0
                             ? (dates()[i() - 1][0] as Date)
                             : new Date(0)
                         ).getTime();
@@ -77,17 +93,13 @@ export default function FarmersMarket() {
                         else if (
                           new Date().setHours(0, 0, 0, 0) !== lastDate &&
                           new Date().getTime() > lastDate &&
-                          new Date().getTime() < thisDate &&
-                          i() == dates().length - 1
-                        )
-                          return styles.finalWeek;
-                        else if (
-                          new Date().setHours(0, 0, 0, 0) !== lastDate &&
-                          new Date().getTime() > lastDate &&
                           new Date().getTime() < thisDate
-                        )
-                          return styles.nextWeek;
-                        else return '';
+                        ) {
+                          if (i() == 0) return styles.firstWeek;
+                          else if (i() == dates().length - 1)
+                            return styles.finalWeek;
+                          else return styles.nextWeek;
+                        } else return '';
                       })()}
                     >{`${date.toString().substring(4, 7)} ${(
                       date as Date
@@ -97,8 +109,15 @@ export default function FarmersMarket() {
               </ul>
             </Match>
           </Switch>
+          <A href="/farmers-market/past-flavors">
+            Click here to see past cupcake flavors
+          </A>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.three}`}>
           <h3>Pricing</h3>
           <p>
@@ -108,18 +127,22 @@ export default function FarmersMarket() {
             Buy any 5 cupcakes of the same size and get one free!
           </p>
         </div>
-        <img src="/images/decorations/bow-divider.svg" class={styles.divider} />
+        <img
+          src="/images/decorations/bow-divider.svg"
+          class={styles.divider}
+          alt=""
+        />
         <div class={`${styles.section} ${styles.four}`}>
-          <h3>Contact me</h3>
+          <h3>Contact us</h3>
           <h4>
-            Contact me at
+            Contact us at
             <br />
             <a
-              href="mailto:oliver@tuxedocupcakes.com"
+              href="mailto:hello@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              oliver@tuxedocupcakes.com
+              hello@tuxedocupcakes.com
             </a>
           </h4>
         </div>

@@ -1,165 +1,279 @@
-@use '../../global-styles/variables.scss' as *;
+@use "../../global-styles/variables.scss" as *;
 
 .head {
-  margin-top: calc(2 * $ru);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  user-select: none;
+	//margin-top: calc(0.5 * $ru);
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	user-select: none;
+	width: 100%;
+	overflow: hidden;
 
-  nav {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    column-gap: calc(5 * $tru);
-    padding-bottom: calc(3 * $ru);
-    width: calc(95 * $ru);
+	padding-top: calc(0.5 * $ru);
 
-    @media (max-width: 700px) {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      height: calc(3 * $ru);
-      width: 100%;
-      min-height: calc(10 * $tru);
-    }
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		column-gap: calc(5 * $tru);
+		padding-bottom: calc(3 * $ru);
+		max-width: calc(100 * $wru);
+		margin-top: calc(1.5 * $ru);
 
-    a {
-      font-size: calc(3 * $tru);
-      font-weight: 500;
-      color: $cyan;
-      text-decoration: none;
-      text-align: center;
-      transition: color 0.2s ease-out;
-    }
-    a:hover {
-      color: $darkCyan;
-    }
-    a.selectedTab {
-      color: $darkCyan;
-      cursor: default;
-    }
-  }
+		a {
+			font-size: calc(3 * $tru);
+			font-weight: 500;
+			color: $cyan;
+			text-decoration: none;
+			text-align: center;
+			transition: color 0.2s ease-out;
+		}
 
-  a.selectedTab {
-    cursor: default;
-  }
+		@media (max-width: 1200px) {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			width: 100%;
+			min-height: calc(10 * $tru);
+			column-gap: calc(0 * $tru);
+			row-gap: calc(1 * $tru);
+
+			.socialLinkBox {
+				grid-column: span 2;
+			}
+		}
+
+		a:hover {
+			color: $darkCyan;
+		}
+		a.selectedTab {
+			color: $darkCyan;
+			cursor: default;
+		}
+
+		.socialLinkBox {
+			display: flex;
+			flex-direction: row;
+			gap: calc(1 * $tru);
+
+			justify-content: center;
+			align-items: center;
+
+			.socialLink {
+				display: flex;
+
+				img {
+					width: calc(3 * $tru);
+					height: calc(3 * $tru);
+
+					transition: all 0.5s ease;
+
+					&:hover {
+						filter: drop-shadow(calc(0.2 * $tru) calc(0.2 * $tru) calc(0.5 * $ru) $darkCyan);
+					}
+				}
+			}
+		}
+	}
+
+	a.selectedTab {
+		cursor: default;
+	}
 }
 
 .logo {
-  &.bigLogo {
-    width: calc($ru * 60);
-    padding: calc($ru * 3);
-  }
+	height: auto;
 
-  &.smallLogo {
-    width: calc($ru * 30);
-    padding-bottom: calc($ru * 1.5);
-    padding-top: calc($ru * 0.5);
-  }
+	&.bigLogo {
+		width: calc($tru * 35);
+		padding: calc($ru * 3);
+	}
 
-  &.toBigLogo {
-    animation: grow 0.3s ease-out forwards;
-  }
+	&.regularLogo {
+		width: calc($tru * 25);
+		padding-bottom: calc($ru * 0.5);
+		padding-top: calc($ru * 0.5);
+		margin-top: calc(1 * $ru);
+	}
 
-  @keyframes grow {
-    from {
-      width: calc($ru * 30);
-      padding-bottom: calc($ru * 1.5);
-      padding-top: calc($ru * 0.5);
-    }
-    to {
-      width: calc($ru * 60);
-      padding-top: calc($ru * 3);
-      padding-bottom: calc($ru * 3);
-    }
-  }
+	&.miniLogo {
+		width: calc($tru * 20);
+		padding-bottom: calc($ru * 0.5);
+		padding-top: 0;
+		margin-top: calc(0.5 * $ru);
+	}
 
-  &.toSmallLogo {
-    animation: shrink 0.3s ease-out forwards;
-  }
+	&.toBigLogo {
+		animation: grow 0.3s ease-out forwards;
+	}
 
-  @keyframes shrink {
-    from {
-      width: calc($ru * 60);
-      padding-top: calc($ru * 3);
-      padding-bottom: calc($ru * 3);
-    }
-    to {
-      width: calc($ru * 30);
-      padding-bottom: calc($ru * 1.5);
-      padding-top: calc($ru * 0.5);
-    }
-  }
+	@keyframes grow {
+		to {
+			width: calc($tru * 35);
+			padding-top: calc($ru * 3);
+			padding-bottom: calc($ru * 3);
+		}
+	}
+
+	&.toRegularLogo {
+		animation: shrink 0.3s ease-out forwards;
+
+		&.miniLogo {
+			animation: shrink 0.2s ease-out forwards;
+		}
+	}
+
+	@keyframes shrink {
+		to {
+			width: calc($tru * 25);
+			padding-bottom: calc($ru * 0.5);
+			padding-top: calc($ru * 0.5);
+			margin-top: calc(1 * $ru);
+		}
+	}
+
+	&.toMiniLogo {
+		animation: superShrink 0.3s ease-out forwards;
+
+		&.regularLogo {
+			animation: superShrink 0.2s ease-out forwards;
+		}
+	}
+
+	@keyframes superShrink {
+		to {
+			width: calc($tru * 20);
+			padding-bottom: calc($ru * 0.5);
+			padding-top: calc($ru * 0.5);
+			margin-top: calc(0.5 * $ru);
+		}
+	}
 }
 
 .decoration {
-  width: calc(90 * $ru);
+	width: calc(90 * $ru);
+	height: auto;
+	margin-bottom: calc(1 * $ru);
+	z-index: -10;
 
-  &.bigLogo {
-    transform: translateY(0);
-    width: calc(90 * $ru);
-  }
+	&.bottom {
+		@media (max-width: 900px) {
+			padding-bottom: calc(5 * $tru);
+		}
+	}
 
-  &.smallLogo {
-    transform: translateY(calc(-5 * $ru));
-    width: 0;
-  }
+	&.bigLogo {
+		transform: translateY(0);
+		width: calc(90 * $ru);
+	}
 
-  &.toBigLogo {
-    animation: slideIn 0.3s ease-out forwards;
-  }
+	&.regularLogo,
+	&.miniLogo {
+		transform: translateY(calc(-5 * $ru));
+		width: 0;
+		margin-bottom: 0;
+	}
 
-  @keyframes slideIn {
-    from {
-      transform: translateY(calc(-5 * $ru));
-      width: 0;
-    }
-    to {
-      transform: translateY(0);
-      width: calc(90 * $ru);
-    }
-  }
+	&.toBigLogo {
+		animation: slideIn 0.3s ease-out forwards;
+	}
 
-  &.toSmallLogo {
-    animation: slideOut 0.3s ease-out forwards;
-  }
+	@keyframes slideIn {
+		to {
+			transform: translateY(0);
+			width: calc(90 * $ru);
+		}
+	}
 
-  @keyframes slideOut {
-    from {
-      transform: translateY(0);
-      width: calc(90 * $ru);
-    }
-    to {
-      transform: translateY(calc(-5 * $ru));
-      width: 0;
-    }
-  }
+	&.toRegularLogo,
+	&.toMiniLogo {
+		animation: slideOut 0.3s ease-out forwards;
+	}
+
+	@keyframes slideOut {
+		to {
+			transform: translateY(calc(-5 * $ru));
+			width: 0;
+			margin-bottom: 0;
+		}
+	}
 }
 
 .fadeIn {
-  opacity: 0;
-  animation: fadeIn 1s ease-in forwards;
+	opacity: 0;
+	animation: fadeIn 1s ease-in forwards;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0%;
-  }
-  to {
-    opacity: 100%;
-  }
+	from {
+		opacity: 0%;
+	}
+	to {
+		opacity: 100%;
+	}
 }
 
 .fadeOut {
-  opacity: 100%;
-  animation: fadeOut 1s ease-in forwards;
+	opacity: 100%;
+	animation: fadeOut 1s ease-in forwards;
 }
 
 @keyframes fadeOut {
-  from {
-    opacity: 100%;
-  }
-  to {
-    opacity: 0%;
-  }
+	from {
+		opacity: 100%;
+	}
+	to {
+		opacity: 0%;
+	}
+}
+
+.banner {
+	width: 90vw;
+	padding: 0 5vw;
+	background-color: #eeeeee;
+	height: auto;
+	padding-top: calc(0.5 * $ru);
+	padding-bottom: calc(0.5 * $ru);
+	margin-bottom: calc(1 * $ru);
+	text-align: center;
+	text-wrap: balance;
+	font-size: calc(2 * $tru);
+
+	&.regularLogo,
+	&.bigLogo {
+		transform: translateY(0);
+		height: auto;
+		margin-bottom: calc(1 * $ru);
+	}
+
+	&.miniLogo {
+		transform: translateY(calc(-8 * $tru));
+		height: 0;
+		margin-bottom: 0;
+	}
+
+	&.toRegularLogo,
+	&.toBigLogo {
+		animation: slideInBanner 0.3s ease-out forwards;
+	}
+
+	&.toMiniLogo {
+		animation: slideOutBanner 0.3s ease-out forwards;
+	}
+
+	@keyframes slideInBanner {
+		to {
+			transform: translateY(0);
+			height: auto;
+			margin-bottom: calc(1 * $ru);
+		}
+	}
+
+	@keyframes slideOutBanner {
+		to {
+			transform: translateY(calc(-8 * $tru));
+			height: 0;
+			margin-bottom: 0;
+		}
+	}
 }
