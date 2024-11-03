@@ -1,5 +1,4 @@
-import { useSearchParams } from '@solidjs/router';
-import { A } from 'solid-start';
+import { A, useSearchParams } from '@solidjs/router';
 import styles from './Navbar.module.scss';
 import { Show } from 'solid-js';
 

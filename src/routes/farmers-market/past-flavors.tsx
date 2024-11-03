@@ -1,5 +1,4 @@
 import { createSignal, For, Match, Switch } from 'solid-js';
-import { A } from 'solid-start';
 import Layout from '~/components/Layout';
 import styles from './past-flavors.module.scss';
 
@@ -22,7 +21,7 @@ export default function FarmersMarket() {
     [new Date(2022, 10, 19), 'Brown Sugar Sweet Potato & Apple Pie'],
   ]);
 
-	const [dates2023, setDates2023] = createSignal([
+  const [dates2023, setDates2023] = createSignal([
     [
       new Date(2023, 5, 17),
       'Coconut Passion Fruit, Salted Caramel Cashew, & Chocolate Strawberry',
@@ -49,7 +48,7 @@ export default function FarmersMarket() {
     [new Date(2023, 10, 18), 'Red Bean & Lemon Raspberry'],
   ]);
   return (
-    <Layout desc="View our past specials for previous Chatham Farmers' Market seasons">
+    <Layout desc="View my past specials for previous Chatham Farmers' Market seasons">
       <div class={styles.sections}>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Past Specials</h2>
@@ -65,7 +64,7 @@ export default function FarmersMarket() {
               )}
             </For>
           </ul>
-					<h3>2023</h3>
+          <h3>2023</h3>
           <ul>
             <For each={dates2023()}>
               {([date, specials], i) => (
@@ -82,16 +81,16 @@ export default function FarmersMarket() {
           alt=""
         />
         <div class={`${styles.section} ${styles.four}`}>
-          <h3>Contact us</h3>
+          <h3>Contact me</h3>
           <h4>
-            Contact us at
+            Contact me at
             <br />
             <a
-              href="mailto:hello@tuxedocupcakes.com"
+              href="mailto:olive@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              hello@tuxedocupcakes.com
+              olive@tuxedocupcakes.com
             </a>
           </h4>
         </div>

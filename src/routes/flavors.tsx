@@ -7,9 +7,9 @@ export default function Flavors() {
       <div class={styles.menu}>
         <h2>Flavors</h2>
         <p class={styles.desc}>
-          These are some of the flavors we have done in the past. If you have an
-          idea for a flavor not on this list, reach out and we'll see what we
-          can do!
+          These are some of the flavors I have done in the past. If you have an
+          idea for a flavor not on this list, reach out and I'll see what I can
+          do!
         </p>
         <h3>Classics</h3>
         <p>
@@ -60,14 +60,14 @@ export default function Flavors() {
       <div class={styles.contact}>
         <h2>Contact</h2>
         <h4>
-          To place an order (or if you have any other questions), contact us at
+          To place an order (or if you have any other questions), contact me at
           <br />
           <a
-            href="mailto:hello@tuxedocupcakes.com"
+            href="mailto:olive@tuxedocupcakes.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            hello@tuxedocupcakes.com
+            olive@tuxedocupcakes.com
           </a>
         </h4>
       </div>

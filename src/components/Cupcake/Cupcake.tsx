@@ -1,5 +1,3 @@
-import { JSX } from 'solid-js';
-
 export default function Cupcake(props: {
   flavor: Flavor;
   size: number;
@@ -19,7 +17,6 @@ export default function Cupcake(props: {
       y={props.y || ''}
       onMouseDown={props.onBrush}
       onMouseEnter={(e) => {
-        console.log(e.buttons);
         if (e.buttons % 2 == 1) {
           props.onBrush();
         }

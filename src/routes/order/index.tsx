@@ -1,16 +1,41 @@
 import Layout from '~/components/Layout';
 import styles from './index.module.scss';
-import { For, Match, Show, Switch, createSignal, onMount } from 'solid-js';
+import { For, Show, createEffect, createSignal, onMount } from 'solid-js';
 import CupcakeBox, { AVAILABLE_SIZES, FLAVORS } from '~/components/CupcakeBox';
 import Cupcake from '~/components/Cupcake';
 import { createClient } from '@supabase/supabase-js';
 import { createStore, unwrap } from 'solid-js/store';
+import { encodeBox } from '~/components/CupcakeBox/CupcakeBox';
+import { getPaypalAuth } from '../server';
+import axios from 'axios';
+import { useSearchParams } from '@solidjs/router';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const EMAIL_VALIDATION_REGEX =
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const PHONE_VALIDATION_REGEX =
   /^\+?(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)?\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*\d\W*(\d{1,2})$/;
+
+const EMPTY_ORDER = {
+  market: { week: new Date(), times: [], names: [], flavors: [] },
+  time: '',
+  name: '',
+  boxes: [],
+  info: {
+    name: '',
+    email: '',
+    phone: '',
+    extra: '',
+    newsletter: false,
+    save: false,
+    discount: {
+      code: '',
+      discount: 0,
+      type: '',
+      used: true,
+    },
+  },
+};
 
 const MARKETS: Market[] = [
   {
@@ -34,6 +59,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.COCONUT_PASSION_FRUIT,
       FLAVORS.MOCHA,
     ],
@@ -49,6 +75,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.SALTED_CARAMEL_CASHEW,
       FLAVORS.CHOCOLATE_RASPBERRY,
     ],
@@ -72,6 +99,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.CHOCOLATE_CHERRY,
       FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
@@ -87,6 +115,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.LEMON_PISTACHIO,
       FLAVORS.COCONUT_RASPBERRY,
     ],
@@ -103,6 +132,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.LEMON_PISTACHIO,
       FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
@@ -119,6 +149,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.CHOCOLATE_PEANUT_BUTTER,
       FLAVORS.SALTED_CARAMEL_CASHEW,
     ],
@@ -134,6 +165,7 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.CINNAMON_PEACH,
       FLAVORS.CHOCOLATE_RASPBERRY,
     ],
@@ -149,8 +181,121 @@ const MARKETS: Market[] = [
       FLAVORS.CHOCOLATE_CHOCOLATE,
       FLAVORS.STRAWBERRY,
       FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
       FLAVORS.RED_BEAN,
       FLAVORS.CHOCOLATE_BLACK_SESAME,
+    ],
+  },
+  {
+    week: new Date(2024, 8, 9, 0, 0),
+    times: ['Saturday 9/14, 8AM - 1PM', 'Sunday 9/15, 8:30AM - 1PM'],
+    names: ['Chatham Farmers Market', 'Morristown Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.RED_BEAN,
+      FLAVORS.CHOCOLATE_BLACK_SESAME,
+    ],
+  },
+  {
+    week: new Date(2024, 9, 14, 0, 0),
+    times: ['Saturday 10/19, 8AM - 1PM', 'Sunday 9/20, 8:30AM - 1PM'],
+    names: ['Chatham Farmers Market', 'Morristown Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.MASALA_CHAI,
+      FLAVORS.CHOCOLATE_CARAMEL,
+    ],
+  },
+  {
+    week: new Date(2024, 9, 21, 0, 0),
+    times: ['Saturday 10/26, 8AM - 1PM'],
+    names: ['Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.CHOCOLATE_BLACK_SESAME,
+      FLAVORS.CHOCOLATE_MATCHA,
+    ],
+  },
+  {
+    week: new Date(2024, 9, 28, 0, 0),
+    times: ['Saturday 11/2, 8AM - 1PM'],
+    names: ['Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.GINGERBREAD,
+      FLAVORS.APPLE_PIE,
+    ],
+  },
+  {
+    week: new Date(2024, 10, 4, 0, 0),
+    times: ['Saturday 11/9, 8AM - 1PM'],
+    names: ['Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.CHOCOLATE_PEPPERMINT,
+      FLAVORS.MASALA_CHAI,
+    ],
+  },
+  {
+    week: new Date(2024, 10, 11, 0, 0),
+    times: ['Saturday 11/16, 8AM - 1PM'],
+    names: ['Chatham Farmers Market'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.PUMPKIN_SPICE,
+      FLAVORS.MEXICAN_HOT_CHOCOLATE,
+    ],
+  },
+  {
+    week: new Date(2024, 10, 18, 0, 0),
+    times: ['Wednesday 11/27, 8PM', 'Wednesday 11/27, 8PM'],
+    names: ['Thanksgiving Pickup', 'Thanksgiving Dropoff'],
+    flavors: [
+      FLAVORS.VANILLA_VANILLA,
+      FLAVORS.VANILLA_CHOCOLATE,
+      FLAVORS.CHOCOLATE_VANILLA,
+      FLAVORS.CHOCOLATE_CHOCOLATE,
+      FLAVORS.STRAWBERRY,
+      FLAVORS.CHOCOLATE_STRAWBERRY,
+      FLAVORS.GAP,
+      FLAVORS.PUMPKIN_SPICE,
+      FLAVORS.APPLE_PIE,
     ],
   },
 ];
@@ -177,36 +322,22 @@ const mobileCheck = function () {
 let activeMarkets: Market[] = [];
 
 export default function Order() {
+  let [orderRetrieved, setOrderRetrieved] = createSignal(false);
   let [mobileBrowser, setMobileBrowser] = createSignal(false);
   onMount(() => {
     setMobileBrowser(mobileCheck());
   });
   let [pageUp, setPageUp] = createSignal(false);
+  let [searchParams, setSearchParams] = useSearchParams();
+  if (searchParams.status == 'canceled' || searchParams.status == 'error')
+    setPageUp(true);
   let [state, setState] = createSignal(0);
   let [marketSelect, setMarketSelect] = createSignal(0);
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
-  let [order, setOrder] = createStore<Order>({
-    market: { week: new Date(), times: [], names: [], flavors: [] },
-    time: '',
-    name: '',
-    boxes: [],
-    info: {
-      name: '',
-      email: '',
-      phone: '',
-      extra: '',
-      newsletter: false,
-      save: false,
-      discount: {
-        code: '',
-        discount: 0,
-        type: '',
-        used: true,
-      },
-    },
-  });
+  let [order, setOrder] = createStore<Order>(EMPTY_ORDER);
+
   // setOrder({
-  //   market: MARKETS[3],
+  //   market: MARKETS[2],
   //   boxes: [
   //     {
   //       type: { price: 100, quantity: 12, regular: true },
@@ -243,6 +374,9 @@ export default function Order() {
   //   email: 'olive@tuxedocupcakes.com',
   //   phone: '8622060280',
   // });
+  // setState(3);
+  // setPageUp(true);
+
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
       cupcakes: [],
@@ -259,7 +393,7 @@ export default function Order() {
   activeMarkets = [];
   if (activeMarkets.length == 0) {
     for (let market of MARKETS) {
-      if (activeMarkets.length >= 3) continue;
+      if (activeMarkets.length >= 6) continue;
       if (market.week.getTime() + 345600000 > Date.now()) {
         activeMarkets.push(market);
       }
@@ -397,6 +531,34 @@ export default function Order() {
     console.log(order.info);
   };
 
+  createEffect(() => {
+    if (orderRetrieved()) {
+      console.log('storing');
+      window.localStorage.setItem(
+        'orderData',
+        JSON.stringify({
+          order,
+          state: state(),
+          pageUp: pageUp(),
+          cupcakeSelectStep: cupcakeSelectStep(),
+          activeBox: activeBox(),
+        })
+      );
+    }
+  });
+
+  onMount(() => {
+    let orderData = JSON.parse(window.localStorage.getItem('orderData'));
+    if (!orderData) return;
+    setOrder(orderData.order ?? EMPTY_ORDER);
+    setState(orderData.state ?? 0);
+    setPageUp(orderData.pageUp ?? false);
+    setCupcakeSelectStep(orderData.cupcakeSelectStep ?? 0);
+    setActiveBox(orderData.activeBox ?? undefined);
+    console.log(orderData);
+    setOrderRetrieved(true);
+  });
+
   return (
     <Layout
       hideFooter
@@ -431,14 +593,14 @@ export default function Order() {
             </Show>
             <br />
             <br />
-            Want cupcakes for another time or something else special? Send us an
+            Want cupcakes for another time or something else special? Send me an
             email at{' '}
             <a
-              href="mailto:hello@tuxedocupcakes.com"
+              href="mailto:olive@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              hello@tuxedocupcakes.com
+              olive@tuxedocupcakes.com
             </a>
             !
           </p>
@@ -490,21 +652,11 @@ export default function Order() {
                                       : ''
                                   }`}
                                   onClick={() => {
-                                    console.log(
-                                      'selected market: ' +
-                                        name +
-                                        ' ' +
-                                        market.times[j()]
-                                    );
                                     setOrder({
                                       market,
                                       name,
                                       time: market.times[j()],
                                     });
-                                    console.log(order);
-                                    console.log(
-                                      market.times[j()] == order.time
-                                    );
                                   }}
                                 >
                                   {name} -
@@ -689,22 +841,30 @@ export default function Order() {
                       <h3>Select flavor to place in box</h3>
                       <div class={styles.brushSelect}>
                         <For each={order.market.flavors}>
-                          {(flavor) => (
-                            <div
-                              class={`${styles.cupcake} tooltip ${
-                                activeBrush() != undefined &&
-                                activeBrush().id == flavor.id
-                                  ? styles.selected
-                                  : ''
-                              }`}
-                              onClick={() => {
-                                setActiveBrush(flavor);
-                              }}
-                            >
-                              <span class="tooltip-text">{flavor.name}</span>
-                              <Cupcake flavor={flavor} scale={1.5} size={75} />
-                            </div>
-                          )}
+                          {(flavor) =>
+                            flavor.id !== 'GAP' ? (
+                              <div
+                                class={`${styles.cupcake} tooltip ${
+                                  activeBrush() != undefined &&
+                                  activeBrush().id == flavor.id
+                                    ? styles.selected
+                                    : ''
+                                }`}
+                                onClick={() => {
+                                  setActiveBrush(flavor);
+                                }}
+                              >
+                                <span class="tooltip-text">{flavor.name}</span>
+                                <Cupcake
+                                  flavor={flavor}
+                                  scale={1.5}
+                                  size={75}
+                                />
+                              </div>
+                            ) : (
+                              <></>
+                            )
+                          }
                         </For>
                       </div>
                       <div class={styles.buttons}>
@@ -892,6 +1052,7 @@ export default function Order() {
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(2);
+                    checkDetailInputs();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -1018,7 +1179,15 @@ export default function Order() {
                       {(box, i) => (
                         <>
                           <div class={styles.cupcakeBox}>
-                            <CupcakeBox box={box} />
+                            <a
+                              href={`/order/display?t=${encodeBox(box).t}&f=${
+                                encodeBox(box).f
+                              }`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <CupcakeBox box={box} />
+                            </a>
                           </div>
                           <div class={styles.divider} />
                           <div class={styles.flavors}>
@@ -1089,62 +1258,9 @@ export default function Order() {
 
                   <button
                     class={`button ${styles.placeOrder}`}
-                    // onClick={async (e) => {
-                    //   e.target.classList.add('submitted');
-                    //   setState(4);
-
-                    //   const supabase = createClient(
-                    //     'https://rxznihvftodgtjdtzbyr.supabase.co',
-                    //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'
-                    //   );
-
-                    //   let response = await supabase.from('orders').insert({
-                    //     email: order.info.email,
-                    //     name: order.info.name,
-                    //     phone: order.info.phone,
-                    //     order: JSON.stringify(order.boxes),
-                    //     extraInfo: order.info.extra,
-                    //     newsletter: order.info.newsletter,
-                    //     discount: order.info.discount,
-                    //   });
-                    //   console.log(response.status);
-
-                    //   setSearchParams({ orderStatus: response.status });
-                    //   if (response.status == 201) {
-                    //     if (formData().discount && !formData().discount.used) {
-                    //       let result = await supabase.rpc('use_discount', {
-                    //         usecode: formData().discount.code,
-                    //       });
-                    //       console.log(result);
-                    //     }
-
-                    //     setCart([]);
-                    //     setFormState(5);
-                    //     if (!formData().saveData) {
-                    //       setFormData({
-                    //         email: '',
-                    //         name: '',
-                    //         phone: '',
-                    //         extra: '',
-                    //         newsletter: false,
-                    //         saveData: false,
-                    //         discount: undefined,
-                    //       });
-                    //     } else {
-                    //       setFormData({
-                    //         ...formData(),
-                    //         discount: {
-                    //           code: '',
-                    //           discount: 0,
-                    //           type: 'PERCENT',
-                    //           used: true,
-                    //         },
-                    //       });
-                    //     }
-                    //   }
-                    //   await sleep(1000);
-                    //   e.target.classList.remove('submitted');
-                    // }}
+                    onClick={async (e) => {
+                      window.location.href = await getPaypalPaymentURL(order);
+                    }}
                   >
                     Place Order
                   </button>
@@ -1156,6 +1272,7 @@ export default function Order() {
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(2);
+                    checkDetailInputs();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -1194,4 +1311,116 @@ function parsePhoneNumber(number: string) {
     numberString = numberString.split(')')[0];
   }
   return numberString;
+}
+
+async function getPaypalPaymentURL(order: Order) {
+  'use server';
+  const paypalAuthToken = await getPaypalAuth();
+  console.log(paypalAuthToken);
+
+  const items: {
+    name: string;
+    quantity: number;
+    description: string;
+    sku: string;
+    category: string;
+    unit_amount: {
+      currency_code: string;
+      value: string;
+    };
+  }[] = [];
+  order.boxes.forEach((box) => {
+    items.push({
+      name: `${box.type.quantity} ${
+        box.type.regular ? 'Regular' : 'Mini'
+      } Cupcake Box`,
+      quantity: 1,
+      description: Object.entries(
+        box.cupcakes.reduce((flavorList, nextFlavor) => {
+          if (Object.keys(flavorList).includes(nextFlavor.name))
+            flavorList[nextFlavor.name] += 1;
+          else flavorList[nextFlavor.name] = 1;
+          return flavorList;
+        }, {})
+      ).reduce(
+        (currString, flavor) =>
+          currString + flavor[0] + ' ×' + flavor[1] + `\n`,
+        ''
+      ),
+      sku: encodeBox(box).f,
+      category: 'PHYSICAL_GOODS',
+      unit_amount: {
+        currency_code: 'USD',
+        value: box.type.price.toFixed(2),
+      },
+    });
+  });
+
+  const totalPreTax = items.reduce(
+    (prev, item) => prev + parseFloat(item.unit_amount.value),
+    0
+  );
+  const totalNormalTax = totalPreTax / 0.9651 + 0.49 / 0.9651;
+  const totalMicroTax = totalPreTax / 0.9501 + 0.09 / 0.9501;
+
+  console.dir({ totalPreTax, totalNormalTax, totalMicroTax });
+
+  const total = Math.min(totalNormalTax, totalMicroTax);
+
+  const reqBody = {
+    intent: 'CAPTURE',
+    purchase_units: [
+      {
+        items,
+        amount: {
+          currency_code: 'USD',
+          value: total.toFixed(2),
+          breakdown: {
+            item_total: {
+              currency_code: 'USD',
+              value: totalPreTax.toFixed(2),
+            },
+            handling: {
+              currency_code: 'USD',
+              value: (total - totalPreTax).toFixed(2),
+            },
+          },
+        },
+      },
+    ],
+    payment_source: {
+      paypal: {
+        experience_context: {
+          brand_name: 'Tuxedo Cupcakes',
+          locale: 'en-US',
+          shipping_preference: 'NO_SHIPPING',
+          user_action: 'PAY_NOW',
+          return_url: 'https://25gpd7pq-2000.use.devtunnels.ms/order/return',
+          cancel_url:
+            'https://25gpd7pq-2000.use.devtunnels.ms/order?status=canceled',
+        },
+        email: 'test@example.com',
+      },
+    },
+  };
+
+  //console.dir(reqBody, { depth: 10 });
+
+  const req = await axios.post(
+    'https://api-m.sandbox.paypal.com/v2/checkout/orders',
+    reqBody,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${paypalAuthToken}`,
+      },
+    }
+  );
+
+  if (req.status == 200) {
+    const links: { href: string; rel: string; method: string }[] =
+      req.data.links;
+    return links.filter((link) => link.rel == 'payer-action')[0].href;
+  }
+  console.error(req);
 }

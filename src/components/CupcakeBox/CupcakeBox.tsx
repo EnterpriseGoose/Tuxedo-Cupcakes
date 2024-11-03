@@ -17,9 +17,18 @@ const VANILLA_CAKE = '#F8ECD4';
 const LEMON_CAKE = '#FFDFA1';
 const CINNAMON_CAKE = '#E3BB8B';
 
-export const FLAVORS: { [id: string]: Flavor } = {
+export const FLAVORS /*: { [id: string]: Flavor }*/ = {
+  GAP: {
+    id: 'GAP',
+    tag: '',
+    name: '',
+    cake: VANILLA_CAKE,
+    frosting: '#FFFFFF',
+    frosting_outline: '#FFFFFF',
+  },
   VANILLA_VANILLA: {
     id: 'VANILLA_VANILLA',
+    tag: 'V_V',
     name: 'Vanilla Vanilla',
     cake: VANILLA_CAKE,
     frosting: '#F0ECE3',
@@ -27,6 +36,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   VANILLA_CHOCOLATE: {
     id: 'VANILLA_CHOCOLATE',
+    tag: 'V_C',
     name: 'Vanilla Chocolate',
     cake: VANILLA_CAKE,
     frosting: '#7E5E50',
@@ -34,6 +44,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_VANILLA: {
     id: 'CHOCOLATE_VANILLA',
+    tag: 'C_V',
     name: 'Chocolate Vanilla',
     cake: CHOCOLATE_CAKE,
     frosting: '#F0ECE3',
@@ -41,6 +52,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_CHOCOLATE: {
     id: 'CHOCOLATE_CHOCOLATE',
+    tag: 'C_C',
     name: 'Chocolate Chocolate',
     cake: CHOCOLATE_CAKE,
     frosting: '#7E5E50',
@@ -48,6 +60,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   STRAWBERRY: {
     id: 'STRAWBERRY',
+    tag: 'V_S',
     name: 'Strawberry',
     cake: VANILLA_CAKE,
     frosting: '#ECBDC2',
@@ -55,6 +68,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_STRAWBERRY: {
     id: 'CHOCOLATE_STRAWBERRY',
+    tag: 'C_S',
     name: 'Chocolate Strawberry',
     cake: CHOCOLATE_CAKE,
     frosting: '#ECBDC2',
@@ -62,6 +76,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   MOCHA: {
     id: 'MOCHA',
+    tag: 'C_MO',
     name: 'Mocha',
     cake: CHOCOLATE_CAKE,
     frosting: '#A67C6A',
@@ -69,6 +84,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   COCONUT_PASSION_FRUIT: {
     id: 'COCONUT_PASSION_FRUIT',
+    tag: 'CO_PF',
     name: 'Coconut Passion Fruit',
     cake: VANILLA_CAKE,
     frosting: '#FEE9C0',
@@ -76,6 +92,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   SALTED_CARAMEL_CASHEW: {
     id: 'SALTED_CARAMEL_CASHEW',
+    tag: 'V_SCC',
     name: 'Salted Caramel Cashew',
     cake: VANILLA_CAKE,
     frosting: '#E9C9A4',
@@ -83,6 +100,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_RASPBERRY: {
     id: 'CHOCOLATE_RASPBERRY',
+    tag: 'C_R',
     name: 'Chocolate Raspberry',
     cake: CHOCOLATE_CAKE,
     frosting: '#DF779C',
@@ -90,6 +108,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_CHERRY: {
     id: 'CHOCOLATE_CHERRY',
+    tag: 'C_CH',
     name: 'Chocolate Cherry',
     cake: CHOCOLATE_CAKE,
     frosting: '#E0A5DE',
@@ -97,6 +116,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   LEMON_PISTACHIO: {
     id: 'LEMON_PISTACHIO',
+    tag: 'L_P',
     name: 'Lemon Pistachio',
     cake: LEMON_CAKE,
     frosting: '#D5F5BB',
@@ -104,6 +124,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   COCONUT_RASPBERRY: {
     id: 'COCONUT_RASPBERRY',
+    tag: 'CO_R',
     name: 'Coconut Raspberry',
     cake: VANILLA_CAKE,
     frosting: '#DF779C',
@@ -111,6 +132,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_PEANUT_BUTTER: {
     id: 'CHOCOLATE_PEANUT_BUTTER',
+    tag: 'C_PB',
     name: 'Chocolate Peanut Butter',
     cake: CHOCOLATE_CAKE,
     frosting: '#F5DCBE',
@@ -118,6 +140,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CINNAMON_PEACH: {
     id: 'CINNAMON_PEACH',
+    tag: 'CN_PE',
     name: 'Cinnamon Peach',
     cake: CINNAMON_CAKE,
     frosting: '#F1C59D',
@@ -125,6 +148,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   CHOCOLATE_BLACK_SESAME: {
     id: 'CHOCOLATE_BLACK_SESAME',
+    tag: 'C_BS',
     name: 'Chocolate Black Sesame',
     cake: CHOCOLATE_CAKE,
     frosting: '#5A5550',
@@ -132,10 +156,75 @@ export const FLAVORS: { [id: string]: Flavor } = {
   },
   RED_BEAN: {
     id: 'RED_BEAN',
+    tag: 'V_RB',
     name: 'Red Bean',
     cake: VANILLA_CAKE,
     frosting: '#DBBBB1',
     frosting_outline: '#C1A096',
+  },
+  MASALA_CHAI: {
+    id: 'MASALA_CHAI',
+    tag: 'V_MC',
+    name: 'Masala Chai',
+    cake: VANILLA_CAKE,
+    frosting: '#F5E4B7',
+    frosting_outline: '#EADBB4',
+  },
+  CHOCOLATE_CARAMEL: {
+    id: 'CHOCOLATE_CARAMEL',
+    tag: 'C_CA',
+    name: 'Chocolate Caramel',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#E9C9A4',
+    frosting_outline: '#D8BC9B',
+  },
+  CHOCOLATE_MATCHA: {
+    id: 'CHOCOLATE_MATCHA',
+    tag: 'C_MA',
+    name: 'Chocolate Matcha',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#C0D8B5',
+    frosting_outline: '#A5C198',
+  },
+  PUMPKIN_SPICE: {
+    id: 'PUMPKIN_SPICE',
+    tag: 'P_S',
+    name: 'Pumpkin Spice',
+    cake: CINNAMON_CAKE,
+    frosting: '#F8DECB',
+    frosting_outline: '#EDCAB1',
+  },
+  APPLE_PIE: {
+    id: 'APPLE_PIE',
+    tag: 'V_AP',
+    name: 'Apple Pie',
+    cake: CINNAMON_CAKE,
+    frosting: '#E9CAB4',
+    frosting_outline: '#DCB99F',
+  },
+  CHOCOLATE_PEPPERMINT: {
+    id: 'CHOCOLATE_PEPPERMINT',
+    tag: 'C_PP',
+    name: 'Chocolate Peppermint',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#FFA5AE',
+    frosting_outline: '#FF9AA4',
+  },
+  MEXICAN_HOT_CHOCOLATE: {
+    id: 'MEXICAN_HOT_CHOCOLATE',
+    tag: 'C_MHT',
+    name: 'Mexican Hot Chocolate',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#775444',
+    frosting_outline: '#6F4A3A',
+  },
+  GINGERBREAD: {
+    id: 'GINGERBREAD',
+    tag: 'GB_D',
+    name: 'Gingerbread',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#F4E8DF',
+    frosting_outline: '#F0E2D8',
   },
 };
 
@@ -146,8 +235,9 @@ export default function CupcakeBox(props: {
   scale?: number;
   setActiveBox?: Setter<Box>;
   tooltip?: boolean;
+  detailedTooltip?: boolean;
 }) {
-  if (props.scale == undefined) props.scale = 1;
+  props.scale ||= 1;
   let [regularSize, setRegularSize] = createSignal(65 * props.scale);
   let [miniSize, setMiniSize] = createSignal(40 * props.scale);
   let [width, setWidth] = createSignal(20);
@@ -157,7 +247,6 @@ export default function CupcakeBox(props: {
   let [regular, setRegular] = createSignal(true);
 
   createEffect(() => {
-    console.log('reloading box');
     let width = 20 * props.scale;
     let height = 20 * props.scale;
     setRegular(props.box.type.regular);
@@ -190,6 +279,29 @@ export default function CupcakeBox(props: {
         <span class="tooltip-text">{`${props.box.type.quantity} ${
           props.box.type.regular ? 'Regular' : 'Mini'
         } - \$${props.box.type.price}`}</span>
+      </Show>
+      <Show when={props.detailedTooltip}>
+        <span class="tooltip-text">
+          {`${props.box.type.quantity} ${
+            props.box.type.regular ? 'Regular' : 'Mini'
+          } - \$${props.box.type.price}`}
+          <br />
+          {Object.entries(
+            props.box.cupcakes.reduce((flavorList, nextFlavor) => {
+              if (Object.keys(flavorList).includes(nextFlavor.name))
+                flavorList[nextFlavor.name] += 1;
+              else flavorList[nextFlavor.name] = 1;
+              return flavorList;
+            }, {})
+          ).reduce((currString, flavor) => {
+            console.log(currString);
+            const desc = document.createElement('b');
+            desc.textContent = flavor[0] + ' ×' + flavor[1];
+            (currString as Element).appendChild(desc);
+            (currString as Element).appendChild(document.createElement('br'));
+            return currString;
+          }, <span></span>)}
+        </span>
       </Show>
       <svg
         width={width()}
@@ -267,4 +379,39 @@ function transformBox(box: Box): Flavor[][] {
   }
 
   return output;
+}
+
+export function encodeBox(box: Box): { t: string; f: string } {
+  let outBox: { t: string; f: string } = {
+    t:
+      (box.type.regular ? 'R' : 'M') +
+      '-' +
+      box.type.quantity +
+      '-' +
+      box.type.price,
+    f: '',
+  };
+  let flavors = [];
+  box.cupcakes.forEach((flavor) => {
+    flavors.push(flavor.tag);
+  });
+  outBox.f = flavors.join('-');
+  return outBox;
+}
+
+export function decodeBox(box: { t: string; f: string }): Box {
+  let outBox: Box = {
+    type: {
+      regular: box.t.split('-')[0] == 'R',
+      quantity: parseInt(box.t.split('-')[1]),
+      price: parseInt(box.t.split('-')[2]),
+    },
+    cupcakes: [],
+  };
+  box.f.split('-').forEach((flavorTag) => {
+    outBox.cupcakes.push(
+      FLAVORS[Object.values(FLAVORS).find(({ tag }) => tag == flavorTag).id]
+    );
+  });
+  return outBox;
 }

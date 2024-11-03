@@ -1,9 +1,9 @@
-import { NavLink, useSearchParams } from '@solidjs/router';
-import { Show, createSignal, onMount } from 'solid-js';
+import { useSearchParams } from '@solidjs/router';
+import { Show, onMount } from 'solid-js';
+import { MetaProvider, Meta } from '@solidjs/meta';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import styles from './Layout.module.scss';
-import { Head } from 'solid-start';
 
 export default function Layout(props?: {
   children?: any;
@@ -25,17 +25,19 @@ export default function Layout(props?: {
     document.body.style.overflow = props.noOverflow ? 'hidden' : '';
   });
 
+  console.log(props);
+
   return (
     <div class={styles.root} id="root">
-      <Head>
-        <meta
+      <MetaProvider>
+        <Meta
           name="description"
           content={
             props.desc ||
             'Tuxedo Cupcakes is a small bakery based in Chatham, NJ that aims to make the best cupcakes that have just the right balance of sweetness and bold flavors.'
           }
         />
-      </Head>
+      </MetaProvider>
       <Navbar mini={props.mini} home={props.home} minimal={props.minimal} />
       <main class={`${styles.main} ${props.mini ? styles.mini : ''}`}>
         {props.children}

@@ -1,7 +1,7 @@
 import Layout from '~/components/Layout';
 
 import styles from './catering.module.scss';
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 
 export default function Catering() {
   return (
@@ -10,10 +10,10 @@ export default function Catering() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Catering of Cakes and Cupcakes</h2>
           <p>
-            We can cater your event with a custom cake or cupcakes that will
-            make it memorable. We love making super tasty creations with
-            interesting flavors, and we specialize in using fresh, seasonal
-            fruit to make decorative and super tasty cakes and cupcakes.
+            I can cater your event with a custom cake or cupcakes that will make
+            it memorable. I love making super tasty creations with interesting
+            flavors, and I specialize in using fresh, seasonal fruit to make
+            decorative and super tasty cakes and cupcakes.
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
@@ -22,19 +22,18 @@ export default function Catering() {
             To inquire about an order, send an email to{' '}
             <a
               class={styles.email}
-              href="mailto:hello@tuxedocupcakes.com?subject=Catering%20Order"
+              href="mailto:olive@tuxedocupcakes.com?subject=Catering%20Order"
               target="_blank"
               rel="noopener noreferrer"
             >
-              hello@tuxedocupcakes.com
+              olive@tuxedocupcakes.com
             </a>
             .
-            <br />
-            We can help you figure out the details about flavors or decorations,
-            as well as the size of the cake or quantity of cupcakes and the
-            price. For basic pricing info,{' '}
-            <A href="/catering#pricing">see below</A>.<br /> <br />
-            We have a menu of our previous flavors <A href="/flavors">here</A>.
+            <br />I can help you figure out the details about flavors or
+            decorations, as well as the size of the cake or quantity of cupcakes
+            and the price. For basic pricing info,{' '}
+            <A href="/catering#pricing">see below</A>.<br /> <br />I have a menu
+            of our previous flavors <A href="/flavors">here</A>.
           </p>
         </div>
         <img
@@ -44,7 +43,7 @@ export default function Catering() {
         />
         <div class={`${styles.section} ${styles.three}`}>
           <h2>Past Cakes</h2>
-          <p>Here are some of the cakes we’ve made in the past:</p>
+          <p>Here are some of the cakes I’ve made in the past:</p>
           <div class={styles.images}>
             <div class={styles.image}>
               <img src="/images/cake-1.png" alt="cake 1" />
@@ -62,7 +61,7 @@ export default function Catering() {
         </div>
         <div class={`${styles.section} ${styles.four}`}>
           <h2>Cupcakes</h2>
-          <p>Here are some of the cupcakes we've made for catering orders:</p>
+          <p>Here are some of the cupcakes I've made for catering orders:</p>
           <div class={styles.images}>
             <div class={styles.image}>
               <img src="/images/cupcake-1.png" alt="cupcake 1" />
@@ -98,7 +97,7 @@ export default function Catering() {
         <div class={`${styles.section} ${styles.five}`} id="pricing">
           <h2>Pricing</h2>
           <p>
-            In the end, pricing has to be done per-order, but we can give a
+            In the end, pricing has to be done per-order, but I can give a
             general idea of how much basic cakes and cupcakes cost
             <br />
           </p>
@@ -146,14 +145,14 @@ export default function Catering() {
         <div class={`${styles.section} ${styles.six}`}>
           <h3>Order</h3>
           <h4>
-            Contact us about catering at
+            Contact me about catering at
             <br />
             <a
-              href="mailto:hello@tuxedocupcakes.com?subject=Catering%20Order"
+              href="mailto:olive@tuxedocupcakes.com?subject=Catering%20Order"
               target="_blank"
               rel="noopener noreferrer"
             >
-              hello@tuxedocupcakes.com
+              olive@tuxedocupcakes.com
             </a>
           </h4>
         </div>
