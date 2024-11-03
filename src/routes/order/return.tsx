@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getPaypalAuth } from '../server';
 import { redirect } from '@solidjs/router';
 
-async function capturePayment(token) {
+async function capturePayment(token: string) {
   'use server';
   if (!token) {
     return { status: 'CANCELED', redirect: redirect('/order?status=canceled') };
@@ -31,7 +31,7 @@ async function capturePayment(token) {
   }
 }
 
-export async function GET(APIEvent) {
+export async function GET(APIEvent: { request: Request }) {
   try {
     const urlParams = new URLSearchParams(APIEvent.request.url.split('?')[1]);
     const payment = await capturePayment(urlParams.get('token'));

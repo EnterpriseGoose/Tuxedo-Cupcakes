@@ -1259,7 +1259,10 @@ export default function Order() {
                   <button
                     class={`button ${styles.placeOrder}`}
                     onClick={async (e) => {
-                      window.location.href = await getPaypalPaymentURL(order);
+                      window.location.href = await getPaypalPaymentURL(
+                        order,
+                        location.origin
+                      );
                     }}
                   >
                     Place Order
@@ -1313,7 +1316,7 @@ function parsePhoneNumber(number: string) {
   return numberString;
 }
 
-async function getPaypalPaymentURL(order: Order) {
+async function getPaypalPaymentURL(order: Order, origin: string) {
   'use server';
   const paypalAuthToken = await getPaypalAuth();
   console.log(paypalAuthToken);
@@ -1395,9 +1398,8 @@ async function getPaypalPaymentURL(order: Order) {
           locale: 'en-US',
           shipping_preference: 'NO_SHIPPING',
           user_action: 'PAY_NOW',
-          return_url: 'https://25gpd7pq-2000.use.devtunnels.ms/order/return',
-          cancel_url:
-            'https://25gpd7pq-2000.use.devtunnels.ms/order?status=canceled',
+          return_url: origin + '/order/return',
+          cancel_url: origin + '/order?status=canceled',
         },
         email: 'test@example.com',
       },
