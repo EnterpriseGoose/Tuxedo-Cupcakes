@@ -14,7 +14,13 @@ export default function Success() {
 
   onMount(async () => {
     if (searchParams.token) {
-      setOrder(await getOrder(searchParams.token));
+      setOrder(
+        await getOrder(
+          Array.isArray(searchParams.token)
+            ? searchParams.token[0]
+            : searchParams.token
+        )
+      );
       const supabase = createClient(
         'https://rxznihvftodgtjdtzbyr.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4em5paHZmdG9kZ3RqZHR6YnlyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2Njg5MTgzNjUsImV4cCI6MTk4NDQ5NDM2NX0.Hqb-OC8vN2zoMZobwouS4QTGA0X0KLBQzM3O8btvwLE'

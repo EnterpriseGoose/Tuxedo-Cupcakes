@@ -1,5 +1,5 @@
+import { Meta } from '@solidjs/meta';
 import { onMount } from 'solid-js';
-import { Head } from 'solid-start';
 
 export default function Instagram() {
   onMount(() => {
@@ -9,19 +9,19 @@ export default function Instagram() {
   });
 
   return (
-    <Head>
-      <meta
+    <>
+      <Meta
         http-equiv="refresh"
         content="0; URL=instagram://user?username=tuxedo_cupcakes"
       />
-      <meta
+      <Meta
         http-equiv="refresh"
         content="0; URL=intent://www.instagram.com/tuxedo_cupcakes/#Intent;package=com.instagram.android;scheme=https;end"
       />
-      <meta
+      <Meta
         http-equiv="refresh"
         content="1; URL=https://www.instagram.com/tuxedo_cupcakes/"
       />
-    </Head>
+    </>
   );
 }
