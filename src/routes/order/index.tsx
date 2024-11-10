@@ -337,47 +337,47 @@ export default function Order() {
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
   let [order, setOrder] = createStore<Order>(EMPTY_ORDER);
 
-  setOrder('market', MARKETS[2]);
-  setOrder({
-    boxes: [
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-      {
-        type: { price: 100, quantity: 12, regular: true },
-        cupcakes: [
-          ...new Array(6).fill(FLAVORS.STRAWBERRY),
-          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-        ],
-      },
-    ],
-  });
-  setOrder('info', {
-    name: 'Olive',
-    email: 'olive@tuxedocupcakes.com',
-    phone: '8622060280',
-  });
-  setState(3);
-  setPageUp(true);
-  setCupcakeSelectStep(1);
+  // setOrder('market', MARKETS[2]);
+  // setOrder({
+  //   boxes: [
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //     {
+  //       type: { price: 100, quantity: 12, regular: true },
+  //       cupcakes: [
+  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //       ],
+  //     },
+  //   ],
+  // });
+  // setOrder('info', {
+  //   name: 'Olive',
+  //   email: 'olive@tuxedocupcakes.com',
+  //   phone: '8622060280',
+  // });
+  // setState(3);
+  // setPageUp(true);
+  // setCupcakeSelectStep(1);
 
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
