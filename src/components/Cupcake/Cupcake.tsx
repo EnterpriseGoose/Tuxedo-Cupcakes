@@ -4,6 +4,7 @@ export default function Cupcake(props: {
   scale: number;
   x?: number;
   y?: number;
+  class?: string;
   onBrush?: () => void;
 }) {
   let scaledSize = props.size * props.scale;
@@ -21,6 +22,7 @@ export default function Cupcake(props: {
           props.onBrush();
         }
       }}
+      class={props.class}
     >
       <circle
         r={scaledSize / 2 - 1 * props.scale}

@@ -33,12 +33,9 @@ export default function FarmersMarket() {
         <div class={`${styles.section} ${styles.one}`}>
           <h2>Get a Cupcake at the Farmers’ Market</h2>
           <p>
-            I am at at the Chatham Farmers’ Market every Saturday and at the
-            Morristown Farmers' Market every Sunday.
-            <br /> <br />
-            Each week, I bring 4 classic flavors (chocolate, vanilla, and
-            strawberry), as well as 2 rotating special flavors, in both regular
-            and mini sizes.
+            I am at at the Chatham Farmers’ Market every Saturday. Each week, I
+            bring 4 classic flavors (chocolate, vanilla, and strawberry), as
+            well as 2 rotating special flavors, in both regular and mini sizes.
           </p>
         </div>
         <div class={`${styles.section} ${styles.two}`}>
@@ -86,7 +83,10 @@ export default function FarmersMarket() {
                             ? (dates()[i() - 1][0] as Date)
                             : new Date(0)
                         ).getTime();
-                        if (today === thisDate || today === thisDate + 86400000)
+                        if (
+                          today ===
+                          thisDate /*|| today === thisDate + 86400000*/
+                        )
                           return styles.today;
                         else if (
                           today !== lastDate &&
@@ -100,13 +100,17 @@ export default function FarmersMarket() {
                           else return styles.nextWeek;
                         } else return '';
                       })()}
-                    >{`${date.toString().substring(4, 7)} ${(
-                      date as Date
-                    ).getDate()}-${
-                      (date as Date).getDate() + 1 < 32
-                        ? (date as Date).getDate() + 1
-                        : 1
-                    }${specials ? ` - ${specials}` : ''}`}</li>
+                    >
+                      {`${date.toString().substring(4, 7)} ${(
+                        date as Date
+                      ).getDate()}` +
+                        // -${
+                        //   (date as Date).getDate() + 1 < 32
+                        //     ? (date as Date).getDate() + 1
+                        //     : 1
+                        // }
+                        `${specials ? ` - ${specials}` : ''}`}
+                    </li>
                   )}
                 </For>
               </ul>

@@ -68,7 +68,9 @@
 
 .nextPage {
 	position: absolute;
-	bottom: 2vh;
+	padding-bottom: 1vh;
+	padding-top: 1vh;
+	bottom: 0;
 	left: 0;
 	right: 0;
 	margin: 0;
@@ -76,6 +78,12 @@
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+
+	background-color: $cyan;
+
+	button {
+		background-color: white;
+	}
 
 	img {
 		margin-left: 10px;
@@ -94,9 +102,14 @@
 
 .nextButton {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	width: 12.5vw;
+
+	p {
+		margin: calc(2 * $ru);
+	}
 
 	button {
 		display: flex;
@@ -186,7 +199,21 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: center;
-				gap: 10vw;
+				column-gap: calc(5 * $wru);
+
+				@media (max-width: 1600px) {
+					flex-direction: column;
+
+					.flavors {
+						p {
+							columns: 2;
+
+							b.gap {
+								display: none;
+							}
+						}
+					}
+				}
 
 				.names {
 					display: flex;
@@ -202,6 +229,7 @@
 						border-radius: calc(1.5 * $tru);
 						transition: all ease-in-out 200ms;
 						cursor: pointer;
+						font-size: calc(0.5 * $tru + 2.5 * $ru);
 
 						span {
 							display: inline-block;
@@ -225,6 +253,14 @@
 
 				.flavors {
 					margin-top: calc(3 * $ru);
+
+					h3 {
+						margin-top: 0;
+					}
+
+					p {
+						font-size: calc(0.5 * $tru + 2.5 * $ru);
+					}
 				}
 			}
 		}
@@ -281,7 +317,7 @@
 			flex-direction: row;
 			justify-content: center;
 			align-items: center;
-			gap: calc(10 * $ru);
+			gap: calc(15 * $wru - 100px);
 
 			.palette {
 				display: flex;
@@ -326,6 +362,11 @@
 								border-radius: 100%;
 								z-index: -1;
 							}
+						}
+
+						.svg {
+							width: calc(10 * $ru);
+							height: calc(10 * $ru);
 						}
 					}
 				}
@@ -494,7 +535,7 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
-		gap: 10vw;
+		gap: calc(10 * $ru);
 		height: 72vh;
 
 		.cart {

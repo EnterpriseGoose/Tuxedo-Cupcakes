@@ -284,8 +284,8 @@ const MARKETS: Market[] = [
   },
   {
     week: new Date(2024, 10, 18, 0, 0),
-    times: ['Wednesday 11/27, 8PM', 'Wednesday 11/27, 8PM'],
-    names: ['Thanksgiving Pickup', 'Thanksgiving Dropoff'],
+    times: ['Wednesday 11/27, 8PM', 'Thursday 11/28, 9AM'],
+    names: ['Thanksgiving Pickup', 'Thanksgiving Delivery'],
     flavors: [
       FLAVORS.VANILLA_VANILLA,
       FLAVORS.VANILLA_CHOCOLATE,
@@ -296,6 +296,7 @@ const MARKETS: Market[] = [
       FLAVORS.GAP,
       FLAVORS.PUMPKIN_SPICE,
       FLAVORS.APPLE_PIE,
+      FLAVORS.BROWN_SUGAR_SWEET_POTATO,
     ],
   },
 ];
@@ -336,46 +337,47 @@ export default function Order() {
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
   let [order, setOrder] = createStore<Order>(EMPTY_ORDER);
 
-  // setOrder({
-  //   market: MARKETS[2],
-  //   boxes: [
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //   ],
-  // });
-  // setOrder('info', {
-  //   name: 'Olive',
-  //   email: 'olive@tuxedocupcakes.com',
-  //   phone: '8622060280',
-  // });
-  // setState(3);
-  // setPageUp(true);
+  setOrder('market', MARKETS[2]);
+  setOrder({
+    boxes: [
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+      {
+        type: { price: 100, quantity: 12, regular: true },
+        cupcakes: [
+          ...new Array(6).fill(FLAVORS.STRAWBERRY),
+          ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+        ],
+      },
+    ],
+  });
+  setOrder('info', {
+    name: 'Olive',
+    email: 'olive@tuxedocupcakes.com',
+    phone: '8622060280',
+  });
+  setState(3);
+  setPageUp(true);
+  setCupcakeSelectStep(1);
 
   let [activeBox, setActiveBox] = createSignal<Box>(
     {
@@ -568,8 +570,10 @@ export default function Order() {
         <div class={styles.explainer}>
           <h2>Order cupcakes today!</h2>
           <p>
-            Place a pre-order of cupcakes for pickup at a farmers' market to
-            ensure you can get the flavors you want.
+            {/* Place a pre-order of cupcakes for pickup at a farmers' market or
+            popup to ensure you can get the flavors you want. */}
+            Orders are currently open for my Thanksgiving popup! Place an order
+            today to get some cupcakes for pickup or delivery.
             <br />
             <br />
             <button
@@ -629,7 +633,7 @@ export default function Order() {
               }`}
               id="state0"
             >
-              <h2>Choose Your Pickup Market (& Date)</h2>
+              <h2>Choose Your Pickup Time{/* Market (& Date) */}</h2>
               <div
                 class={styles.marketGrid}
                 style={{ left: `calc(15vw - ${marketSelect() * 82.5}vw)` }}
@@ -668,19 +672,30 @@ export default function Order() {
                           </div>
                           <div class={styles.flavors}>
                             <h3>Flavors:</h3>
-                            <For each={market.flavors}>
-                              {(flavor, j) => (
-                                <>
-                                  {flavor.name}
-                                  <br />
-                                </>
-                              )}
-                            </For>
+                            <p>
+                              <For each={market.flavors}>
+                                {(flavor, j) => (
+                                  <b
+                                    class={flavor.name == '' ? styles.gap : ''}
+                                  >
+                                    {flavor.name}
+                                    <br />
+                                  </b>
+                                )}
+                              </For>
+                            </p>
                           </div>
                         </div>
                       </div>
                       <Show when={i() < activeMarkets.length - 1}>
                         <div class={styles.nextButton}>
+                          <Show
+                            when={i() < marketSelect()}
+                            fallback={<p>Next Market</p>}
+                          >
+                            <p>Previous Market</p>
+                          </Show>
+
                           <button
                             onClick={() => {
                               if (i() < marketSelect()) {
@@ -796,49 +811,8 @@ export default function Order() {
                 <div class={`${styles.flavorChoice} ${styles.step}`}>
                   <h2>2. Select Flavors</h2>
                   <div class={styles.divider}>
-                    <div class={styles.boxInfo}>
-                      <Show
-                        when={activeBox() != undefined}
-                        fallback={
-                          <>
-                            <h3>Select a box to continue</h3>
-                          </>
-                        }
-                      >
-                        <p>{`${activeBox().type.quantity} ${
-                          activeBox().type.regular ? 'Regular' : 'Mini'
-                        } - $${activeBox().type.price}`}</p>
-                        <CupcakeBox
-                          box={activeBox()}
-                          editable={true}
-                          scale={1.5}
-                          brush={activeBrush()}
-                          setActiveBox={setActiveBox}
-                        />
-                        <button
-                          class={`button ${styles.addToCart}`}
-                          disabled={
-                            activeBox().cupcakes.filter((v) => v == undefined)
-                              .length > 0 || activeBox().cupcakes.length == 0
-                          }
-                          onClick={async () => {
-                            setOrder('boxes', order.boxes.length, activeBox());
-                            setCupcakeSelectStep(2);
-                            await sleep(1000);
-                            setActiveBox();
-                            setActiveBrush();
-                            if (activeBoxEditBuffer() != undefined) {
-                              setActiveBox(activeBoxEditBuffer());
-                              setActiveBoxEditBuffer();
-                            }
-                          }}
-                        >
-                          Put in cart
-                        </button>
-                      </Show>
-                    </div>
                     <div class={styles.palette}>
-                      <h3>Select flavor to place in box</h3>
+                      <h3>Click to select flavor</h3>
                       <div class={styles.brushSelect}>
                         <For each={order.market.flavors}>
                           {(flavor) =>
@@ -859,6 +833,7 @@ export default function Order() {
                                   flavor={flavor}
                                   scale={1.5}
                                   size={75}
+                                  class={styles.svg}
                                 />
                               </div>
                             ) : (
@@ -913,6 +888,55 @@ export default function Order() {
                           Empty box
                         </button>
                       </div>
+                    </div>
+                    <div class={styles.boxInfo}>
+                      <Show
+                        when={
+                          activeBox() != undefined && activeBrush() != undefined
+                        }
+                        fallback={
+                          <>
+                            <Show
+                              when={activeBox() != undefined}
+                              fallback={<h3>Select a box to continue</h3>}
+                            >
+                              <h3>Select a flavor to continue</h3>
+                            </Show>
+                          </>
+                        }
+                      >
+                        <h3>Click a slot to add</h3>
+                        <p>{`${activeBox().type.quantity} ${
+                          activeBox().type.regular ? 'Regular' : 'Mini'
+                        } - $${activeBox().type.price}`}</p>
+                        <CupcakeBox
+                          box={activeBox()}
+                          editable={true}
+                          scale={1.5}
+                          brush={activeBrush()}
+                          setActiveBox={setActiveBox}
+                        />
+                        <button
+                          class={`button ${styles.addToCart}`}
+                          disabled={
+                            activeBox().cupcakes.filter((v) => v == undefined)
+                              .length > 0 || activeBox().cupcakes.length == 0
+                          }
+                          onClick={async () => {
+                            setOrder('boxes', order.boxes.length, activeBox());
+                            setCupcakeSelectStep(2);
+                            await sleep(1000);
+                            setActiveBox();
+                            setActiveBrush();
+                            if (activeBoxEditBuffer() != undefined) {
+                              setActiveBox(activeBoxEditBuffer());
+                              setActiveBoxEditBuffer();
+                            }
+                          }}
+                        >
+                          Put in cart
+                        </button>
+                      </Show>
                     </div>
                   </div>
                 </div>

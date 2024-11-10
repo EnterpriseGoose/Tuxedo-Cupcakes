@@ -226,6 +226,14 @@ export const FLAVORS /*: { [id: string]: Flavor }*/ = {
     frosting: '#F4E8DF',
     frosting_outline: '#F0E2D8',
   },
+  BROWN_SUGAR_SWEET_POTATO: {
+    id: 'BROWN_SUGAR_SWEET_POTATO',
+    tag: 'BS_SP',
+    name: 'Brown Sugar Sweet Potato',
+    cake: CINNAMON_CAKE,
+    frosting: '#DDAF8D',
+    frosting_outline: '#D1A380',
+  },
 };
 
 export default function CupcakeBox(props: {
