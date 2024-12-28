@@ -24,7 +24,7 @@ async function capturePayment(token: string) {
   if (req.status == 201 && req.data.status == 'COMPLETED') {
     return {
       status: 'SUCCESS',
-      redirect: redirect(`/order/success?token=${token}`),
+      redirect: redirect(`/order/success?token=${token}&log=y`),
     };
   } else {
     return { status: 'ERROR', redirect: redirect('/order?status=error') };

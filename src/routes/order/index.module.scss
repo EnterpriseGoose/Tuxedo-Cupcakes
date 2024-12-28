@@ -46,6 +46,7 @@
 	}
 
 	.closeOrderPage {
+		position: relative;
 		background-color: $cyan;
 		border: none;
 		cursor: pointer;
@@ -57,6 +58,10 @@
 		img {
 			transform: rotate(90deg);
 			height: calc(2 * $tru);
+		}
+
+		@media only screen and ((hover: none) or (pointer: coarse)) {
+			padding-top: 8vh;
 		}
 	}
 
@@ -70,6 +75,10 @@
 .nextPage {
 	position: fixed;
 	bottom: 0;
+	transition: bottom 1s ease-in-out;
+	&.down {
+		bottom: -10vh;
+	}
 	padding-bottom: 1vh;
 	padding-top: 1vh;
 	width: 100%;
@@ -165,7 +174,6 @@
 	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 20vh;
 
 	&.left {
 		left: -100%;
@@ -177,6 +185,10 @@
 
 	&.right {
 		left: 100%;
+	}
+
+	> :nth-last-child(2) {
+		margin-bottom: calc(7 * $tru);
 	}
 }
 
@@ -431,7 +443,7 @@
 						}
 					}
 
-					@media only screen and (hover: none) and (pointer: coarse) {
+					@media only screen and ((hover: none) or (pointer: coarse)) {
 						grid-template-columns: 2fr 5fr;
 						align-items: center;
 						column-gap: calc(2 * $wru);
@@ -492,6 +504,10 @@
 				}
 			}
 
+			@media (max-width: 700px) {
+				grid-template-columns: 1fr 2px 1fr;
+			}
+
 			.divider {
 				background-color: #000000;
 				width: 100%;
@@ -514,10 +530,6 @@
 				button {
 					margin: calc(0.5 * $ru);
 				}
-			}
-
-			@media (max-width: 700px) {
-				grid-template-columns: 1fr 2px 1fr;
 			}
 		}
 
@@ -663,7 +675,9 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		align-items: flex-start;
 		gap: calc(10 * $ru);
+		height: 100%;
 
 		.cart {
 			display: flex;
@@ -673,13 +687,20 @@
 			.cartGrid {
 				max-height: 100%;
 				display: grid;
-				grid-template-columns: 1.2fr 2px 1.5fr 2px 1fr;
+				grid-template-columns: 1.2fr 2px 1fr 2px 1.5fr;
 				justify-content: center;
 				align-items: center;
 				margin: calc(2 * $ru) 0;
 				overflow-y: auto;
 				row-gap: calc(2 * $ru);
 				column-gap: calc(1 * $ru);
+
+				@media (max-width: 1000px) {
+					.cupcakeBox svg {
+						height: 90%;
+						width: 90%;
+					}
+				}
 
 				.divider {
 					background-color: #000000;
@@ -702,6 +723,7 @@
 		.details {
 			display: flex;
 			flex-direction: column;
+			height: 100%;
 
 			.gap {
 				margin-top: calc(5 * $ru);
@@ -713,7 +735,8 @@
 				align-items: center;
 				justify-content: center;
 				margin-top: auto;
-				margin-bottom: calc(1 * $wru);
+				margin-bottom: calc(5 * $tru);
+				font-size: calc(3.5 * $tru);
 
 				img {
 					width: calc(3 * $tru);
@@ -725,6 +748,8 @@
 
 		@media (max-width: 1150px) {
 			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
 		}
 	}
 }

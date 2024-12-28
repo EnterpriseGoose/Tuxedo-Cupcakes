@@ -360,39 +360,37 @@ export default function Order() {
     setOrder('market', POP_UP_MARKET);
   }
 
-  //setOrder('market', MARKETS[2]);
-  // setOrder({
-  //   boxes: [
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //     {
-  //       type: { price: 100, quantity: 12, regular: true },
-  //       cupcakes: [
-  //         ...new Array(6).fill(FLAVORS.STRAWBERRY),
-  //         ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
-  //       ],
-  //     },
-  //   ],
-  // });
+  // setOrder('market', MARKETS[2]);
+  // setOrder('boxes', [
+  //   {
+  //     type: { price: 100, quantity: 12, regular: true },
+  //     cupcakes: [
+  //       ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //       ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //     ],
+  //   },
+  //   {
+  //     type: { price: 100, quantity: 12, regular: true },
+  //     cupcakes: [
+  //       ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //       ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //     ],
+  //   },
+  //   {
+  //     type: { price: 100, quantity: 12, regular: true },
+  //     cupcakes: [
+  //       ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //       ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //     ],
+  //   },
+  //   {
+  //     type: { price: 100, quantity: 12, regular: true },
+  //     cupcakes: [
+  //       ...new Array(6).fill(FLAVORS.STRAWBERRY),
+  //       ...new Array(6).fill(FLAVORS.CHOCOLATE_CHOCOLATE),
+  //     ],
+  //   },
+  // ]);
   // setOrder('info', {
   //   name: 'Olive',
   //   email: 'olive@tuxedocupcakes.com',
@@ -754,7 +752,7 @@ export default function Order() {
                   )}
                 </For>
               </div>
-              <div class={styles.nextPage}>
+              <div class={`${styles.nextPage} ${!pageUp() ? styles.down : ''}`}>
                 <button
                   class="button"
                   disabled={order.time == ''}
@@ -1183,7 +1181,7 @@ export default function Order() {
               </div>
               <div
                 class={`${styles.nextPage} ${
-                  !addedFirstBox() ? styles.down : ''
+                  !addedFirstBox() || !pageUp() ? styles.down : ''
                 }`}
               >
                 <Show when={!POP_UP}>
@@ -1297,7 +1295,7 @@ export default function Order() {
                   ></input>
                 </div>
               </div>
-              <div class={styles.nextPage}>
+              <div class={`${styles.nextPage} ${!pageUp() ? styles.down : ''}`}>
                 <button
                   class={`${styles.back} button`}
                   onClick={async (e) => {
@@ -1355,6 +1353,12 @@ export default function Order() {
                             </a>
                           </div>
                           <div class={styles.divider} />
+                          <div class={styles.boxInfo}>
+                            {box.type.quantity}&nbsp;
+                            {box.type.regular ? 'Regular' : 'Mini'} -&nbsp;$
+                            {box.type.price}
+                          </div>
+                          <div class={styles.divider} />
                           <div class={styles.flavors}>
                             {Object.entries(
                               box.cupcakes.reduce((flavorList, nextFlavor) => {
@@ -1377,11 +1381,6 @@ export default function Order() {
                               ''
                             )}
                           </div>
-
-                          <div class={styles.divider} />
-                          <div class={styles.boxInfo}>{`${box.type.quantity} ${
-                            box.type.regular ? 'Regular' : 'Mini'
-                          } - $${box.type.price}`}</div>
                         </>
                       )}
                     </For>
@@ -1444,7 +1443,7 @@ export default function Order() {
                   </div>
                 </div>
               </div>
-              <div class={styles.nextPage}>
+              <div class={`${styles.nextPage} ${!pageUp() ? styles.down : ''}`}>
                 <button
                   class={`${styles.back} button`}
                   onClick={async (e) => {

@@ -9,21 +9,23 @@
 	"type": "module",
 	"devDependencies": {
 		"@solidjs/meta": "^0.29.4",
-		"@solidjs/router": "^0.14.9",
-		"@solidjs/start": "^1.0.8",
+		"@solidjs/router": "^0.15.2",
+		"@solidjs/start": "^1.0.10",
 		"@solidjs/testing-library": "^0.8.10",
-		"@testing-library/jest-dom": "^6.5.0",
-		"sass": "^1.79.5",
-		"solid-js": "^1.9.2",
-		"typescript": "^5.6.3",
-		"vinxi": "^0.4.3"
+		"@testing-library/jest-dom": "^6.6.3",
+		"sass": "^1.83.0",
+		"solid-js": "^1.9.3",
+		"typescript": "^5.7.2",
+		"vinxi": "^0.5.1"
 	},
 	"engines": {
 		"node": ">=20"
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "^2.45.4",
-		"axios": "^1.7.7",
-		"pnpm": "^9.12.1"
+		"@sendgrid/mail": "^8.1.4",
+		"@supabase/supabase-js": "^2.47.10",
+		"axios": "^1.7.9",
+		"dotenv": "^16.4.7",
+		"pnpm": "^9.15.1"
 	}
 }
