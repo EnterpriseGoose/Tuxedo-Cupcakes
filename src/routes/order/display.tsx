@@ -15,7 +15,10 @@ export default function Display() {
     <Layout minimal>
       <div class={styles.display}>
         <CupcakeBox
-          box={decodeBox({ t: searchParams.t, f: searchParams.f })}
+          box={decodeBox({
+            t: searchParams.t as string,
+            f: searchParams.f as string,
+          })}
           scale={2}
           detailedTooltip={detailedTooltip()}
         />

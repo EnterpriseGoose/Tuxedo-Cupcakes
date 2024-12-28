@@ -1,3 +1,5 @@
+import { Show } from 'solid-js';
+
 export default function Cupcake(props: {
   flavor: Flavor;
   size: number;
@@ -6,6 +8,7 @@ export default function Cupcake(props: {
   y?: number;
   class?: string;
   onBrush?: () => void;
+  onRemove?: () => void;
 }) {
   let scaledSize = props.size * props.scale;
 
@@ -16,12 +19,12 @@ export default function Cupcake(props: {
       viewBox={`0 0 ${scaledSize} ${scaledSize}`}
       x={props.x || ''}
       y={props.y || ''}
-      onMouseDown={props.onBrush}
-      onMouseEnter={(e) => {
-        if (e.buttons % 2 == 1) {
-          props.onBrush();
-        }
-      }}
+      onMouseDown={props.onRemove}
+      // onMouseEnter={(e) => {
+      //   if (e.buttons % 2 == 1) {
+      //     props.onRemove();
+      //   }
+      // }}
       class={props.class}
     >
       <circle
@@ -66,6 +69,9 @@ export default function Cupcake(props: {
         cy={scaledSize / 2}
         fill={props.flavor.frosting}
       />
+      <Show when={props.flavor.extra}>
+        <image href={props.flavor.extra} width={scaledSize} />
+      </Show>
     </svg>
   );
 }

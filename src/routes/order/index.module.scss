@@ -15,7 +15,7 @@
 	text-align: center;
 
 	p {
-		width: calc(60 * $wru);
+		width: calc(80 * $swru);
 	}
 
 	button {
@@ -31,6 +31,7 @@
 }
 
 .orderPage {
+	scroll-behavior: smooth;
 	width: 100vw;
 	height: 100vh;
 	background-color: white;
@@ -67,13 +68,12 @@
 }
 
 .nextPage {
-	position: absolute;
+	position: fixed;
+	bottom: 0;
 	padding-bottom: 1vh;
 	padding-top: 1vh;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: 0;
+	width: 100%;
+	margin-top: auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
@@ -145,29 +145,38 @@
 		&:disabled {
 			cursor: not-allowed;
 			filter: grayscale(100%);
+
+			img {
+				opacity: 50%;
+			}
 		}
 	}
 }
 
 .pageBox {
 	transition: all 1.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+	scroll-behavior: smooth;
 	height: 100%;
 	width: 100%;
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 20vh;
 
 	&.left {
-		transform: translateX(-100%);
+		left: -100%;
 	}
 
 	&.active {
-		transform: translateX(0);
+		left: 0;
 	}
 
 	&.right {
-		transform: translateX(100%);
+		left: 100%;
 	}
 }
 
@@ -272,17 +281,27 @@
 		margin-bottom: calc(1 * $ru);
 	}
 
+	.stepGridBox {
+		display: flex;
+	}
+
 	.stepGrid {
 		display: flex;
-		position: absolute;
+		position: relative;
 		flex-direction: row;
 		flex-wrap: nowrap;
-		left: 15vw;
+		// left: 15vw;
 		transition: left ease-in-out 0.5s;
+		gap: 5vw;
+		//min-height: 100%;
 
 		.step {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 			width: 70vw;
-			height: 75vh;
+			flex-shrink: 0;
+			//height: 75vh;
 		}
 	}
 
@@ -290,6 +309,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		height: auto;
 
 		.boxGrid {
 			width: fit-content;
@@ -300,12 +320,32 @@
 			align-items: center;
 
 			.boxSelect {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
 				&:hover {
 					filter: brightness(95%);
 				}
 
 				&:active {
 					filter: brightness(90%);
+				}
+			}
+
+			@media (max-width: 900px) {
+				grid: auto-flow / repeat(5, 1fr);
+			}
+			@media (max-width: 650px) {
+				grid: auto-flow / repeat(3, 1fr);
+				.boxSelect {
+					align-items: flex-start;
+					justify-content: flex-start;
+				}
+
+				svg {
+					width: 90%;
+					height: auto;
 				}
 			}
 		}
@@ -319,6 +359,23 @@
 			align-items: center;
 			gap: calc(15 * $wru - 100px);
 
+			.boxInfo {
+				h3 {
+					margin-bottom: 0;
+				}
+				h4 {
+					font-size: calc(2 * $tru);
+				}
+
+				svg {
+					height: auto;
+
+					@media (max-width: 1100px) {
+						width: 80%;
+					}
+				}
+			}
+
 			.palette {
 				display: flex;
 				flex-direction: column;
@@ -331,7 +388,7 @@
 
 				.brushSelect {
 					display: grid;
-					grid-template-columns: repeat(4, 1fr);
+					grid-template-columns: repeat(3, 1fr);
 					gap: calc(1 * $ru);
 
 					.cupcake {
@@ -365,8 +422,28 @@
 						}
 
 						.svg {
-							width: calc(10 * $ru);
-							height: calc(10 * $ru);
+							width: calc(10 * $swru);
+							height: auto;
+
+							@media (max-width: 600px) {
+								width: calc(15 * $swru);
+							}
+						}
+					}
+
+					@media only screen and (hover: none) and (pointer: coarse) {
+						grid-template-columns: 2fr 5fr;
+						align-items: center;
+						column-gap: calc(2 * $wru);
+
+						div {
+							user-select: none;
+							justify-self: flex-start;
+							text-align: left;
+						}
+
+						.cupcake {
+							justify-self: flex-end;
 						}
 					}
 				}
@@ -377,7 +454,12 @@
 					width: 100%;
 					justify-content: center;
 					gap: calc(4 * $ru);
+					margin-bottom: calc(2 * $wru);
 				}
+			}
+
+			@media (max-width: 1000px) {
+				flex-direction: column;
 			}
 		}
 	}
@@ -386,8 +468,10 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+
 		.cartGrid {
-			max-height: 100%;
+			width: 100%;
+			max-height: 55vh;
 			display: grid;
 			grid-template-columns: 1.5fr 2px 1fr 2px 1.5fr 2px 1fr;
 			justify-content: center;
@@ -397,10 +481,29 @@
 			row-gap: calc(2 * $ru);
 			column-gap: calc(1 * $ru);
 
+			@media (max-width: 1100px) {
+				.cupcakeBox svg {
+					width: 90%;
+					height: 90%;
+				}
+
+				.boxInfo {
+					width: min-content;
+				}
+			}
+
 			.divider {
 				background-color: #000000;
 				width: 100%;
 				height: 50%;
+			}
+
+			.horizontalDivider {
+				grid-column: auto / span 3;
+				width: 90%;
+				justify-self: center;
+				height: 2px;
+				background-color: black;
 			}
 
 			.flavors {
@@ -412,10 +515,15 @@
 					margin: calc(0.5 * $ru);
 				}
 			}
+
+			@media (max-width: 700px) {
+				grid-template-columns: 1fr 2px 1fr;
+			}
 		}
 
 		.addBox {
 			width: 50%;
+			margin-bottom: calc(2 * $wru);
 		}
 	}
 }
@@ -426,11 +534,12 @@
 	align-items: center;
 
 	.detailsGrid {
+		position: relative;
 		display: grid;
 		align-items: center;
 		width: max-content;
 		grid-template-columns: 1fr 3fr;
-		grid-template-rows: repeat(7, calc(6.5 * $tru));
+		grid-template-rows: repeat(4, calc(6.5 * $tru)) calc(10 * $tru) repeat(2, calc(6.5 * $tru));
 		grid-template-areas:
 			"nameLabel name"
 			"emailLabel email"
@@ -443,6 +552,10 @@
 		font-size: calc(2.4 * $tru);
 
 		margin-bottom: calc(2 * $ru);
+
+		@media (max-width: 1000px) {
+			grid-template-rows: repeat(4, calc(6.5 * $tru)) calc(15 * $tru) repeat(2, calc(6.5 * $tru));
+		}
 
 		.textInput {
 			//margin-left: calc(3 * $ru);
@@ -461,6 +574,10 @@
 
 				font-size: calc(2 * $tru);
 
+				@media (max-width: 1000px) {
+					font-size: calc(2.5 * $tru);
+				}
+
 				&:invalid,
 				&[valid="false"] {
 					border-bottom: 2px solid red;
@@ -473,6 +590,10 @@
 
 		label {
 			font-size: calc(2.4 * $tru);
+
+			b {
+				color: rgb(192, 29, 29);
+			}
 		}
 
 		.toAdd {
@@ -480,8 +601,11 @@
 			display: flex;
 			flex-direction: column;
 
+			height: 80%;
+
 			textarea {
 				resize: none;
+				height: 100%;
 				//all: unset;
 				border: none;
 				border-bottom: 2px solid black;
@@ -490,11 +614,15 @@
 				transition: all 100ms ease-in-out;
 				text-align: left;
 
-				font-size: calc(1.5 * $tru);
+				font-size: calc(2 * $tru);
 
 				&:focus {
 					outline: none;
 					border-bottom: 2px solid $cyan;
+				}
+
+				@media (max-width: 1000px) {
+					font-size: calc(2.5 * $tru);
 				}
 			}
 		}
@@ -536,12 +664,12 @@
 		flex-direction: row;
 		justify-content: center;
 		gap: calc(10 * $ru);
-		height: 72vh;
 
 		.cart {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			max-height: 72vh;
 			.cartGrid {
 				max-height: 100%;
 				display: grid;
@@ -567,6 +695,7 @@
 			.cartFooter {
 				display: flex;
 				gap: calc(5 * $ru);
+				margin-bottom: calc(1 * $wru);
 			}
 		}
 
@@ -579,8 +708,33 @@
 			}
 
 			.placeOrder {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
 				margin-top: auto;
+				margin-bottom: calc(1 * $wru);
+
+				img {
+					width: calc(3 * $tru);
+					animation: spin 1s cubic-bezier(0.38, 0.52, 0.72, 0.59) infinite forwards;
+					display: none;
+				}
 			}
 		}
+
+		@media (max-width: 1150px) {
+			flex-direction: column;
+		}
+	}
+}
+
+@keyframes spin {
+	0% {
+		rotate: 0deg;
+	}
+
+	100% {
+		rotate: 360deg;
 	}
 }

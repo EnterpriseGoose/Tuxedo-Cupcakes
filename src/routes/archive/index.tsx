@@ -6,47 +6,8 @@ import EmailForm from '~/components/EmailForm';
 
 export default function Home() {
   return (
-    <Layout>
+    <Layout home>
       <div class={styles.sections}>
-        <div class={`${styles.section} ${styles.zero}`}>
-          <h1>New Year's Eve Pop&#8209;up</h1>
-          <div class={`${styles.card} ${styles.eggnog}`}>
-            <img src="/images/cupcake-graphics/eggnog.svg" />
-            <div>
-              <h2>Eggnog</h2>
-              <i>custard + nutmeg</i>
-            </div>
-          </div>
-          <div class={`${styles.card} ${styles.panettone}`}>
-            <img src="/images/cupcake-graphics/panettone.svg" />
-            <div>
-              <h2>Panettone</h2>
-              <i>fruitcake + creme</i>
-            </div>
-          </div>
-          <div class={`${styles.card} ${styles.gingerbread}`}>
-            <img src="/images/cupcake-graphics/gingerbread.svg" />
-            <div>
-              <h2>Gingerbread</h2>
-              <i>ginger + spices</i>
-            </div>
-          </div>
-          <div class={`${styles.card} ${styles.classics}`}>
-            <img src="/images/cupcake-graphics/classics-trio.svg" />
-            <div>
-              <h2>Classics</h2>
-              <i>vanilla, chocolate +&nbsp;strawberry</i>
-            </div>
-          </div>
-          <button
-            class={`${styles.order} button`}
-            onclick={() => {
-              window.location.pathname = '/order';
-            }}
-          >
-            Order Now!
-          </button>
-        </div>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>A More Sophisticated Cupcake</h2>
           <p>

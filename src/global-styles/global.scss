@@ -1,24 +1,38 @@
 @use "./variables.scss" as *;
 
+@font-face {
+	font-family: "Metropolis";
+	src:
+		url("/fonts/metropolis.woff2") format("woff2"),
+		url("/fonts/metropolis.woff") format("woff");
+}
+
 * {
-	font-family: "Raleway", sans-serif;
+	font-family: "Rokkitt", serif;
 	font-weight: 400;
 	margin: 0;
 }
 
+h1 {
+	font-family: "Metropolis", sans-serif;
+}
+
 h2 {
+	font-family: "Metropolis", sans-serif;
 	font-weight: 500;
-	font-size: calc(4.3 * $tru);
+	font-size: calc(5 * $tru);
 	margin: 0 0 calc(4 * $ru) 0;
 }
 
 h3 {
+	// font-family: "Raleway", sans-serif;
 	font-weight: 500;
 	font-size: calc(3.4 * $tru);
 	margin: 0 0 calc(2 * $ru) 0;
 }
 
 h4 {
+	// font-family: "Raleway", sans-serif;
 	font-weight: 500;
 	font-size: calc(2.5 * $tru);
 	margin: 0 0 calc(2 * $ru) 0;
@@ -28,7 +42,7 @@ p,
 li,
 input,
 button {
-	font-weight: 400;
+	font-weight: 350;
 	font-size: calc(2.7 * $tru);
 	margin: calc(0.5 * $ru) 0;
 }
@@ -42,7 +56,7 @@ a {
 	text-decoration: none;
 	color: $darkCyan;
 	transition: color 0.2s ease-out;
-	font-weight: 500;
+	font-weight: 300;
 }
 a:hover {
 	color: $cyan;

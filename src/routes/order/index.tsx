@@ -322,6 +322,24 @@ const mobileCheck = function () {
 
 let activeMarkets: Market[] = [];
 
+const POP_UP = true;
+const POP_UP_MARKET: Market = {
+  times: ['December 31st'],
+  names: ["New Year's Eve Pop-up"],
+  week: new Date(),
+  flavors: [
+    FLAVORS.VANILLA_VANILLA,
+    FLAVORS.VANILLA_CHOCOLATE,
+    FLAVORS.STRAWBERRY,
+    FLAVORS.CHOCOLATE_VANILLA,
+    FLAVORS.CHOCOLATE_CHOCOLATE,
+    FLAVORS.CHOCOLATE_STRAWBERRY,
+    FLAVORS.EGGNOG,
+    FLAVORS.PANETTONE,
+    FLAVORS.GINGERBREAD,
+  ],
+};
+
 export default function Order() {
   let [orderRetrieved, setOrderRetrieved] = createSignal(false);
   let [mobileBrowser, setMobileBrowser] = createSignal(false);
@@ -337,7 +355,12 @@ export default function Order() {
   let [cupcakeSelectStep, setCupcakeSelectStep] = createSignal(0);
   let [order, setOrder] = createStore<Order>(EMPTY_ORDER);
 
-  // setOrder('market', MARKETS[2]);
+  if (POP_UP) {
+    setState(1);
+    setOrder('market', POP_UP_MARKET);
+  }
+
+  //setOrder('market', MARKETS[2]);
   // setOrder({
   //   boxes: [
   //     {
@@ -375,7 +398,7 @@ export default function Order() {
   //   email: 'olive@tuxedocupcakes.com',
   //   phone: '8622060280',
   // });
-  // setState(3);
+  // setState(2);
   // setPageUp(true);
   // setCupcakeSelectStep(1);
 
@@ -388,9 +411,10 @@ export default function Order() {
   );
   setActiveBox();
   let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
-
+  let [boxEditIndex, setBoxEditIndex] = createSignal(-1);
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
   let [extraDetailsValid, setExtraDetailsValid] = createSignal(false);
+  let [addedFirstBox, setAddedFirstBox] = createSignal(false);
 
   activeMarkets = [];
   if (activeMarkets.length == 0) {
@@ -429,7 +453,7 @@ export default function Order() {
     }
 
     let cleanPhone = phoneInput.value.replaceAll(/\D+/g, '');
-    if (cleanPhone.length > 10) cleanPhone = cleanPhone.substring(0, 10);
+    if (cleanPhone.length > 13) cleanPhone = cleanPhone.substring(0, 13);
     phoneInput.value = parsePhoneNumber(cleanPhone);
     if (
       phoneInput.value != '' &&
@@ -450,7 +474,8 @@ export default function Order() {
       nameInput.value !== '' &&
       emailInput.value.match(EMAIL_VALIDATION_REGEX) !== null &&
       (phoneInput.value == '' ||
-        phoneInput.value.match(PHONE_VALIDATION_REGEX) !== null)
+        phoneInput.value.match(PHONE_VALIDATION_REGEX) !== null) &&
+      toAddInput.value !== ''
     ) {
       setExtraDetailsValid(true);
     } else {
@@ -534,6 +559,13 @@ export default function Order() {
   };
 
   createEffect(() => {
+    //console.log('things have been changed');
+    //console.log(order.info);
+    //console.log(orderRetrieved());
+    if (POP_UP && state() == 0) {
+      setState(1);
+    }
+
     if (orderRetrieved()) {
       console.log('storing');
       window.localStorage.setItem(
@@ -551,12 +583,16 @@ export default function Order() {
 
   onMount(() => {
     let orderData = JSON.parse(window.localStorage.getItem('orderData'));
-    if (!orderData) return;
+    if (!orderData) {
+      setOrderRetrieved(true);
+      return;
+    }
     setOrder(orderData.order ?? EMPTY_ORDER);
     setState(orderData.state ?? 0);
     setPageUp(orderData.pageUp ?? false);
     setCupcakeSelectStep(orderData.cupcakeSelectStep ?? 0);
     setActiveBox(orderData.activeBox ?? undefined);
+    setAddedFirstBox(order.boxes.length > 0);
     console.log(orderData);
     setOrderRetrieved(true);
   });
@@ -565,6 +601,7 @@ export default function Order() {
     <Layout
       hideFooter
       desc="Place a pre-order to get your cupcakes quickly at the market!"
+      noOverflow={pageUp()}
     >
       <div class={styles.order}>
         <div class={styles.explainer}>
@@ -572,8 +609,8 @@ export default function Order() {
           <p>
             {/* Place a pre-order of cupcakes for pickup at a farmers' market or
             popup to ensure you can get the flavors you want. */}
-            Orders are currently open for my Thanksgiving popup! Place an order
-            today to get some cupcakes for pickup or delivery.
+            Orders are currently open for my New Year's Eve popup! Place an
+            order today to get some cupcakes for pickup or delivery on the 31st.
             <br />
             <br />
             <button
@@ -585,11 +622,11 @@ export default function Order() {
                 await sleep(1000);
                 e.target.classList.remove('submitted');
               }}
-              disabled={mobileBrowser()}
+              disabled={mobileBrowser() && false}
             >
               Place order now
             </button>
-            <Show when={mobileBrowser()}>
+            <Show when={mobileBrowser() && false}>
               <p>
                 Unfortunately, this is currently a desktop-only tool. Please use
                 a desktop to place an order via this page, or send me an email.
@@ -615,6 +652,7 @@ export default function Order() {
         >
           <button
             class={styles.closeOrderPage}
+            id="orderPageTop"
             onClick={() => {
               setPageUp(false);
             }}
@@ -723,6 +761,7 @@ export default function Order() {
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(1);
+                    document.getElementById('orderPageTop').scrollIntoView();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -742,340 +781,433 @@ export default function Order() {
               }`}
               id="state1"
             >
-              <h2>Choose your cupcakes</h2>
-              <div
-                class={styles.stepGrid}
-                style={{ left: `calc(15vw - ${cupcakeSelectStep() * 82.5}vw)` }}
-              >
-                <div class={`${styles.boxChoice} ${styles.step}`}>
-                  <h2>1. Select Box</h2>
-                  <div class={styles.boxGrid}>
-                    <For each={AVAILABLE_SIZES}>
-                      {(boxSize) => (
-                        <div
-                          class={styles.boxSelect}
-                          style={{
-                            'grid-column':
-                              'span ' +
-                              (boxSize.regular
-                                ? Math.ceil(Math.sqrt(boxSize.quantity))
-                                : Math.round(
-                                    (Math.ceil(Math.sqrt(boxSize.quantity)) *
-                                      2) /
-                                      3
-                                  )),
-                          }}
-                          onClick={() => {
-                            setActiveBox({
-                              type: boxSize,
-                              cupcakes: activeBox() ? activeBox().cupcakes : [],
-                            });
-                            setCupcakeSelectStep(1);
-                          }}
-                        >
-                          <CupcakeBox
-                            box={{
-                              type: boxSize,
-                              cupcakes: [],
+              <h2 id="chooseYourCupcakesHeader">Choose your cupcakes</h2>
+              <div class={styles.stepGridBox}>
+                <div
+                  class={styles.stepGrid}
+                  style={{
+                    left: `calc(15vw - ${cupcakeSelectStep() * 92.5}vw)`,
+                  }}
+                >
+                  <div class={`${styles.boxChoice} ${styles.step}`}>
+                    <h3>1. Select Box</h3>
+                    <div class={styles.boxGrid}>
+                      <For each={AVAILABLE_SIZES}>
+                        {(boxSize) => (
+                          <div
+                            class={styles.boxSelect}
+                            style={{
+                              'grid-column':
+                                'span ' +
+                                (boxSize.regular
+                                  ? Math.ceil(Math.sqrt(boxSize.quantity))
+                                  : Math.round(
+                                      (Math.ceil(Math.sqrt(boxSize.quantity)) *
+                                        2) /
+                                        3
+                                    )),
                             }}
-                            tooltip
+                            onClick={() => {
+                              if (boxEditIndex() >= 0) {
+                                setBoxEditIndex(-1);
+                                setActiveBox({
+                                  type: boxSize,
+                                  cupcakes: [],
+                                });
+                              } else {
+                                setActiveBox({
+                                  type: boxSize,
+                                  cupcakes: activeBox()
+                                    ? activeBox().cupcakes
+                                    : [],
+                                });
+                              }
+                              setCupcakeSelectStep(1);
+                              document
+                                .getElementById('chooseYourCupcakesHeader')
+                                .scrollIntoView();
+                            }}
+                          >
+                            <CupcakeBox
+                              box={{
+                                type: boxSize,
+                                cupcakes: [],
+                              }}
+                              tooltip
+                            />
+                          </div>
+                        )}
+                      </For>
+                    </div>
+                  </div>
+                  <div class={styles.nextButton}>
+                    <button
+                      onClick={() => {
+                        if (cupcakeSelectStep() > 0) {
+                          setCupcakeSelectStep(cupcakeSelectStep() - 1);
+                        } else {
+                          if (activeBox()) {
+                            setCupcakeSelectStep(cupcakeSelectStep() + 1);
+                          } else {
+                            setCupcakeSelectStep(cupcakeSelectStep() + 2);
+                          }
+                        }
+                      }}
+                      disabled={
+                        activeBox() === undefined &&
+                        order.boxes.length === 0 &&
+                        cupcakeSelectStep() == 0
+                      }
+                    >
+                      <img
+                        class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
+                        src="/images/arrow.svg"
+                      />
+                    </button>
+                  </div>
+                  <div class={`${styles.flavorChoice} ${styles.step}`}>
+                    <h3>2. Select Flavors</h3>
+                    <div class={styles.divider}>
+                      <div class={styles.boxInfo}>
+                        <Show
+                          when={activeBox() != undefined}
+                          fallback={
+                            <>
+                              <Show when={activeBox() == undefined}>
+                                <h3>Select a box to continue</h3>
+                              </Show>
+                            </>
+                          }
+                        >
+                          <h3>Your cupcake box</h3>
+                          <h4>(click cupcake to remove)</h4>
+                          <p>{`${activeBox().type.quantity} ${
+                            activeBox().type.regular ? 'Regular' : 'Mini'
+                          } - $${activeBox().type.price}`}</p>
+                          <CupcakeBox
+                            box={activeBox()}
+                            editable={false}
+                            scale={1.5}
+                            setActiveBox={setActiveBox}
+                            removable={true}
                           />
-                        </div>
-                      )}
-                    </For>
-                  </div>
-                </div>
-
-                <div class={styles.nextButton}>
-                  <button
-                    onClick={() => {
-                      if (cupcakeSelectStep() > 0) {
-                        setCupcakeSelectStep(cupcakeSelectStep() - 1);
-                      } else {
-                        setCupcakeSelectStep(cupcakeSelectStep() + 1);
-                      }
-                    }}
-                    disabled={
-                      activeBox() === undefined &&
-                      order.boxes.length === 0 &&
-                      cupcakeSelectStep() == 0
-                    }
-                  >
-                    <img
-                      class={cupcakeSelectStep() > 0 ? styles.flipped : ''}
-                      src="/images/arrow.svg"
-                    />
-                  </button>
-                </div>
-
-                <div class={`${styles.flavorChoice} ${styles.step}`}>
-                  <h2>2. Select Flavors</h2>
-                  <div class={styles.divider}>
-                    <div class={styles.palette}>
-                      <h3>Click to select flavor</h3>
-                      <div class={styles.brushSelect}>
-                        <For each={order.market.flavors}>
-                          {(flavor) =>
-                            flavor.id !== 'GAP' ? (
-                              <div
-                                class={`${styles.cupcake} tooltip ${
-                                  activeBrush() != undefined &&
-                                  activeBrush().id == flavor.id
-                                    ? styles.selected
-                                    : ''
-                                }`}
-                                onClick={() => {
-                                  setActiveBrush(flavor);
-                                }}
-                              >
-                                <span class="tooltip-text">{flavor.name}</span>
-                                <Cupcake
-                                  flavor={flavor}
-                                  scale={1.5}
-                                  size={75}
-                                  class={styles.svg}
-                                />
-                              </div>
-                            ) : (
-                              <></>
-                            )
-                          }
-                        </For>
-                      </div>
-                      <div class={styles.buttons}>
-                        <button
-                          class="button"
-                          disabled={
-                            activeBox() == undefined ||
-                            (activeBox().cupcakes.filter((v) => v == undefined)
-                              .length == 0 &&
-                              activeBox().cupcakes.length != 0) ||
-                            activeBrush() == undefined
-                          }
-                          onClick={() => {
-                            setActiveBox((box) => {
-                              if (box.cupcakes.length == 0)
-                                box.cupcakes = new Array(
-                                  box.type.quantity
-                                ).fill(activeBrush());
-                              else
-                                box.cupcakes = box.cupcakes.map((flavor) =>
-                                  flavor == undefined ? activeBrush() : flavor
-                                );
-                              console.log(box);
-                              return box;
-                            });
-                            console.log(activeBox());
-                          }}
-                        >
-                          Fill box
-                        </button>
-                        <button
-                          class="button"
-                          disabled={
-                            activeBox() == undefined ||
-                            activeBox().cupcakes.filter((v) => v != undefined)
-                              .length == 0 ||
-                            activeBox().cupcakes.length == 0
-                          }
-                          onClick={() => {
-                            setActiveBox({
-                              type: activeBox().type,
-                              cupcakes: [],
-                            });
-                          }}
-                        >
-                          Empty box
-                        </button>
-                      </div>
-                    </div>
-                    <div class={styles.boxInfo}>
-                      <Show
-                        when={
-                          activeBox() != undefined && activeBrush() != undefined
-                        }
-                        fallback={
-                          <>
-                            <Show
-                              when={activeBox() != undefined}
-                              fallback={<h3>Select a box to continue</h3>}
-                            >
-                              <h3>Select a flavor to continue</h3>
-                            </Show>
-                          </>
-                        }
-                      >
-                        <h3>Click a slot to add</h3>
-                        <p>{`${activeBox().type.quantity} ${
-                          activeBox().type.regular ? 'Regular' : 'Mini'
-                        } - $${activeBox().type.price}`}</p>
-                        <CupcakeBox
-                          box={activeBox()}
-                          editable={true}
-                          scale={1.5}
-                          brush={activeBrush()}
-                          setActiveBox={setActiveBox}
-                        />
-                        <button
-                          class={`button ${styles.addToCart}`}
-                          disabled={
-                            activeBox().cupcakes.filter((v) => v == undefined)
-                              .length > 0 || activeBox().cupcakes.length == 0
-                          }
-                          onClick={async () => {
-                            setOrder('boxes', order.boxes.length, activeBox());
-                            setCupcakeSelectStep(2);
-                            await sleep(1000);
-                            setActiveBox();
-                            setActiveBrush();
-                            if (activeBoxEditBuffer() != undefined) {
-                              setActiveBox(activeBoxEditBuffer());
-                              setActiveBoxEditBuffer();
+                          <button
+                            class={`button ${styles.addToCart}`}
+                            disabled={
+                              activeBox().cupcakes.filter((v) => v == undefined)
+                                .length > 0 ||
+                              activeBox().cupcakes.length <
+                                activeBox().type.quantity
                             }
-                          }}
-                        >
-                          Put in cart
-                        </button>
-                      </Show>
-                    </div>
-                  </div>
-                </div>
-
-                <div class={styles.nextButton}>
-                  <button
-                    onClick={() => {
-                      if (cupcakeSelectStep() > 1) {
-                        setCupcakeSelectStep(cupcakeSelectStep() - 1);
-                      } else {
-                        setCupcakeSelectStep(cupcakeSelectStep() + 1);
-                      }
-                    }}
-                    disabled={
-                      order.boxes.length == 0 && cupcakeSelectStep() < 2
-                    }
-                  >
-                    <img
-                      class={cupcakeSelectStep() > 1 ? styles.flipped : ''}
-                      src="/images/arrow.svg"
-                    />
-                  </button>
-                </div>
-
-                <div class={`${styles.cart} ${styles.step}`}>
-                  <h2>3. Review Cart</h2>
-                  <div class={styles.cartGrid}>
-                    <For each={order.boxes}>
-                      {(box, i) => (
-                        <>
-                          <div class={styles.cupcakeBox}>
-                            <CupcakeBox box={box} />
-                          </div>
-                          <div class={styles.divider} />
-                          <div class={styles.boxInfo}>{`${box.type.quantity} ${
-                            box.type.regular ? 'Regular' : 'Mini'
-                          } - $${box.type.price}`}</div>
-                          <div class={styles.divider} />
-                          <div class={styles.flavors}>
-                            {Object.entries(
-                              box.cupcakes.reduce((flavorList, nextFlavor) => {
-                                if (
-                                  Object.keys(flavorList).includes(
-                                    nextFlavor.name
-                                  )
-                                )
-                                  flavorList[nextFlavor.name] += 1;
-                                else flavorList[nextFlavor.name] = 1;
-                                return flavorList;
-                              }, {})
-                            ).reduce(
-                              (currString, flavor) =>
-                                currString +
-                                flavor[0] +
-                                ' ×' +
-                                flavor[1] +
-                                `\n`,
-                              ''
-                            )}
-                          </div>
-                          <div class={styles.divider} />
-                          <div class={styles.buttons}>
-                            <button
-                              class="button"
-                              onClick={() => {
-                                setOrder(
-                                  'boxes',
-                                  order.boxes.toSpliced(i(), 1)
-                                );
-
-                                if (order.boxes.length == 0) {
-                                  setCupcakeSelectStep(0);
-                                }
-                              }}
-                            >
-                              Remove
-                            </button>
-                            <button
-                              class="button"
-                              onClick={() => {
-                                if (activeBox() != undefined) {
-                                  setActiveBoxEditBuffer(activeBox());
-                                }
-                                setActiveBox(box);
-                                setCupcakeSelectStep(1);
-                                setOrder(
-                                  'boxes',
-                                  order.boxes.toSpliced(i(), 1)
-                                );
-                              }}
-                            >
-                              Edit
-                            </button>
-                            <button
-                              class="button"
-                              onClick={() => {
-                                console.log(box);
+                            onClick={async () => {
+                              if (boxEditIndex() >= 0) {
+                                setOrder('boxes', boxEditIndex(), activeBox());
+                                setBoxEditIndex(-1);
+                              } else {
                                 setOrder(
                                   'boxes',
                                   order.boxes.length,
-                                  structuredClone(unwrap(box))
+                                  activeBox()
                                 );
-                              }}
+                              }
+                              setCupcakeSelectStep(2);
+                              await sleep(1000);
+                              setActiveBox();
+                              setActiveBrush();
+                              if (activeBoxEditBuffer() != undefined) {
+                                setActiveBox(activeBoxEditBuffer());
+                                setActiveBoxEditBuffer();
+                              }
+                              setAddedFirstBox(true);
+                            }}
+                          >
+                            <Show
+                              when={boxEditIndex() >= 0}
+                              fallback={'Put in cart'}
                             >
-                              Duplicate
-                            </button>
-                          </div>
-                        </>
-                      )}
-                    </For>
+                              Save Box Edits
+                            </Show>
+                          </button>
+                        </Show>
+                      </div>
+                      <div class={styles.palette}>
+                        <h3>Click flavor to add</h3>
+                        <div class={styles.brushSelect}>
+                          <For each={order.market.flavors}>
+                            {(flavor) =>
+                              flavor.id !== 'GAP' ? (
+                                <>
+                                  <div
+                                    class={`${styles.cupcake} tooltip ${
+                                      activeBrush() != undefined &&
+                                      activeBrush().id == flavor.id
+                                        ? styles.selected
+                                        : ''
+                                    }`}
+                                    onClick={() => {
+                                      // setActiveBrush(flavor);
+                                      setActiveBox((prevBox) => {
+                                        if (
+                                          prevBox.type.quantity >
+                                          prevBox.cupcakes.length
+                                        ) {
+                                          prevBox.cupcakes.push(flavor);
+                                        }
+                                        return prevBox;
+                                      });
+                                    }}
+                                  >
+                                    <span class="tooltip-text">
+                                      {flavor.name}
+                                    </span>
+                                    <Cupcake
+                                      flavor={flavor}
+                                      scale={1.5}
+                                      size={75}
+                                      class={styles.svg}
+                                    />
+                                  </div>
+                                  <Show when={mobileBrowser()}>
+                                    <div
+                                      onClick={() => {
+                                        // setActiveBrush(flavor);
+                                        setActiveBox((prevBox) => {
+                                          if (
+                                            prevBox.type.quantity >
+                                            prevBox.cupcakes.length
+                                          ) {
+                                            prevBox.cupcakes.push(flavor);
+                                          }
+                                          return prevBox;
+                                        });
+                                      }}
+                                    >
+                                      {flavor.name}
+                                    </div>
+                                  </Show>
+                                </>
+                              ) : (
+                                <></>
+                              )
+                            }
+                          </For>
+                        </div>
+                        <div class={styles.buttons}>
+                          {/* <button
+														class="button"
+														disabled={
+															activeBox() == undefined ||
+															(activeBox().cupcakes.filter((v) => v == undefined)
+																.length == 0 &&
+																activeBox().cupcakes.length != 0) ||
+															activeBrush() == undefined
+														}
+														onClick={() => {
+															setActiveBox((box) => {
+																if (box.cupcakes.length == 0)
+																	box.cupcakes = new Array(
+																		box.type.quantity
+																	).fill(activeBrush());
+																else
+																	box.cupcakes = box.cupcakes.map((flavor) =>
+																		flavor == undefined ? activeBrush() : flavor
+																	);
+																console.log(box);
+																return box;
+															});
+															console.log(activeBox());
+														}}
+													>
+														Fill box
+													</button> */}
+                          <button
+                            class="button"
+                            disabled={
+                              activeBox() == undefined ||
+                              activeBox().cupcakes.filter((v) => v != undefined)
+                                .length == 0 ||
+                              activeBox().cupcakes.length == 0
+                            }
+                            onClick={() => {
+                              setActiveBox({
+                                type: activeBox().type,
+                                cupcakes: [],
+                              });
+                            }}
+                          >
+                            Empty box
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <button
-                    class={`button ${styles.addBox}`}
-                    onClick={() => {
-                      setCupcakeSelectStep(0);
-                    }}
-                  >
-                    Add Another Box
-                  </button>
+                  <div class={styles.nextButton}>
+                    <button
+                      onClick={() => {
+                        if (cupcakeSelectStep() > 1) {
+                          if (activeBox()) {
+                            setCupcakeSelectStep(cupcakeSelectStep() - 1);
+                          } else {
+                            setCupcakeSelectStep(cupcakeSelectStep() - 2);
+                          }
+                        } else {
+                          setCupcakeSelectStep(cupcakeSelectStep() + 1);
+                        }
+                      }}
+                      disabled={
+                        order.boxes.length == 0 && cupcakeSelectStep() < 2
+                      }
+                    >
+                      <img
+                        class={cupcakeSelectStep() > 1 ? styles.flipped : ''}
+                        src="/images/arrow.svg"
+                      />
+                    </button>
+                  </div>
+                  <div class={`${styles.cart} ${styles.step}`}>
+                    <h3>3. Review Cart</h3>
+                    <div class={styles.cartGrid}>
+                      <For each={order.boxes}>
+                        {(box, i) => (
+                          <>
+                            <div class={styles.cupcakeBox}>
+                              <CupcakeBox box={box} />
+                            </div>
+                            <div class={styles.divider} />
+                            <div class={styles.boxInfo}>
+                              {box.type.quantity}&nbsp;
+                              {box.type.regular ? 'Regular' : 'Mini'} -&nbsp;$
+                              {box.type.price}
+                            </div>
+                            <Show
+                              when={
+                                !window.matchMedia('(max-width: 700px)').matches
+                              }
+                            >
+                              <div class={styles.divider} />
+                            </Show>
+                            <div class={styles.flavors}>
+                              {Object.entries(
+                                box.cupcakes.reduce(
+                                  (flavorList, nextFlavor) => {
+                                    if (
+                                      Object.keys(flavorList).includes(
+                                        nextFlavor.name
+                                      )
+                                    )
+                                      flavorList[nextFlavor.name] += 1;
+                                    else flavorList[nextFlavor.name] = 1;
+                                    return flavorList;
+                                  },
+                                  {}
+                                )
+                              ).reduce(
+                                (currString, flavor) =>
+                                  currString +
+                                  flavor[0] +
+                                  ' ×' +
+                                  flavor[1] +
+                                  `\n`,
+                                ''
+                              )}
+                            </div>
+                            <div class={styles.divider} />
+                            <div class={styles.buttons}>
+                              <button
+                                class="button"
+                                onClick={() => {
+                                  setOrder(
+                                    'boxes',
+                                    order.boxes.toSpliced(i(), 1)
+                                  );
+                                  if (order.boxes.length == 0) {
+                                    setCupcakeSelectStep(0);
+                                  }
+                                }}
+                              >
+                                Remove
+                              </button>
+                              <button
+                                class="button"
+                                onClick={() => {
+                                  if (activeBox() != undefined) {
+                                    setActiveBoxEditBuffer(activeBox());
+                                  }
+                                  setActiveBox(box);
+                                  setCupcakeSelectStep(1);
+                                  setBoxEditIndex(i());
+                                  // setOrder(
+                                  //   'boxes',
+                                  //   order.boxes.toSpliced(i(), 1)
+                                  // );
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="button"
+                                onClick={() => {
+                                  console.log(box);
+                                  setOrder(
+                                    'boxes',
+                                    order.boxes.length,
+                                    structuredClone(unwrap(box))
+                                  );
+                                }}
+                              >
+                                Duplicate
+                              </button>
+                            </div>
+                            <Show
+                              when={
+                                window.matchMedia('(max-width: 700px)')
+                                  .matches && i() + 1 < order.boxes.length
+                              }
+                            >
+                              <div class={styles.horizontalDivider} />
+                            </Show>
+                          </>
+                        )}
+                      </For>
+                    </div>
+                    <button
+                      class={`button ${styles.addBox}`}
+                      onClick={() => {
+                        setCupcakeSelectStep(0);
+                      }}
+                    >
+                      Add Another Box
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class={styles.nextPage}>
-                <button
-                  class={`${styles.back} button`}
-                  onClick={async (e) => {
-                    e.target.classList.add('submitted');
-                    setState(0);
-                    await sleep(1000);
-                    e.target.classList.remove('submitted');
-                  }}
-                >
-                  <img src="/images/arrow.svg" /> Back
-                </button>
+              <div
+                class={`${styles.nextPage} ${
+                  !addedFirstBox() ? styles.down : ''
+                }`}
+              >
+                <Show when={!POP_UP}>
+                  <button
+                    class={`${styles.back} button`}
+                    onClick={async (e) => {
+                      e.target.classList.add('submitted');
+                      setState(0);
+                      document.getElementById('orderPageTop').scrollIntoView();
+                      await sleep(1000);
+                      e.target.classList.remove('submitted');
+                    }}
+                  >
+                    <img src="/images/arrow.svg" /> Back
+                  </button>
+                </Show>
+
                 <button
                   class={`${styles.next} button`}
                   disabled={order.boxes.length == 0}
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(2);
+                    document.getElementById('orderPageTop').scrollIntoView();
                     checkDetailInputs();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
@@ -1097,7 +1229,9 @@ export default function Order() {
             >
               <h2>Final details</h2>
               <div class={styles.detailsGrid}>
-                <label>Name</label>
+                <label>
+                  Name<b>*</b>
+                </label>
                 <div class={styles.textInput}>
                   <input
                     type="text"
@@ -1107,7 +1241,9 @@ export default function Order() {
                     value={order.info.name}
                   />
                 </div>
-                <label>Email</label>
+                <label>
+                  Email<b>*</b>
+                </label>
                 <div class={styles.textInput}>
                   <input
                     type="email"
@@ -1127,11 +1263,14 @@ export default function Order() {
                   />
                 </div>
                 <div class={styles.toAdd}>
-                  <label>Anything else you wish to add?</label>
+                  <label>
+                    Delivery Info<b>*</b>
+                  </label>
                   <textarea
                     id="toAddInput"
                     oninput={checkDetailInputs}
                     value={order.info.extra}
+                    placeholder="Specify the time for pickup/delivery, and address if you would like delivery (required)"
                   />
                 </div>
                 <div class={styles.newsletter}>
@@ -1164,6 +1303,7 @@ export default function Order() {
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(1);
+                    document.getElementById('orderPageTop').scrollIntoView();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -1176,6 +1316,7 @@ export default function Order() {
                   onClick={async (e) => {
                     e.target.classList.add('submitted');
                     setState(3);
+                    document.getElementById('orderPageTop').scrollIntoView();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -1272,25 +1413,35 @@ export default function Order() {
                     <p>Phone: {order.info.phone}</p>
                   </Show>
                   <Show when={order.info.extra}>
-                    <p>Extra: {order.info.extra}</p>
+                    <p>Delivery Info: {order.info.extra}</p>
                   </Show>
-                  <p>Newsletter: {order.info.newsletter ? 'Yes' : 'No'}</p>
+                  <Show when={order.info.newsletter}>
+                    <p>Newsletter: Yes</p>
+                  </Show>
 
-                  <p class={styles.gap}>
-                    Pickup Market: {order.name} <br /> @ {order.time}
-                  </p>
+                  <Show when={!POP_UP}>
+                    <p class={styles.gap}>
+                      Pickup Market: {order.name} <br /> @ {order.time}
+                    </p>
+                  </Show>
 
-                  <button
-                    class={`button ${styles.placeOrder}`}
-                    onClick={async (e) => {
-                      window.location.href = await getPaypalPaymentURL(
-                        order,
-                        location.origin
-                      );
-                    }}
-                  >
-                    Place Order
-                  </button>
+                  <div class={styles.placeOrder}>
+                    <img src="/images/loader.svg" id="payment-spin-loader" />
+                    <button
+                      class={`button`}
+                      onClick={async (e) => {
+                        document
+                          .getElementById('payment-spin-loader')
+                          .style.setProperty('display', 'block');
+                        window.location.href = await getPaypalPaymentURL(
+                          order,
+                          location.origin
+                        );
+                      }}
+                    >
+                      Place Order
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class={styles.nextPage}>
@@ -1300,6 +1451,7 @@ export default function Order() {
                     e.target.classList.add('submitted');
                     setState(2);
                     checkDetailInputs();
+                    document.getElementById('orderPageTop').scrollIntoView();
                     await sleep(1000);
                     e.target.classList.remove('submitted');
                   }}
@@ -1327,10 +1479,18 @@ function parseDiscountCode(code: string) {
 }
 
 function parsePhoneNumber(number: string) {
-  let numberString = number.replace(
-    /(\d{1,3})(\d{1,3})?(\d{1,4})?/,
-    '($1) $2-$3'
-  );
+  let numberString = '';
+  if (number.length > 10) {
+    numberString = number.replace(
+      /(\d{1,3})(\d{3})(\d{3})(\d{4})/,
+      '+$1 ($2) $3-$4'
+    );
+  } else {
+    numberString = number.replace(
+      /(\d{1,3})(\d{1,3})?(\d{1,4})?/,
+      '($1) $2-$3'
+    );
+  }
   if (numberString.charAt(numberString.length - 1) == '-') {
     numberString = numberString.split('-')[0];
   }

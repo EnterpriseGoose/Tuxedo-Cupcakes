@@ -4,29 +4,7 @@ import styles from './index.module.scss';
 import { A } from '@solidjs/router';
 
 export default function FarmersMarket() {
-  const [dates, setDates] = createSignal([
-    [new Date(2024, 5, 15), 'Lemon Raspberry & Chocolate Peanut Butter'],
-    [new Date(2024, 5, 22), 'Coconut Passion Fruit & Mocha'],
-    [new Date(2024, 5, 29), 'Salted Caramel Cashew & Chocolate Raspberry'],
-    [new Date(2024, 6, 6), 'Salted Caramel Cashew & Chocolate Cherry'],
-    [new Date(2024, 6, 13), 'Lemon Pistachio & Coconut Raspberry'],
-    [new Date(2024, 6, 20), 'Mango & Coconut Raspberry'],
-    [new Date(2024, 6, 27), 'Cinnamon Peach & Masala Chai'],
-    [new Date(2024, 7, 3), 'Coconut Mango & Lemon Blueberry'],
-    [new Date(2024, 7, 17), 'Salted Caramel Cashew & Chocolate Lemon'],
-    [new Date(2024, 7, 24), 'Coconut Pineapple & Chocolate Mango'],
-    [new Date(2024, 7, 31), 'Salted Caramel Cashew & Chocolate Peanut Butter'],
-    [new Date(2024, 8, 7), 'Cinnamon Peach & Chocolate Raspberry'],
-    [new Date(2024, 8, 14), 'Chocolate Black Sesame & Red Bean'],
-    [new Date(2024, 8, 21), 'Cinnamon Peach & Pumpkin Spice'],
-    [new Date(2024, 9, 5), 'Salted Caramel Cashew & Pumpkin Spice'],
-    [new Date(2024, 9, 12), 'Cinnamon Apple Cider & Chocolate Matcha'],
-    [new Date(2024, 9, 19), 'Masala Chai & Chocolate Caramel'],
-    [new Date(2024, 9, 26), 'Chocolate Black Sesame & Chocolate Matcha'],
-    [new Date(2024, 10, 2), 'Pumpkin Spice & Apple Pie'],
-    [new Date(2024, 10, 9), 'Chocolate Peppermint & Mocha'],
-    [new Date(2024, 10, 16), 'Mexican Hot Chocolate & Gingerbread'],
-  ]);
+  const [dates, setDates] = createSignal([]);
   return (
     <Layout desc="I appear at the Chatham Farmers’ Market every Saturday in the summer (June-August) and about every other week in the fall (September-November). Each week, I bring 5 classic flavors (chocolate, vanilla, and strawberry), as well as 2 rotating special flavors, in both regular and mini sizes.">
       <div class={styles.sections}>

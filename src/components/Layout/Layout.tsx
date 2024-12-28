@@ -1,5 +1,5 @@
 import { useSearchParams } from '@solidjs/router';
-import { Show, onMount } from 'solid-js';
+import { Show, createEffect, onMount } from 'solid-js';
 import { MetaProvider, Meta } from '@solidjs/meta';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
@@ -13,6 +13,7 @@ export default function Layout(props?: {
   mini?: boolean;
   minimal?: boolean;
   noOverflow?: boolean;
+  noModern?: boolean;
 }) {
   let footerRef;
   onMount(() => {
@@ -21,11 +22,11 @@ export default function Layout(props?: {
       footerRef.scrollIntoView();
     }
     setSearchparams({ p: undefined });
-
-    document.body.style.overflow = props.noOverflow ? 'hidden' : '';
   });
 
-  console.log(props);
+  createEffect(() => {
+    document.body.style.overflow = props.noOverflow ? 'hidden' : '';
+  });
 
   return (
     <div class={styles.root} id="root">
@@ -38,7 +39,12 @@ export default function Layout(props?: {
           }
         />
       </MetaProvider>
-      <Navbar mini={props.mini} home={props.home} minimal={props.minimal} />
+      <Navbar
+        mini={props.mini}
+        home={props.home}
+        minimal={props.minimal}
+        notModern={props.noModern}
+      />
       <main class={`${styles.main} ${props.mini ? styles.mini : ''}`}>
         {props.children}
       </main>

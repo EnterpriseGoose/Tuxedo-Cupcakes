@@ -11,6 +11,7 @@ declare global {
     cake: string;
     frosting: string;
     frosting_outline: string;
+    extra?: string;
   }
 
   interface BoxType {

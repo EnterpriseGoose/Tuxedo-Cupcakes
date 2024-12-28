@@ -47,6 +47,30 @@ export default function FarmersMarket() {
     [new Date(2023, 10, 11), 'Lemon Raspberry & Salted Caramel Cashew'],
     [new Date(2023, 10, 18), 'Red Bean & Lemon Raspberry'],
   ]);
+
+  const [dates2024, setDates2024] = createSignal([
+    [new Date(2024, 5, 15), 'Lemon Raspberry & Chocolate Peanut Butter'],
+    [new Date(2024, 5, 22), 'Coconut Passion Fruit & Mocha'],
+    [new Date(2024, 5, 29), 'Salted Caramel Cashew & Chocolate Raspberry'],
+    [new Date(2024, 6, 6), 'Salted Caramel Cashew & Chocolate Cherry'],
+    [new Date(2024, 6, 13), 'Lemon Pistachio & Coconut Raspberry'],
+    [new Date(2024, 6, 20), 'Mango & Coconut Raspberry'],
+    [new Date(2024, 6, 27), 'Cinnamon Peach & Masala Chai'],
+    [new Date(2024, 7, 3), 'Coconut Mango & Lemon Blueberry'],
+    [new Date(2024, 7, 17), 'Salted Caramel Cashew & Chocolate Lemon'],
+    [new Date(2024, 7, 24), 'Coconut Pineapple & Chocolate Mango'],
+    [new Date(2024, 7, 31), 'Salted Caramel Cashew & Chocolate Peanut Butter'],
+    [new Date(2024, 8, 7), 'Cinnamon Peach & Chocolate Raspberry'],
+    [new Date(2024, 8, 14), 'Chocolate Black Sesame & Red Bean'],
+    [new Date(2024, 8, 21), 'Cinnamon Peach & Pumpkin Spice'],
+    [new Date(2024, 9, 5), 'Salted Caramel Cashew & Pumpkin Spice'],
+    [new Date(2024, 9, 12), 'Cinnamon Apple Cider & Chocolate Matcha'],
+    [new Date(2024, 9, 19), 'Masala Chai & Chocolate Caramel'],
+    [new Date(2024, 9, 26), 'Chocolate Black Sesame & Chocolate Matcha'],
+    [new Date(2024, 10, 2), 'Pumpkin Spice & Apple Pie'],
+    [new Date(2024, 10, 9), 'Chocolate Peppermint & Mocha'],
+    [new Date(2024, 10, 16), 'Mexican Hot Chocolate & Gingerbread'],
+  ]);
   return (
     <Layout desc="View my past specials for previous Chatham Farmers' Market seasons">
       <div class={styles.sections}>
@@ -67,6 +91,16 @@ export default function FarmersMarket() {
           <h3>2023</h3>
           <ul>
             <For each={dates2023()}>
+              {([date, specials], i) => (
+                <li>{`${date.toString().substring(4, 7)} ${(
+                  date as Date
+                ).getDate()}${specials ? ` - ${specials}` : ''}`}</li>
+              )}
+            </For>
+          </ul>
+          <h3>2024</h3>
+          <ul>
+            <For each={dates2024()}>
               {([date, specials], i) => (
                 <li>{`${date.toString().substring(4, 7)} ${(
                   date as Date

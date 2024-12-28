@@ -17,7 +17,7 @@ const VANILLA_CAKE = '#F8ECD4';
 const LEMON_CAKE = '#FFDFA1';
 const CINNAMON_CAKE = '#E3BB8B';
 
-export const FLAVORS /*: { [id: string]: Flavor }*/ = {
+export const FLAVORS: { [id: string]: Flavor } = {
   GAP: {
     id: 'GAP',
     tag: '',
@@ -222,9 +222,9 @@ export const FLAVORS /*: { [id: string]: Flavor }*/ = {
     id: 'GINGERBREAD',
     tag: 'GB_D',
     name: 'Gingerbread',
-    cake: CHOCOLATE_CAKE,
-    frosting: '#F4E8DF',
-    frosting_outline: '#F0E2D8',
+    cake: '#785A48',
+    frosting: '#F0E7E0',
+    frosting_outline: '#ECDDD2',
   },
   BROWN_SUGAR_SWEET_POTATO: {
     id: 'BROWN_SUGAR_SWEET_POTATO',
@@ -234,11 +234,30 @@ export const FLAVORS /*: { [id: string]: Flavor }*/ = {
     frosting: '#DDAF8D',
     frosting_outline: '#D1A380',
   },
+  EGGNOG: {
+    id: 'EGGNOG',
+    tag: 'EGG',
+    name: 'Eggnog',
+    cake: '#E8D1A6',
+    frosting: '#F9EAD2',
+    frosting_outline: '#F3E1C4',
+    extra: '/images/cupcake-extras/cinnamon.svg',
+  },
+  PANETTONE: {
+    id: 'PANETTONE',
+    tag: 'PAN',
+    name: 'Panettone',
+    cake: VANILLA_CAKE,
+    frosting: '#FBFBFB',
+    frosting_outline: '#F8F8F8',
+    extra: '/images/cupcake-extras/fruitcake.svg',
+  },
 };
 
 export default function CupcakeBox(props: {
   box: Box;
   editable?: boolean;
+  removable?: boolean;
   brush?: Flavor;
   scale?: number;
   setActiveBox?: Setter<Box>;
@@ -279,6 +298,18 @@ export default function CupcakeBox(props: {
         cupcakes: flavorArray2D().flat(),
       });
     }
+  };
+
+  const removeFlavor = (position: number) => {
+    let newCupcakesArray = [...props.box.cupcakes];
+    console.log(newCupcakesArray);
+    console.log(position);
+    newCupcakesArray.splice(position, 1);
+    console.log(newCupcakesArray);
+    props.setActiveBox({
+      type: props.box.type,
+      cupcakes: newCupcakesArray,
+    });
   };
 
   return (
@@ -361,6 +392,21 @@ export default function CupcakeBox(props: {
                         y={10 * props.scale + cupcakeSize() * i()}
                         onBrush={() => {
                           brushFlavor(i(), j());
+                        }}
+                        onRemove={() => {
+                          if (props.removable) {
+                            removeFlavor(
+                              j() +
+                                i() *
+                                  Math.ceil(Math.sqrt(props.box.type.quantity))
+                            );
+                          }
+                          console.log(
+                            'removing ' +
+                              (j() +
+                                i() *
+                                  Math.ceil(Math.sqrt(props.box.type.quantity)))
+                          );
                         }}
                       />
                     </Show>

@@ -8,11 +8,12 @@ export default function Navbar(props?: {
   home?: boolean;
   mini?: boolean;
   minimal?: boolean;
+  notModern?: boolean;
 }) {
   const [searchParams, setSearchparams] = useSearchParams();
 
   let home = props.home || false;
-  let mini = props.mini || props.minimal || false;
+  let mini = props.mini || props.minimal || true;
 
   let newLayout = 'regular';
   let baseStyle = styles.regularLogo;
@@ -56,118 +57,187 @@ export default function Navbar(props?: {
   }
   previousLayout = newLayout;
 
-  return (
-    <div class={styles.head}>
-      {/* <A href="/order" draggable={false} noScroll={true}>
+  if (props.notModern)
+    return (
+      <div class={styles.head}>
+        {/* <A href="/order" draggable={false} noScroll={true}>
         <div class={`${styles.banner} ${baseStyle} ${logoTransition}`}>
           Click here to place an order today for our February 24th pop up!
         </div>{' '}
       </A> */}
-      <img
-        src="/images/decorations/nav-top.svg"
-        class={`${styles.decoration} ${baseStyle} ${logoTransition}`}
-        draggable={false}
-        alt=""
-        width="900"
-        height="80"
-      />
-      <A
-        href="/"
-        activeClass={styles.selectedTab}
-        end={true}
-        draggable={false}
-        noScroll={true}
-      >
         <img
-          src="/images/full-logo.svg"
-          class={`${baseStyle} ${logoTransition} ${styles.logo}`}
+          src="/images/decorations/nav-top.svg"
+          class={`${styles.decoration} ${baseStyle} ${logoTransition}`}
           draggable={false}
-          alt="Tuxedo Cupcakes Logo"
-          width="600"
-          height="150"
+          alt=""
+          width="900"
+          height="80"
         />
-      </A>
+        <A
+          href="/"
+          activeClass={styles.selectedTab}
+          end={true}
+          draggable={false}
+          noScroll={true}
+        >
+          <img
+            src="/images/full-logo.svg"
+            class={`${baseStyle} ${logoTransition} ${styles.logo}`}
+            draggable={false}
+            alt="Tuxedo Cupcakes Logo"
+            width="600"
+            height="150"
+          />
+        </A>
 
-      <Show when={!props.minimal}>
-        <nav>
-          <A
-            href="/"
-            activeClass={styles.selectedTab}
-            end={true}
-            draggable={false}
-            noScroll={true}
-          >
-            Home
-          </A>
-          <A
-            href="/order/"
-            activeClass={styles.selectedTab}
-            draggable={false}
-            noScroll={true}
-          >
-            Order
-          </A>
-          <A
-            href="/catering"
-            activeClass={styles.selectedTab}
-            draggable={false}
-            noScroll={true}
-          >
-            Catering
-          </A>
-          <A
-            href="/farmers-market/"
-            activeClass={styles.selectedTab}
-            draggable={false}
-            noScroll={true}
-          >
-            Farmers' Market
-          </A>
-          <A
-            href="/flavors"
-            activeClass={styles.selectedTab}
-            draggable={false}
-            noScroll={true}
-          >
-            Flavors
-          </A>
-          <A
-            href="/contact"
-            activeClass={styles.selectedTab}
-            draggable={false}
-            noScroll={true}
-          >
-            Contact
-          </A>
-          <div class={styles.socialLinkBox}>
-            <a
-              href="https://www.instagram.com/tuxedo_cupcakes/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={styles.socialLink}
+        <Show when={!props.minimal}>
+          <nav>
+            <A
+              href="/"
+              activeClass={styles.selectedTab}
+              end={true}
+              draggable={false}
+              noScroll={true}
             >
-              <img src="/images/instagram-logo.svg" width={50} height={50} />
-            </a>
-            <a
-              href="https://www.facebook.com/profile.php?id=61555665201272"
-              target="_blank"
-              rel="noopener noreferrer"
-              class={styles.socialLink}
+              Home
+            </A>
+            <A
+              href="/order/"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
             >
-              <img src="/images/facebook-logo.svg" width={50} height={50} />
-            </a>
-          </div>
-        </nav>
-      </Show>
-      <div />
-      <img
-        src="/images/decorations/nav-bottom.svg"
-        class={`${styles.decoration} ${styles.bottom}`}
-        draggable={false}
-        alt=""
-        width="900"
-        height="80"
-      />
-    </div>
-  );
+              Order
+            </A>
+            <A
+              href="/catering"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Catering
+            </A>
+            <A
+              href="/farmers-market/"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Farmers' Market
+            </A>
+            <A
+              href="/flavors"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Flavors
+            </A>
+            <A
+              href="/contact"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Contact
+            </A>
+            <div class={styles.socialLinkBox}>
+              <a
+                href="https://www.instagram.com/tuxedo_cupcakes/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class={styles.socialLink}
+              >
+                <img src="/images/instagram-logo.svg" width={50} height={50} />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61555665201272"
+                target="_blank"
+                rel="noopener noreferrer"
+                class={styles.socialLink}
+              >
+                <img src="/images/facebook-logo.svg" width={50} height={50} />
+              </a>
+            </div>
+          </nav>
+        </Show>
+        <div />
+        <img
+          src="/images/decorations/nav-bottom.svg"
+          class={`${styles.decoration} ${styles.bottom}`}
+          draggable={false}
+          alt=""
+          width="900"
+          height="80"
+        />
+      </div>
+    );
+  else
+    return (
+      <div class={styles.mhead}>
+        <A
+          href="/"
+          activeClass={styles.selectedTab}
+          end={true}
+          draggable={false}
+          noScroll={true}
+        >
+          <img
+            src="/images/full-logo-dark.svg"
+            class={`${baseStyle} ${logoTransition} ${styles.logo}`}
+            draggable={false}
+            alt="Tuxedo Cupcakes Logo"
+            width="600"
+            height="150"
+          />
+        </A>
+
+        <Show when={!props.minimal}>
+          <nav>
+            <A
+              href="/catering"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Catering
+            </A>
+            <A
+              href="/farmers-market/"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Farmers' Market
+            </A>
+            <A
+              href="/flavors"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Flavors
+            </A>
+            <A
+              href="/contact"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+            >
+              Contact
+            </A>
+            <A
+              href="/order/"
+              activeClass={styles.selectedTab}
+              draggable={false}
+              noScroll={true}
+              class={styles.order}
+            >
+              Order
+            </A>
+          </nav>
+        </Show>
+        <div />
+      </div>
+    );
 }

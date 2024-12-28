@@ -79,73 +79,73 @@
 	a.selectedTab {
 		cursor: default;
 	}
-}
 
-.logo {
-	height: auto;
+	.logo {
+		height: auto;
 
-	&.bigLogo {
-		width: calc($tru * 35);
-		padding: calc($ru * 3);
-	}
-
-	&.regularLogo {
-		width: calc($tru * 25);
-		padding-bottom: calc($ru * 0.5);
-		padding-top: calc($ru * 0.5);
-		margin-top: calc(1 * $ru);
-	}
-
-	&.miniLogo {
-		width: calc($tru * 20);
-		padding-bottom: calc($ru * 0.5);
-		padding-top: 0;
-		margin-top: calc(0.5 * $ru);
-	}
-
-	&.toBigLogo {
-		animation: grow 0.3s ease-out forwards;
-	}
-
-	@keyframes grow {
-		to {
+		&.bigLogo {
 			width: calc($tru * 35);
-			padding-top: calc($ru * 3);
-			padding-bottom: calc($ru * 3);
+			padding: calc($ru * 3);
 		}
-	}
 
-	&.toRegularLogo {
-		animation: shrink 0.3s ease-out forwards;
-
-		&.miniLogo {
-			animation: shrink 0.2s ease-out forwards;
-		}
-	}
-
-	@keyframes shrink {
-		to {
+		&.regularLogo {
 			width: calc($tru * 25);
 			padding-bottom: calc($ru * 0.5);
 			padding-top: calc($ru * 0.5);
 			margin-top: calc(1 * $ru);
 		}
-	}
 
-	&.toMiniLogo {
-		animation: superShrink 0.3s ease-out forwards;
-
-		&.regularLogo {
-			animation: superShrink 0.2s ease-out forwards;
-		}
-	}
-
-	@keyframes superShrink {
-		to {
+		&.miniLogo {
 			width: calc($tru * 20);
 			padding-bottom: calc($ru * 0.5);
-			padding-top: calc($ru * 0.5);
+			padding-top: 0;
 			margin-top: calc(0.5 * $ru);
+		}
+
+		&.toBigLogo {
+			animation: grow 0.3s ease-out forwards;
+		}
+
+		@keyframes grow {
+			to {
+				width: calc($tru * 35);
+				padding-top: calc($ru * 3);
+				padding-bottom: calc($ru * 3);
+			}
+		}
+
+		&.toRegularLogo {
+			animation: shrink 0.3s ease-out forwards;
+
+			&.miniLogo {
+				animation: shrink 0.2s ease-out forwards;
+			}
+		}
+
+		@keyframes shrink {
+			to {
+				width: calc($tru * 25);
+				padding-bottom: calc($ru * 0.5);
+				padding-top: calc($ru * 0.5);
+				margin-top: calc(1 * $ru);
+			}
+		}
+
+		&.toMiniLogo {
+			animation: superShrink 0.3s ease-out forwards;
+
+			&.regularLogo {
+				animation: superShrink 0.2s ease-out forwards;
+			}
+		}
+
+		@keyframes superShrink {
+			to {
+				width: calc($tru * 20);
+				padding-bottom: calc($ru * 0.5);
+				padding-top: calc($ru * 0.5);
+				margin-top: calc(0.5 * $ru);
+			}
 		}
 	}
 }
@@ -274,6 +274,57 @@
 			transform: translateY(calc(-8 * $tru));
 			height: 0;
 			margin-bottom: 0;
+		}
+	}
+}
+
+.mhead {
+	background-image: linear-gradient(165deg, $darkCyan, $cyan);
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+
+	.logo {
+		height: calc(10 * $tru);
+		width: auto;
+		margin: calc(2 * $tru) 0 calc(2 * $tru) calc(10 * $tru);
+	}
+
+	nav {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-evenly;
+
+		width: 100%;
+		margin-left: calc(20 * $tru);
+		a {
+			font-size: calc(3 * $tru);
+			color: $text-light;
+
+			&:hover,
+			&.selectedTab {
+				color: $lightCyan;
+			}
+
+			&.order {
+				background-color: rgba(0, 0, 0, 0.15);
+				padding: calc(0.75 * $tru) calc(1.5 * $tru);
+				border-radius: calc(1.5 * $tru);
+				border: rgba(255, 255, 255, 0.28) solid 2px;
+				transition: background-color 0.2s ease-in-out;
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.2);
+					color: $text-light;
+				}
+				&.selectedTab {
+					background-color: rgba(0, 0, 0, 0.2);
+					color: $text-light;
+				}
+			}
 		}
 	}
 }
