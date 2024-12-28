@@ -408,7 +408,10 @@ export default function Order() {
     { equals: false }
   );
   setActiveBox();
-  let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<Box>();
+  let [activeBoxEditBuffer, setActiveBoxEditBuffer] = createSignal<{
+    box: Box;
+    index: number;
+  }>();
   let [boxEditIndex, setBoxEditIndex] = createSignal(-1);
   let [activeBrush, setActiveBrush] = createSignal<Flavor>();
   let [extraDetailsValid, setExtraDetailsValid] = createSignal(false);
@@ -913,7 +916,8 @@ export default function Order() {
                               setActiveBox();
                               setActiveBrush();
                               if (activeBoxEditBuffer() != undefined) {
-                                setActiveBox(activeBoxEditBuffer());
+                                setActiveBox(activeBoxEditBuffer().box);
+                                setBoxEditIndex(activeBoxEditBuffer().index);
                                 setActiveBoxEditBuffer();
                               }
                               setAddedFirstBox(true);
@@ -1129,7 +1133,10 @@ export default function Order() {
                                 class="button"
                                 onClick={() => {
                                   if (activeBox() != undefined) {
-                                    setActiveBoxEditBuffer(activeBox());
+                                    setActiveBoxEditBuffer({
+                                      box: activeBox(),
+                                      index: boxEditIndex(),
+                                    });
                                   }
                                   setActiveBox(box);
                                   setCupcakeSelectStep(1);

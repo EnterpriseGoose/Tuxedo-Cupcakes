@@ -83,7 +83,7 @@ a:hover {
 	&:disabled {
 		cursor: not-allowed;
 		box-shadow: inset 0 0px $cyan;
-		background-color: rgba(0, 0, 0, 0.1);
+		background-color: rgba(0, 0, 0, 0.15);
 	}
 
 	&.submitted,

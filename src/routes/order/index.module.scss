@@ -92,6 +92,10 @@
 
 	button {
 		background-color: white;
+
+		&:disabled {
+			background-color: rgb(53, 53, 53);
+		}
 	}
 
 	img {
