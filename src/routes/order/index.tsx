@@ -1319,7 +1319,7 @@ export default function Order() {
                     id="toAddInput"
                     oninput={checkDetailInputs}
                     value={order.info.extra}
-                    placeholder="Specify the time for pickup/delivery, and address if you would like delivery (required)"
+                    placeholder="Specify the time for pickup/delivery, and address if you would like delivery (pickup is from Chatham, required)"
                   />
                 </div>
                 <div class={styles.newsletter}>
