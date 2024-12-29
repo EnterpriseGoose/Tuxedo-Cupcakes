@@ -197,7 +197,7 @@
 	> :nth-last-child(2)::after {
 		position: relative;
 		content: "";
-		height: calc(5 * $tru);
+		height: calc(15 * $tru);
 		width: 100%;
 		flex-shrink: 0;
 	}
@@ -772,7 +772,7 @@
 				align-items: center;
 				justify-content: center;
 				margin-top: auto;
-				margin-bottom: calc(12 * $tru);
+				margin-bottom: auto;
 				font-size: calc(3.5 * $tru);
 
 				img {
