@@ -601,7 +601,7 @@ export default function Order() {
   return (
     <Layout
       hideFooter
-      desc="Place a pre-order to get your cupcakes quickly at the market!"
+      desc="Order from the Tuxedo Cupcakes New Year's Eve Pop-up today!"
       noOverflow={pageUp()}
     >
       <div class={styles.order}>
@@ -619,9 +619,11 @@ export default function Order() {
               onClick={async (e) => {
                 e.target.classList.add('submitted');
                 setPageUp(true);
-                window.scrollTo(0, 10000);
+
                 await sleep(1000);
                 e.target.classList.remove('submitted');
+                window.scrollTo(0, 10000);
+                document.getElementById('orderPageTop').scrollIntoView();
               }}
               disabled={mobileBrowser() && false}
             >
@@ -1341,112 +1343,115 @@ export default function Order() {
               id="state3"
             >
               <h2>Review order</h2>
-              <div class={styles.divider}>
-                <div class={styles.cart}>
-                  <h3>Cart</h3>
-                  <div class={styles.cartGrid}>
-                    <For each={order.boxes}>
-                      {(box, i) => (
-                        <>
-                          <div class={styles.cupcakeBox}>
-                            <a
-                              href={`/order/display?t=${encodeBox(box).t}&f=${
-                                encodeBox(box).f
-                              }`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <CupcakeBox box={box} />
-                            </a>
-                          </div>
-                          <div class={styles.divider} />
-                          <div class={styles.boxInfo}>
-                            {box.type.quantity}&nbsp;
-                            {box.type.regular ? 'Regular' : 'Mini'} -&nbsp;$
-                            {box.type.price}
-                          </div>
-                          <div class={styles.divider} />
-                          <div class={styles.flavors}>
-                            {Object.entries(
-                              box.cupcakes.reduce((flavorList, nextFlavor) => {
-                                if (
-                                  Object.keys(flavorList).includes(
-                                    nextFlavor.name
-                                  )
+              <div class={styles.dividerBox}>
+                <div class={styles.divider}>
+                  <div class={styles.cart}>
+                    <h3>Cart</h3>
+                    <div class={styles.cartGrid}>
+                      <For each={order.boxes}>
+                        {(box, i) => (
+                          <>
+                            <div class={styles.cupcakeBox}>
+                              <a
+                                href={`/order/display?t=${encodeBox(box).t}&f=${
+                                  encodeBox(box).f
+                                }`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <CupcakeBox box={box} />
+                              </a>
+                            </div>
+                            <div class={styles.divider} />
+                            <div class={styles.boxInfo}>
+                              {box.type.quantity}&nbsp;
+                              {box.type.regular ? 'Regular' : 'Mini'} -&nbsp;$
+                              {box.type.price}
+                            </div>
+                            <div class={styles.divider} />
+                            <div class={styles.flavors}>
+                              {Object.entries(
+                                box.cupcakes.reduce(
+                                  (flavorList, nextFlavor) => {
+                                    if (
+                                      Object.keys(flavorList).includes(
+                                        nextFlavor.name
+                                      )
+                                    )
+                                      flavorList[nextFlavor.name] += 1;
+                                    else flavorList[nextFlavor.name] = 1;
+                                    return flavorList;
+                                  },
+                                  {}
                                 )
-                                  flavorList[nextFlavor.name] += 1;
-                                else flavorList[nextFlavor.name] = 1;
-                                return flavorList;
-                              }, {})
-                            ).reduce(
-                              (currString, flavor) =>
-                                currString +
-                                flavor[0] +
-                                ' ×' +
-                                flavor[1] +
-                                `\n`,
-                              ''
-                            )}
-                          </div>
-                        </>
-                      )}
-                    </For>
+                              ).reduce(
+                                (currString, flavor) =>
+                                  currString +
+                                  flavor[0] +
+                                  ' ×' +
+                                  flavor[1] +
+                                  `\n`,
+                                ''
+                              )}
+                            </div>
+                          </>
+                        )}
+                      </For>
+                    </div>
+                    <div class={styles.cartFooter}>
+                      <p>
+                        Total: $
+                        {order.boxes.reduce(
+                          (total, box) => total + box.type.price,
+                          0
+                        )}
+                      </p>
+                      <button
+                        class="button"
+                        onClick={() => {
+                          setState(1);
+                          setCupcakeSelectStep(2);
+                        }}
+                      >
+                        Edit Cart
+                      </button>
+                    </div>
                   </div>
-                  <div class={styles.cartFooter}>
-                    <p>
-                      Total: $
-                      {order.boxes.reduce(
-                        (total, box) => total + box.type.price,
-                        0
-                      )}
-                    </p>
-                    <button
-                      class="button"
-                      onClick={() => {
-                        setState(1);
-                        setCupcakeSelectStep(2);
-                      }}
-                    >
-                      Edit Cart
-                    </button>
-                  </div>
-                </div>
-                <div class={styles.details}>
-                  <h3>Details</h3>
-                  <p>Name: {order.info.name}</p>
-                  <p>Email: {order.info.email}</p>
-                  <Show when={order.info.phone}>
-                    <p>Phone: {order.info.phone}</p>
-                  </Show>
-                  <Show when={order.info.extra}>
-                    <p>Delivery Info: {order.info.extra}</p>
-                  </Show>
-                  <Show when={order.info.newsletter}>
-                    <p>Newsletter: Yes</p>
-                  </Show>
-
-                  <Show when={!POP_UP}>
-                    <p class={styles.gap}>
-                      Pickup Market: {order.name} <br /> @ {order.time}
-                    </p>
-                  </Show>
-
-                  <div class={styles.placeOrder}>
-                    <img src="/images/loader.svg" id="payment-spin-loader" />
-                    <button
-                      class={`button`}
-                      onClick={async (e) => {
-                        document
-                          .getElementById('payment-spin-loader')
-                          .style.setProperty('display', 'block');
-                        window.location.href = await getPaypalPaymentURL(
-                          order,
-                          location.origin
-                        );
-                      }}
-                    >
-                      Place Order
-                    </button>
+                  <div class={styles.details}>
+                    <h3>Details</h3>
+                    <p>Name: {order.info.name}</p>
+                    <p>Email: {order.info.email}</p>
+                    <Show when={order.info.phone}>
+                      <p>Phone: {order.info.phone}</p>
+                    </Show>
+                    <Show when={order.info.extra}>
+                      <p>Delivery Info: {order.info.extra}</p>
+                    </Show>
+                    <Show when={order.info.newsletter}>
+                      <p>Newsletter: Yes</p>
+                    </Show>
+                    <Show when={!POP_UP}>
+                      <p class={styles.gap}>
+                        Pickup Market: {order.name} <br /> @ {order.time}
+                      </p>
+                    </Show>
+                    <div class={styles.placeOrder}>
+                      <img src="/images/loader.svg" id="payment-spin-loader" />
+                      <button
+                        class={`button`}
+                        onClick={async (e) => {
+                          document
+                            .getElementById('payment-spin-loader')
+                            .style.setProperty('display', 'block');
+                          window.location.href = await getPaypalPaymentURL(
+                            order,
+                            location.origin
+                          );
+                        }}
+                      >
+                        Place Order
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
