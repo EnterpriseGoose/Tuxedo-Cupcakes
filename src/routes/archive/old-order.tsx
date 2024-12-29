@@ -1,5 +1,5 @@
 import Layout from '~/components/Layout';
-import styles from './order.module.scss';
+import styles from './old-order.module.scss';
 import {
   For,
   Match,
@@ -11,7 +11,7 @@ import {
   onMount,
 } from 'solid-js';
 import { createClient } from '@supabase/supabase-js';
-import { A, useSearchParams } from 'solid-start';
+import { A, useSearchParams } from '@solidjs/router';
 import EmailForm from '~/components/EmailForm';
 
 const EMAIL_VALIDATION_REGEX =

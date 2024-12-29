@@ -1,0 +1,28 @@
+@use "../../global-styles/variables.scss" as *;
+
+.success {
+	padding-top: calc(5 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+
+	p {
+		width: calc(75 * $wru);
+	}
+
+	h3 {
+		padding-top: calc(5 * $ru);
+	}
+
+	.boxArray {
+		padding-top: calc(3 * $ru);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: row;
+		flex-flow: wrap;
+		gap: calc(3 * $ru);
+		width: calc(80 * $wru);
+	}
+}

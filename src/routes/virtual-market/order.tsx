@@ -2,7 +2,7 @@ import { createEffect, createSignal, For, Match, Show, Switch } from 'solid-js';
 import Layout from '~/components/Layout';
 import styles from './order.module.scss';
 import { createClient } from '@supabase/supabase-js';
-import { useSearchParams, A } from 'solid-start';
+import { useSearchParams, A } from '@solidjs/router';
 import EmailForm from '~/components/EmailForm';
 
 const UPCOMING_VIRTUAL_MARKET = false;
@@ -35,7 +35,7 @@ export default function VirtualMarket() {
   });
 
   return (
-    <Layout desc='Order Cupcakes from a Tuxedo Cupcakes Virtual Market.'>
+    <Layout desc="Order Cupcakes from a Tuxedo Cupcakes Virtual Market.">
       <div class={styles.sections}>
         <Show
           when={UPCOMING_VIRTUAL_MARKET}

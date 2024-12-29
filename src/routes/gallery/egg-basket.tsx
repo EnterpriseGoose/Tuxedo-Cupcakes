@@ -1,7 +1,6 @@
 import Layout from '~/components/Layout';
 import styles from './egg-basket.module.scss';
-import { HttpStatusCode } from 'solid-start/server';
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 
 export default function Newsletter() {
   return (

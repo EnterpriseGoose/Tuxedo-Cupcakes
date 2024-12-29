@@ -1,5 +1,4 @@
-import { Link } from '@solidjs/router';
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 import styles from './Card.module.scss';
 
 export default function Card(props?: {

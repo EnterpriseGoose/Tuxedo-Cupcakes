@@ -1,7 +1,7 @@
 import { createSignal, For } from 'solid-js';
 import Layout from '~/components/Layout';
 import styles from './index.module.scss';
-import { A } from 'solid-start';
+import { A } from '@solidjs/router';
 import EmailForm from '~/components/EmailForm';
 
 export default function VirtualMarket() {

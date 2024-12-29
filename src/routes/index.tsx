@@ -6,20 +6,47 @@ import EmailForm from '~/components/EmailForm';
 
 export default function Home() {
   return (
-    <Layout home>
+    <Layout>
       <div class={styles.sections}>
-        {/* <div class={`${styles.section} ${styles.zero}`}>
-          <img
-            src="/images/front-page-cupcakes.png"
-            class={styles.mainPicture}
-            alt=""
-          />
-          <img
-            src="/images/decorations/nav-top.svg"
-            class={styles.bottomFrame}
-            alt=""
-          />
-        </div> */}
+        <div class={`${styles.section} ${styles.zero}`}>
+          <h1>New Year's Eve Pop&#8209;up</h1>
+          <div class={`${styles.card} ${styles.eggnog}`}>
+            <img src="/images/cupcake-graphics/eggnog.svg" />
+            <div>
+              <h2>Eggnog</h2>
+              <i>custard + nutmeg</i>
+            </div>
+          </div>
+          <div class={`${styles.card} ${styles.panettone}`}>
+            <img src="/images/cupcake-graphics/panettone.svg" />
+            <div>
+              <h2>Panettone</h2>
+              <i>fruitcake + creme</i>
+            </div>
+          </div>
+          <div class={`${styles.card} ${styles.gingerbread}`}>
+            <img src="/images/cupcake-graphics/gingerbread.svg" />
+            <div>
+              <h2>Gingerbread</h2>
+              <i>ginger + spices</i>
+            </div>
+          </div>
+          <div class={`${styles.card} ${styles.classics}`}>
+            <img src="/images/cupcake-graphics/classics-trio.svg" />
+            <div>
+              <h2>Classics</h2>
+              <i>vanilla, chocolate +&nbsp;strawberry</i>
+            </div>
+          </div>
+          <button
+            class={`${styles.order} button`}
+            onclick={() => {
+              window.location.pathname = '/order';
+            }}
+          >
+            Order Now!
+          </button>
+        </div>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>A More Sophisticated Cupcake</h2>
           <p>
@@ -60,17 +87,17 @@ export default function Home() {
           <h2>How to get Tuxedo Cupcakes</h2>
           <div class={styles.cards}>
             <Card title="Catering" link="/catering?p=m">
-              We can provide your event with a cake or cupcakes that will make
-              it memorable
+              I can provide your event with a cake or cupcakes that will make it
+              memorable
             </Card>
             <Card title="Pop-ups" link="/order?p=m">
-              When it's not Farmers' Market season, we will do occasional
-              pop-ups that are a chance to order a smaller quantity of cupcakes.
-              Place an order today!
+              When it's not Farmers' Market season, I will do occasional pop-ups
+              that are a chance to order a smaller quantity of cupcakes. Place
+              an order today!
             </Card>
             <Card title="Farmers' Market" link="/farmers-market?p=m">
-              We attend the Chatham Farmers’ Market on Saturdays, where you can
-              choose from a selection of cupcakes we have available that day
+              I attend the Chatham and Morristown Farmers’ Markets, where you
+              can choose from a selection of cupcakes I have available that day
             </Card>
           </div>
         </div>
@@ -91,14 +118,14 @@ export default function Home() {
 
           <h2>Contact</h2>
           <h4>
-            Contact us at
+            Contact me at
             <br />
             <a
-              href="mailto:hello@tuxedocupcakes.com"
+              href="mailto:olive@tuxedocupcakes.com"
               target="_blank"
               rel="noopener noreferrer"
             >
-              hello@tuxedocupcakes.com
+              olive@tuxedocupcakes.com
             </a>
           </h4>
         </div>

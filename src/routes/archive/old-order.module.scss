@@ -1,0 +1,496 @@
+@use "../../global-styles/variables.scss" as *;
+
+.order {
+	padding-top: calc(5 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	height: 100%;
+	flex: auto;
+	min-height: 0;
+	overflow: hidden;
+
+	animation: slideUp 0.2s ease-out forwards;
+}
+
+@keyframes slideUp {
+	to {
+		padding-top: calc(1 * $ru);
+	}
+}
+
+.navigation {
+	display: flex;
+	flex-direction: row;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	margin-top: auto;
+	padding-top: calc(3 * $ru);
+
+	.nextButton {
+		background-color: $cyan;
+		border: none;
+		padding: calc(1 * $tru) calc(3 * $tru);
+		border-radius: calc(1 * $tru);
+		transition: all 0.2s ease-in-out;
+		cursor: pointer;
+
+		&:hover {
+			filter: brightness(1.1);
+		}
+
+		&:active {
+			filter: brightness(0.9);
+		}
+
+		&:disabled {
+			filter: brightness(1);
+			background-color: lightgray;
+			border-radius: calc(0 * $ru);
+			cursor: not-allowed;
+		}
+	}
+
+	.placeOrder {
+		padding: calc(1 * $tru) calc(3 * $tru);
+
+		&:disabled {
+			filter: brightness(1);
+			background-color: lightgray;
+			border-radius: calc(0 * $ru);
+			cursor: not-allowed;
+		}
+	}
+
+	.backButton {
+		position: absolute;
+		font-size: calc(2 * $tru);
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		left: calc(-13 * $tru);
+		cursor: pointer;
+	}
+
+	.error {
+		position: absolute;
+		font-size: calc(2 * $tru);
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		left: calc(25 * $tru);
+		width: calc(30 * $tru);
+	}
+}
+
+.progressBar {
+	width: calc(70 * $wru);
+	margin-top: calc(2 * $ru);
+	margin-bottom: calc(3 * $ru);
+	height: 10px;
+	background-color: rgb(226, 226, 226);
+	border-radius: 5px;
+
+	&.toBottom {
+		margin-top: auto;
+	}
+}
+
+.progress {
+	--progress: 0;
+	width: calc(70 * $wru * var(--progress));
+	height: 10px;
+	background-color: $cyan;
+	border-radius: 5px;
+	transition: width 1s ease;
+}
+
+.instruction {
+	width: calc(70 * $wru);
+	margin-bottom: calc(3 * $ru);
+}
+
+.flavorDivide {
+	width: calc(100 * $wru);
+	display: grid;
+	grid-template: 1fr / 2fr 1fr;
+
+	justify-items: center;
+	align-items: flex-start;
+
+	@media (max-width: 1000px) {
+		&.boxes {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: calc(10 * $ru);
+		}
+
+		&.flavors {
+			display: flex;
+			flex-direction: column-reverse;
+			align-items: center;
+			gap: calc(1 * $ru);
+		}
+
+		&.details {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: calc(10 * $ru);
+		}
+	}
+}
+
+.leftBar {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	max-width: calc(33 * $wru);
+	text-wrap: balance;
+
+	@media (max-width: 1000px) {
+		&.boxes {
+			width: 100%;
+			max-width: unset;
+			flex-direction: row;
+			justify-content: space-evenly;
+		}
+		&.flavors {
+			width: 100%;
+			max-width: unset;
+			display: grid;
+			grid-template: 1fr / 2fr 1fr;
+			justify-items: center;
+			align-items: flex-start;
+			gap: calc(2 * $ru);
+			margin: calc(7 * $ru) 0;
+
+			@media (max-height: 600px) {
+				margin: calc(2 * $ru) 0;
+			}
+		}
+		&.details {
+			width: 100%;
+			max-width: unset;
+			display: flex;
+			flex-direction: column;
+			margin-bottom: calc(5 * $ru);
+		}
+	}
+}
+
+.flavorsList {
+	margin-bottom: calc(4 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: calc(0 * $ru);
+
+	@media (max-width: 850px) {
+		gap: calc(2 * $ru);
+
+		p {
+			line-height: 90%;
+		}
+	}
+
+	p {
+		margin-bottom: 0;
+	}
+}
+
+.cartTotal {
+	margin-top: calc(2 * $ru);
+	margin-bottom: calc(2 * $ru);
+}
+
+.cartBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.emailDiffFlavor {
+	margin-top: calc(5 * $ru);
+	padding: 0 calc(1 * $ru);
+	width: 100%;
+}
+
+.orderDetails {
+	margin-top: calc(3 * $tru);
+}
+
+#productGrid {
+	width: calc(67 * $wru);
+	height: fit-content;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	@media (max-width: 1400px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media (max-width: 1000px) {
+		grid-template-columns: repeat(4, 1fr);
+		width: fit-content;
+	}
+	@media (max-width: 750px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	row-gap: max(calc(2 * $ru + calc(calc(calc(67 * $wru) - calc(72 * $tru)) / 4)), calc(2 * $ru));
+	//border-radius: calc(calc(67 * $wru) - calc(64 * $tru));
+	column-gap: calc(2 * $ru);
+	margin-bottom: calc(3 * $ru) 0;
+
+	div {
+		width: calc(15 * $tru);
+		height: fit-content;
+		background-color: #f5f5f5;
+		border-radius: calc(1 * $tru);
+		padding: calc(0.5 * $ru);
+		cursor: pointer;
+		transition: all 0.2s ease;
+		user-select: none;
+
+		&:hover {
+			background-color: #e9e9e9;
+		}
+
+		&[selected="true"] {
+			background-color: #d3d3d3;
+		}
+	}
+}
+
+#cart {
+	width: fit-content;
+	margin: 0 calc(3 * $ru);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		text-wrap: balance;
+	}
+
+	.cartItem {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 100%;
+
+		.name {
+			margin-right: auto;
+			width: fit-content;
+
+			&.min {
+				width: min-content;
+			}
+		}
+
+		textarea {
+			max-width: calc(50 * $ru);
+			flex-shrink: 2;
+			height: calc(10 * $ru);
+			font-size: calc(2 * $tru);
+			margin-left: calc(4 * $ru);
+			margin-right: calc(1 * $ru);
+			resize: none;
+			margin-top: calc(1 * $ru);
+			margin-bottom: calc(1 * $ru);
+		}
+
+		.cost {
+			margin-left: calc(2 * $ru);
+			min-width: calc(7 * $ru);
+			flex-basis: 0;
+			text-align: center;
+		}
+
+		button {
+			margin-left: calc(2 * $ru);
+			border-width: 0;
+			background-color: transparent;
+			cursor: pointer;
+			font-size: calc(3.5 * $tru);
+		}
+
+		.displayFlavors {
+			text-align: center;
+			max-width: calc(50 * $ru);
+			min-width: calc(10 * $ru);
+			flex: 2;
+			height: calc(10 * $ru);
+			padding: 0 calc(4 * $ru);
+
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			p {
+				font-size: calc(2 * $tru);
+			}
+		}
+	}
+
+	.discount {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		position: relative;
+		margin-top: calc(2 * $ru);
+		margin-bottom: calc(1 * $ru);
+
+		.code {
+			all: unset;
+			border: none;
+			border-bottom: 2px solid black;
+			background-color: #f7f7f7;
+			padding: 10px;
+			transition: all 100ms ease-in-out;
+			text-align: left;
+			width: 6.5em;
+			margin-left: calc(2 * $ru);
+			transform: translateX(0);
+
+			&:focus {
+				border-bottom: 2px solid $cyan;
+			}
+
+			&[valid="true"] + label {
+				color: green;
+				transform: translateX(75%);
+			}
+
+			&[valid="false"] + label {
+				color: red;
+			}
+
+			&[valid="used"] + label {
+				color: red;
+				transform: translateY(120%);
+			}
+
+			& + label {
+				position: absolute;
+				right: -1em;
+				transition: all ease 100ms;
+			}
+		}
+	}
+}
+
+#details {
+	display: grid;
+	align-items: center;
+	width: max-content;
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: repeat(7, calc(6 * $tru));
+	grid-template-areas:
+		"nameLabel name"
+		"emailLabel email"
+		"phoneLabel phone"
+		"toAdd toAdd"
+		"toAdd toAdd"
+		"newsletter newsletter"
+		"saveDetails saveDetails";
+
+	font-size: calc(2.4 * $tru);
+
+	margin-bottom: calc(2 * $ru);
+
+	.textInput {
+		//margin-left: calc(3 * $ru);
+
+		input {
+			all: unset;
+			border: none;
+			border-bottom: 2px solid black;
+			background-color: #f7f7f7;
+			padding: 10px;
+			transition: all 300ms ease-in-out;
+			width: calc(100% - 20px);
+			max-width: 17em;
+			text-align: left;
+			margin: 10px 0;
+
+			font-size: calc(2 * $tru);
+
+			&:invalid,
+			&[valid="false"] {
+				border-bottom: 2px solid red;
+			}
+			&:focus {
+				border-bottom: 2px solid $cyan;
+			}
+		}
+	}
+
+	label {
+		font-size: calc(2.4 * $tru);
+	}
+
+	.toAdd {
+		grid-area: toAdd;
+		display: flex;
+		flex-direction: column;
+
+		textarea {
+			resize: none;
+			//all: unset;
+			border: none;
+			border-bottom: 2px solid black;
+			background-color: #f7f7f7;
+			padding: 10px;
+			transition: all 100ms ease-in-out;
+			text-align: left;
+
+			font-size: calc(1.5 * $tru);
+
+			&:focus {
+				outline: none;
+				border-bottom: 2px solid $cyan;
+			}
+		}
+	}
+
+	.newsletter {
+		grid-area: newsletter;
+	}
+	.saveDetails {
+		grid-area: saveDetails;
+
+		label {
+			margin-left: auto;
+		}
+	}
+
+	.newsletter,
+	.saveDetails {
+		display: flex;
+		flex-direction: row;
+		text-align: right;
+
+		input {
+			margin-left: calc(4 * $ru);
+			width: calc(2 * $tru);
+			height: calc(2 * $tru);
+
+			@media (max-width: 800px) {
+				width: calc(3 * $tru);
+				height: calc(3 * $tru);
+			}
+		}
+	}
+}
+
+.crossedOut {
+	font-style: normal;
+	text-decoration: line-through;
+}
