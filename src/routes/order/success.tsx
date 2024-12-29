@@ -186,7 +186,7 @@ async function getOrder(token: string) {
   const paypalAuthToken = await getPaypalAuth();
 
   const req = await axios.get(
-    process.env.PAYPAL_URL + `/v2/checkout/orders/${token}`,
+    `https://api-m.paypal.com` + `/v2/checkout/orders/${token}`,
     {
       headers: {
         'Content-Type': 'application/json',
