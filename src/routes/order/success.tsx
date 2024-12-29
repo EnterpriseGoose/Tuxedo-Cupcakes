@@ -7,6 +7,7 @@ import { createSignal, For, onMount, Show } from 'solid-js';
 import CupcakeBox from '~/components/CupcakeBox';
 import { decodeBox, encodeBox } from '~/components/CupcakeBox/CupcakeBox';
 import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config';
 import sgMail from '@sendgrid/mail';
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -185,7 +186,7 @@ async function getOrder(token: string) {
   const paypalAuthToken = await getPaypalAuth();
 
   const req = await axios.get(
-    `https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}`,
+    process.env.PAYPAL_URL + `/v2/checkout/orders/${token}`,
     {
       headers: {
         'Content-Type': 'application/json',

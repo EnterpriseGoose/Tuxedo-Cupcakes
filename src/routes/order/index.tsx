@@ -1646,7 +1646,7 @@ async function getPaypalPaymentURL(order: Order, origin: string) {
   //console.dir(reqBody, { depth: 10 });
 
   const req = await axios.post(
-    'https://api-m.sandbox.paypal.com/v2/checkout/orders',
+    process.env.PAYPAL_URL + '/v2/checkout/orders',
     reqBody,
     {
       headers: {

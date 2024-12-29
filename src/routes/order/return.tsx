@@ -10,7 +10,7 @@ async function capturePayment(token: string) {
   console.log('payment capturing');
   const paypalAuthToken = await getPaypalAuth();
   const req = await axios.post(
-    `https://api-m.sandbox.paypal.com/v2/checkout/orders/${token}/capture`,
+    process.env.PAYPAL_URL + `/v2/checkout/orders/${token}/capture`,
     {},
     {
       headers: {
