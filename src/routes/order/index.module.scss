@@ -54,6 +54,7 @@
 		margin: 0;
 		padding: calc(0.3 * $tru) 0 calc(0.3 * $tru) 0;
 		margin-bottom: calc(0.5 * $ru);
+		user-select: none;
 
 		img {
 			transform: rotate(90deg);
@@ -120,7 +121,7 @@
 	justify-content: center;
 	width: 12.5vw;
 	flex-shrink: 0;
-	//margin: auto;
+	user-select: none;
 
 	p {
 		margin: calc(2 * $ru);
