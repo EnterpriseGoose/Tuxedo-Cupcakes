@@ -119,6 +119,8 @@
 	align-items: center;
 	justify-content: center;
 	width: 12.5vw;
+	flex-shrink: 0;
+	//margin: auto;
 
 	p {
 		margin: calc(2 * $ru);
@@ -195,6 +197,8 @@
 		position: relative;
 		content: "";
 		height: calc(5 * $tru);
+		width: 100%;
+		flex-shrink: 0;
 	}
 }
 
@@ -311,7 +315,7 @@
 		flex-wrap: nowrap;
 		// left: 15vw;
 		transition: left ease-in-out 0.5s;
-		gap: 5vw;
+		//gap: 5vw;
 		//min-height: 100%;
 
 		.step {
@@ -508,6 +512,7 @@
 
 				.boxInfo {
 					width: min-content;
+					justify-self: center;
 				}
 			}
 
@@ -534,8 +539,23 @@
 			}
 
 			.buttons {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+
 				button {
 					margin: calc(0.5 * $ru);
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					width: calc(3 * $tru);
+					height: calc(3 * $tru);
+
+					svg {
+						width: calc(2 * $tru);
+						height: calc(2 * $tru);
+					}
 				}
 			}
 		}
@@ -751,7 +771,7 @@
 				align-items: center;
 				justify-content: center;
 				margin-top: auto;
-				margin-bottom: auto;
+				margin-bottom: calc(12 * $tru);
 				font-size: calc(3.5 * $tru);
 
 				img {

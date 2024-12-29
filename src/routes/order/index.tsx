@@ -789,7 +789,7 @@ export default function Order() {
                 <div
                   class={styles.stepGrid}
                   style={{
-                    left: `calc(15vw - ${cupcakeSelectStep() * 92.5}vw)`,
+                    left: `${15 - cupcakeSelectStep() * 82.5}vw`,
                   }}
                 >
                   <div class={`${styles.boxChoice} ${styles.step}`}>
@@ -826,8 +826,12 @@ export default function Order() {
                                 });
                               }
                               setCupcakeSelectStep(1);
+
                               document
                                 .getElementById('chooseYourCupcakesHeader')
+                                .scrollIntoView();
+                              document
+                                .getElementById('orderPageTop')
                                 .scrollIntoView();
                             }}
                           >
@@ -1116,21 +1120,8 @@ export default function Order() {
                               )}
                             </div>
                             <div class={styles.divider} />
+
                             <div class={styles.buttons}>
-                              <button
-                                class="button"
-                                onClick={() => {
-                                  setOrder(
-                                    'boxes',
-                                    order.boxes.toSpliced(i(), 1)
-                                  );
-                                  if (order.boxes.length == 0) {
-                                    setCupcakeSelectStep(0);
-                                  }
-                                }}
-                              >
-                                Remove
-                              </button>
                               <button
                                 class="button"
                                 onClick={() => {
@@ -1143,13 +1134,20 @@ export default function Order() {
                                   setActiveBox(box);
                                   setCupcakeSelectStep(1);
                                   setBoxEditIndex(i());
-                                  // setOrder(
-                                  //   'boxes',
-                                  //   order.boxes.toSpliced(i(), 1)
-                                  // );
                                 }}
                               >
-                                Edit
+                                <svg
+                                  width="100"
+                                  height="100"
+                                  viewBox="0 0 100 100"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M97.246 27.7404L88.2416 36.7446C87.3236 37.6626 85.8392 37.6626 84.9212 36.7446L63.2405 15.0641C62.3225 14.1461 62.3225 12.6616 63.2405 11.7436L72.2448 2.73937C75.8973 -0.913122 81.8351 -0.913122 85.5071 2.73937L97.246 14.4781C100.918 18.1306 100.918 24.0683 97.246 27.7404ZM55.5058 19.4783L4.21432 70.7694L0.0735004 94.5008C-0.492932 97.7041 2.30017 100.478 5.50344 99.9307L29.235 95.7704L80.5264 44.4793C81.4445 43.5613 81.4445 42.0769 80.5264 41.1589L58.8458 19.4783C57.9082 18.5603 56.4238 18.5603 55.5058 19.4783ZM24.2348 66.3747C23.1605 65.3004 23.1605 63.5816 24.2348 62.5074L54.3143 32.428C55.3886 31.3538 57.1074 31.3538 58.1817 32.428C59.2559 33.5023 59.2559 35.2211 58.1817 36.2954L28.1021 66.3747C27.0279 67.449 25.309 67.449 24.2348 66.3747ZM17.1837 82.8011H26.5591V89.8913L13.9609 92.0984L7.88636 86.0239L10.0935 73.4258H17.1837V82.8011Z"
+                                    fill="black"
+                                  />
+                                </svg>
                               </button>
                               <button
                                 class="button"
@@ -1162,7 +1160,51 @@ export default function Order() {
                                   );
                                 }}
                               >
-                                Duplicate
+                                <svg
+                                  width="88"
+                                  height="100"
+                                  viewBox="0 0 88 100"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M62.5 87.5V95.3125C62.5 97.9014 60.4014 100 57.8125 100H4.6875C2.09863 100 0 97.9014 0 95.3125V23.4375C0 20.8486 2.09863 18.75 4.6875 18.75H18.75V76.5625C18.75 82.5936 23.6564 87.5 29.6875 87.5H62.5ZM62.5 20.3125V0H29.6875C27.0986 0 25 2.09863 25 4.6875V76.5625C25 79.1514 27.0986 81.25 29.6875 81.25H82.8125C85.4014 81.25 87.5 79.1514 87.5 76.5625V25H67.1875C64.6094 25 62.5 22.8906 62.5 20.3125ZM86.1272 14.2521L73.2478 1.37285C72.3688 0.493833 71.1765 6.49992e-06 69.9334 0L68.75 0V18.75H87.5V17.5666C87.5 16.3235 87.0062 15.1312 86.1272 14.2521Z"
+                                    fill="black"
+                                  />
+                                </svg>
+                              </button>
+                              <button
+                                class="button"
+                                onClick={() => {
+                                  setOrder(
+                                    'boxes',
+                                    order.boxes.toSpliced(i(), 1)
+                                  );
+                                  if (order.boxes.length == 0) {
+                                    setCupcakeSelectStep(0);
+                                  }
+                                }}
+                              >
+                                <svg
+                                  width="100"
+                                  height="100"
+                                  viewBox="0 0 100 100"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M2.02515 2.01286C4.72536 -0.670951 9.10325 -0.670952 11.8035 2.01285L97.9748 87.6609C100.675 90.3447 100.675 94.696 97.9748 97.3798C95.2746 100.064 90.8967 100.064 88.1965 97.3798L2.02515 11.7318C-0.675051 9.04797 -0.675051 4.69666 2.02515 2.01286Z"
+                                    fill="black"
+                                  />
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M97.9748 2.62022C100.675 5.30403 100.675 9.65534 97.9748 12.3391L11.8035 97.9871C9.10333 100.671 4.72543 100.671 2.02522 97.9871C-0.674982 95.3033 -0.674979 90.952 2.02522 88.2682L88.1965 2.62022C90.8968 -0.063584 95.2746 -0.0635836 97.9748 2.62022Z"
+                                    fill="black"
+                                  />
+                                </svg>
                               </button>
                             </div>
                             <Show
