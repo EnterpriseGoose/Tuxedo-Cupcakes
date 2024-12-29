@@ -7,7 +7,6 @@ import { createSignal, For, onMount, Show } from 'solid-js';
 import CupcakeBox from '~/components/CupcakeBox';
 import { decodeBox, encodeBox } from '~/components/CupcakeBox/CupcakeBox';
 import { createClient } from '@supabase/supabase-js';
-import 'dotenv/config';
 import sgMail from '@sendgrid/mail';
 
 async function logAndEmail(orderData: Order, token: string, order: any) {
