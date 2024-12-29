@@ -9,10 +9,11 @@ import { decodeBox, encodeBox } from '~/components/CupcakeBox/CupcakeBox';
 import { createClient } from '@supabase/supabase-js';
 import 'dotenv/config';
 import sgMail from '@sendgrid/mail';
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function logAndEmail(orderData: Order, token: string, order: any) {
   'use server';
+
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const supabase = createClient(
     'https://rxznihvftodgtjdtzbyr.supabase.co',
