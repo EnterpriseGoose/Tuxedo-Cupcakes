@@ -150,7 +150,7 @@ export default function Success() {
           </p>
           <div class={styles.boxArray}>
             <For each={order().purchase_units[0].items}>
-              {(box, index) => (
+              {(box: any, index) => (
                 <a
                   href={`/order/display?t=${box.name.split(' ')[1][0]}-${
                     box.name.split(' ')[0]
