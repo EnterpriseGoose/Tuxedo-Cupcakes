@@ -9,6 +9,7 @@ import { encodeBox } from '~/components/CupcakeBox/CupcakeBox';
 import { getPaypalAuth } from '../server';
 import axios from 'axios';
 import { useSearchParams } from '@solidjs/router';
+import EmailForm from '~/components/EmailForm';
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const EMAIL_VALIDATION_REGEX =
@@ -588,6 +589,17 @@ export default function Order() {
       setOrderRetrieved(true);
       return;
     }
+    // TOGGLE - CLOSE ORDER FORM START
+    if (orderData.info.save) {
+      localStorage.setItem(
+        'orderData',
+        JSON.stringify({ order: { info: orderData.info } })
+      );
+    } else {
+      localStorage.setItem('orderData', '{}');
+    }
+    return;
+    // !TOGGLE
     setOrder(orderData.order ?? EMPTY_ORDER);
     setState(orderData.state ?? 0);
     setPageUp(orderData.pageUp ?? false);
@@ -610,8 +622,10 @@ export default function Order() {
           <p>
             {/* Place a pre-order of cupcakes for pickup at a farmers' market or
             popup to ensure you can get the flavors you want. */}
-            Orders are currently open for my New Year's Eve popup! Place an
-            order today to get some cupcakes for pickup or delivery on the 31st.
+            There is no pop-up currently planned. Check back here for to order
+            from future pop-ups! To get notified when the next pop-up happens,
+            sign up for my mailing list:
+            <EmailForm />
             <br />
             <br />
             <button
@@ -625,16 +639,12 @@ export default function Order() {
                 window.scrollTo(0, 10000);
                 document.getElementById('orderPageTop').scrollIntoView();
               }}
-              disabled={mobileBrowser() && false}
+              // TOGGLE - CLOSE ORDER FORM START
+              disabled={true}
+              // !TOGGLE
             >
               Place order now
             </button>
-            <Show when={mobileBrowser() && false}>
-              <p>
-                Unfortunately, this is currently a desktop-only tool. Please use
-                a desktop to place an order via this page, or send me an email.
-              </p>
-            </Show>
             <br />
             <br />
             Want cupcakes for another time or something else special? Send me an
@@ -1481,15 +1491,18 @@ export default function Order() {
                       <img src="/images/loader.svg" id="payment-spin-loader" />
                       <button
                         class={`button`}
+                        // TOGGLE - CLOSE ORDER FORM START
                         onClick={async (e) => {
-                          document
-                            .getElementById('payment-spin-loader')
-                            .style.setProperty('display', 'block');
-                          window.location.href = await getPaypalPaymentURL(
-                            order,
-                            location.origin
-                          );
+                          // document
+                          //   .getElementById('payment-spin-loader')
+                          //   .style.setProperty('display', 'block');
+                          // window.location.href = await getPaypalPaymentURL(
+                          //   order,
+                          //   location.origin
+                          // );
                         }}
+                        disabled
+                        // !TOGGLE
                       >
                         Place Order
                       </button>
