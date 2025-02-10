@@ -73,6 +73,7 @@ export const FLAVORS: { [id: string]: Flavor } = {
     cake: CHOCOLATE_CAKE,
     frosting: '#ECBDC2',
     frosting_outline: '#E9B7BD',
+    desc: "a valentine's classic",
   },
   MOCHA: {
     id: 'MOCHA',
@@ -251,6 +252,25 @@ export const FLAVORS: { [id: string]: Flavor } = {
     frosting: '#FBFBFB',
     frosting_outline: '#F8F8F8',
     extra: '/images/cupcake-extras/fruitcake.svg',
+  },
+  CHOCOLATE_SPICE: {
+    id: 'CHOCOLATE_SPICE',
+    tag: 'C_SP',
+    name: 'Chocolate Spice',
+    cake: CHOCOLATE_CAKE,
+    frosting: '#7E5E50',
+    frosting_outline: '#6F5144',
+    extra: '/images/cupcake-extras/cinnamon.svg',
+    desc: 'chocolate + cayenne',
+  },
+  RASPBERRY: {
+    id: 'RASPBERRY',
+    tag: 'V_RAS',
+    name: 'Raspberry',
+    cake: VANILLA_CAKE,
+    frosting: '#E47B99',
+    frosting_outline: '#D8708E',
+    desc: 'tart + fruity',
   },
 };
 

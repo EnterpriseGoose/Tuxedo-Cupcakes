@@ -11,12 +11,12 @@ import ServerError from './routes/500';
 export default function Root() {
   return (
     <Suspense>
-      <ErrorBoundary fallback={ServerError}>
-        <Router>
-          <FileRoutes />
-          <Route path="*" component={NoPage} />
-        </Router>
-      </ErrorBoundary>
+      {/* <ErrorBoundary fallback={ServerError}> */}
+      <Router>
+        <FileRoutes />
+        <Route path="*" component={NoPage} />
+      </Router>
+      {/* </ErrorBoundary> */}
     </Suspense>
   );
 }

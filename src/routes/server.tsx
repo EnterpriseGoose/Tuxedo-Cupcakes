@@ -16,8 +16,8 @@ export async function getPaypalAuth() {
       { grant_type: 'client_credentials' },
       {
         auth: {
-          username: process.env.PAYPAL_USERNAME_PROD,
-          password: process.env.PAYPAL_PASSWORD_PROD,
+          username: process.env.PAYPAL_USERNAME,
+          password: process.env.PAYPAL_PASSWORD,
         },
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       }
