@@ -11,7 +11,6 @@ import sgMail from '@sendgrid/mail';
 
 async function logAndEmail(orderData: Order, token: string, order: any) {
   'use server';
-
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   const supabase = createClient(
@@ -36,7 +35,6 @@ async function logAndEmail(orderData: Order, token: string, order: any) {
       encodeBox(box).f
     }`,
   }));
-
   let response = await supabase.from('orders').insert({
     id: token,
     market: {
@@ -109,6 +107,7 @@ export default function Success() {
 
       const orderData = JSON.parse(localStorage.getItem('orderData')).order;
       if (orderData && searchParams.log == 'y') {
+        console.log('hi');
         logAndEmail(
           orderData,
           Array.isArray(searchParams.token)
@@ -186,7 +185,7 @@ async function getOrder(token: string) {
   const paypalAuthToken = await getPaypalAuth();
 
   const req = await axios.get(
-    `https://api-m.paypal.com` + `/v2/checkout/orders/${token}`,
+    process.env.PAYPAL_URL + `/v2/checkout/orders/${token}`,
     {
       headers: {
         'Content-Type': 'application/json',

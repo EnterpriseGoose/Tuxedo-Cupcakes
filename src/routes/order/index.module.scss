@@ -464,6 +464,10 @@
 							user-select: none;
 							justify-self: flex-start;
 							text-align: left;
+
+							i {
+								font-size: calc(2.2 * $tru);
+							}
 						}
 
 						.cupcake {

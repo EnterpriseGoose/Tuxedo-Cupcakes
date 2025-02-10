@@ -18,7 +18,7 @@
 		gap: calc(5 * $tru);
 
 		.card {
-			width: calc(50 * $tru);
+			width: calc(40 * $tru);
 			height: calc(20 * $tru);
 			display: flex;
 			align-items: center;
@@ -27,6 +27,7 @@
 
 			border-radius: calc(2.5 * $tru);
 			gap: calc(3.5 * $tru);
+			padding: 0 calc(5 * $tru);
 
 			&:nth-child(even) {
 				margin-right: calc(20 * $wru);
@@ -53,14 +54,14 @@
 				}
 			}
 
-			&.eggnog {
-				background-color: #e7c272;
+			&.raspberry {
+				background-color: #b44f6c;
 			}
-			&.panettone {
-				background-color: #8a68a8;
+			&.chocolateSpice {
+				background-color: #a7817a;
 			}
-			&.gingerbread {
-				background-color: #ad7e5f;
+			&.chocolateStrawberry {
+				background-color: #e58ca4;
 			}
 			&.classics {
 				background-color: $cyan;

@@ -325,19 +325,17 @@ let activeMarkets: Market[] = [];
 
 const POP_UP = true;
 const POP_UP_MARKET: Market = {
-  times: ['December 31st'],
-  names: ["New Year's Eve Pop-up"],
+  times: ['Feburary 14th'],
+  names: ["Valentine's Day Pop-up"],
   week: new Date(),
   flavors: [
     FLAVORS.VANILLA_VANILLA,
     FLAVORS.VANILLA_CHOCOLATE,
-    FLAVORS.STRAWBERRY,
     FLAVORS.CHOCOLATE_VANILLA,
     FLAVORS.CHOCOLATE_CHOCOLATE,
+    FLAVORS.RASPBERRY,
+    FLAVORS.CHOCOLATE_SPICE,
     FLAVORS.CHOCOLATE_STRAWBERRY,
-    FLAVORS.EGGNOG,
-    FLAVORS.PANETTONE,
-    FLAVORS.GINGERBREAD,
   ],
 };
 
@@ -584,22 +582,39 @@ export default function Order() {
   });
 
   onMount(() => {
-    let orderData = JSON.parse(window.localStorage.getItem('orderData'));
+    let orderData: {
+      order: Order;
+      state: number;
+      pageUp: boolean;
+      cupcakeSelectStep: number;
+      activeBox: Box;
+    } = JSON.parse(window.localStorage.getItem('orderData'));
     if (!orderData) {
       setOrderRetrieved(true);
       return;
     }
     // TOGGLE - CLOSE ORDER FORM START
-    if (orderData.info.save) {
-      localStorage.setItem(
-        'orderData',
-        JSON.stringify({ order: { info: orderData.info } })
-      );
-    } else {
-      localStorage.setItem('orderData', '{}');
+    if (
+      orderData.order &&
+      orderData.order.market &&
+      orderData.order.market.names[0] != POP_UP_MARKET.names[0]
+    ) {
+      // !TOGGLE
+      if (orderData.order.info.save) {
+        localStorage.setItem(
+          'orderData',
+          JSON.stringify({ order: { info: orderData.order.info } })
+        );
+      } else {
+        localStorage.setItem('orderData', '{}');
+      }
+
+      setOrder(EMPTY_ORDER);
+      return;
+      // TOGGLE - CLOSE ORDER FORM START
     }
-    return;
     // !TOGGLE
+
     setOrder(orderData.order ?? EMPTY_ORDER);
     setState(orderData.state ?? 0);
     setPageUp(orderData.pageUp ?? false);
@@ -622,10 +637,8 @@ export default function Order() {
           <p>
             {/* Place a pre-order of cupcakes for pickup at a farmers' market or
             popup to ensure you can get the flavors you want. */}
-            There is no pop-up currently planned. Check back here for to order
-            from future pop-ups! To get notified when the next pop-up happens,
-            sign up for my mailing list:
-            <EmailForm />
+            Mix it up a little this Valentine's day and get your love (or
+            yourself) some cupcakes! Place an order today right here:
             <br />
             <br />
             <button
@@ -633,14 +646,13 @@ export default function Order() {
               onClick={async (e) => {
                 e.target.classList.add('submitted');
                 setPageUp(true);
-
                 await sleep(1000);
                 e.target.classList.remove('submitted');
                 window.scrollTo(0, 10000);
                 document.getElementById('orderPageTop').scrollIntoView();
               }}
               // TOGGLE - CLOSE ORDER FORM START
-              disabled={true}
+              disabled={false}
               // !TOGGLE
             >
               Place order now
@@ -963,7 +975,6 @@ export default function Order() {
                                         : ''
                                     }`}
                                     onClick={() => {
-                                      // setActiveBrush(flavor);
                                       setActiveBox((prevBox) => {
                                         if (
                                           prevBox.type.quantity >
@@ -977,6 +988,10 @@ export default function Order() {
                                   >
                                     <span class="tooltip-text">
                                       {flavor.name}
+                                      <Show when={flavor.desc}>
+                                        <br />
+                                        <i>{flavor.desc}</i>
+                                      </Show>
                                     </span>
                                     <Cupcake
                                       flavor={flavor}
@@ -988,7 +1003,6 @@ export default function Order() {
                                   <Show when={mobileBrowser()}>
                                     <div
                                       onClick={() => {
-                                        // setActiveBrush(flavor);
                                         setActiveBox((prevBox) => {
                                           if (
                                             prevBox.type.quantity >
@@ -1001,6 +1015,10 @@ export default function Order() {
                                       }}
                                     >
                                       {flavor.name}
+                                      <Show when={flavor.desc}>
+                                        <br />
+                                        <i>{flavor.desc}</i>
+                                      </Show>
                                     </div>
                                   </Show>
                                 </>
@@ -1329,7 +1347,7 @@ export default function Order() {
                     id="toAddInput"
                     oninput={checkDetailInputs}
                     value={order.info.extra}
-                    placeholder="Specify the time for pickup/delivery, and address if you would like delivery (pickup is from Chatham, required)"
+                    placeholder="Specify the time for pickup/delivery on the 14th, and address if you would like delivery (pickup is from Chatham)"
                   />
                 </div>
                 <div class={styles.newsletter}>
@@ -1493,15 +1511,15 @@ export default function Order() {
                         class={`button`}
                         // TOGGLE - CLOSE ORDER FORM START
                         onClick={async (e) => {
-                          // document
-                          //   .getElementById('payment-spin-loader')
-                          //   .style.setProperty('display', 'block');
-                          // window.location.href = await getPaypalPaymentURL(
-                          //   order,
-                          //   location.origin
-                          // );
+                          document
+                            .getElementById('payment-spin-loader')
+                            .style.setProperty('display', 'block');
+                          window.location.href = await getPaypalPaymentURL(
+                            order,
+                            location.origin
+                          );
                         }}
-                        disabled
+                        // disabled
                         // !TOGGLE
                       >
                         Place Order

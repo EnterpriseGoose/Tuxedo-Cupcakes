@@ -39,12 +39,7 @@ export default function Layout(props?: {
           }
         />
       </MetaProvider>
-      <Navbar
-        mini={props.mini}
-        home={props.home}
-        minimal={props.minimal}
-        notModern={props.noModern}
-      />
+      <Navbar notModern={props.noModern} />
       <main class={`${styles.main} ${props.mini ? styles.mini : ''}`}>
         {props.children}
       </main>

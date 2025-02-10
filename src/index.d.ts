@@ -12,6 +12,7 @@ declare global {
     frosting: string;
     frosting_outline: string;
     extra?: string;
+    desc?: string;
   }
 
   interface BoxType {

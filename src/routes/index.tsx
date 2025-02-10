@@ -8,34 +8,34 @@ export default function Home() {
   return (
     <Layout>
       <div class={styles.sections}>
-        {/* <div class={`${styles.section} ${styles.zero}`}>
-          <h1>New Year's Eve Pop&#8209;up</h1>
-          <div class={`${styles.card} ${styles.eggnog}`}>
-            <img src="/images/cupcake-graphics/eggnog.svg" />
+        <div class={`${styles.section} ${styles.zero}`}>
+          <h1>Valentine's Day Pop&#8209;up</h1>
+          <div class={`${styles.card} ${styles.raspberry}`}>
+            <img src="/images/cupcake-graphics/raspberry.svg" />
             <div>
-              <h2>Eggnog</h2>
-              <i>custard + nutmeg</i>
+              <h2>Raspberry</h2>
+              <i>tart + fruity</i>
             </div>
           </div>
-          <div class={`${styles.card} ${styles.panettone}`}>
-            <img src="/images/cupcake-graphics/panettone.svg" />
+          <div class={`${styles.card} ${styles.chocolateSpice}`}>
+            <img src="/images/cupcake-graphics/chocolate-spice.svg" />
             <div>
-              <h2>Panettone</h2>
-              <i>fruitcake + creme</i>
+              <h2>Chocolate Spice</h2>
+              <i>chocolate + cayenne</i>
             </div>
           </div>
-          <div class={`${styles.card} ${styles.gingerbread}`}>
-            <img src="/images/cupcake-graphics/gingerbread.svg" />
+          <div class={`${styles.card} ${styles.chocolateStrawberry}`}>
+            <img src="/images/cupcake-graphics/chocolate-strawberry.svg" />
             <div>
-              <h2>Gingerbread</h2>
-              <i>ginger + spices</i>
+              <h2>Chocolate Strawberry</h2>
+              <i>a classic</i>
             </div>
           </div>
           <div class={`${styles.card} ${styles.classics}`}>
-            <img src="/images/cupcake-graphics/classics-trio.svg" />
+            <img src="/images/cupcake-graphics/classics-duo.svg" />
             <div>
               <h2>Classics</h2>
-              <i>vanilla, chocolate +&nbsp;strawberry</i>
+              <i>vanilla + chocolate</i>
             </div>
           </div>
           <button
@@ -46,7 +46,7 @@ export default function Home() {
           >
             Order Now!
           </button>
-        </div> */}
+        </div>
         <div class={`${styles.section} ${styles.one}`}>
           <h2>A More Sophisticated Cupcake</h2>
           <p>
