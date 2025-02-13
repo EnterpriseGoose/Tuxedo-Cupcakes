@@ -594,25 +594,25 @@ export default function Order() {
       return;
     }
     // TOGGLE - CLOSE ORDER FORM START
-    if (
-      orderData.order &&
-      orderData.order.market &&
-      orderData.order.market.names[0] != POP_UP_MARKET.names[0]
-    ) {
-      // !TOGGLE
-      if (orderData.order.info.save) {
-        localStorage.setItem(
-          'orderData',
-          JSON.stringify({ order: { info: orderData.order.info } })
-        );
-      } else {
-        localStorage.setItem('orderData', '{}');
-      }
-
-      setOrder(EMPTY_ORDER);
-      return;
-      // TOGGLE - CLOSE ORDER FORM START
+    //if (
+    //  orderData.order &&
+    //  orderData.order.market &&
+    //  orderData.order.market.names[0] != POP_UP_MARKET.names[0]
+    //) {
+    // !TOGGLE
+    if (orderData.order.info.save) {
+      localStorage.setItem(
+        'orderData',
+        JSON.stringify({ order: { info: orderData.order.info } })
+      );
+    } else {
+      localStorage.setItem('orderData', '{}');
     }
+
+    setOrder(EMPTY_ORDER);
+    return;
+    // TOGGLE - CLOSE ORDER FORM START
+    //}
     // !TOGGLE
 
     setOrder(orderData.order ?? EMPTY_ORDER);
@@ -652,7 +652,7 @@ export default function Order() {
                 document.getElementById('orderPageTop').scrollIntoView();
               }}
               // TOGGLE - CLOSE ORDER FORM START
-              disabled={false}
+              disabled={true}
               // !TOGGLE
             >
               Place order now
@@ -1510,15 +1510,15 @@ export default function Order() {
                       <button
                         class={`button`}
                         // TOGGLE - CLOSE ORDER FORM START
-                        onClick={async (e) => {
-                          document
-                            .getElementById('payment-spin-loader')
-                            .style.setProperty('display', 'block');
-                          window.location.href = await getPaypalPaymentURL(
-                            order,
-                            location.origin
-                          );
-                        }}
+                        //onClick={async (e) => {
+                        //</div>  document
+                        //</div>    .getElementById('payment-spin-loader')
+                        //    .style.setProperty('display', 'block');
+                        //  window.location.href = await getPaypalPaymentURL(
+                        //    order,
+                        //</div>    location.origin
+                        //  );
+                        //}}
                         // disabled
                         // !TOGGLE
                       >
