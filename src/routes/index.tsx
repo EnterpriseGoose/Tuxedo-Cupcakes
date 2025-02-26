@@ -8,6 +8,7 @@ export default function Home() {
   return (
     <Layout>
       <div class={styles.sections}>
+        {/*
         <div class={`${styles.section} ${styles.zero}`}>
           <h1>Valentine's Day Pop&#8209;up</h1>
           <div class={`${styles.card} ${styles.raspberry}`}>
@@ -47,6 +48,7 @@ export default function Home() {
             Order Now!
           </button>
         </div>
+        */}
         <div class={`${styles.section} ${styles.one}`}>
           <h2>A More Sophisticated Cupcake</h2>
           <p>

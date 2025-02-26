@@ -9,6 +9,7 @@
 	from {
 		opacity: 0%;
 	}
+
 	to {
 		opacity: 100%;
 	}
@@ -23,6 +24,7 @@
 	from {
 		opacity: 100%;
 	}
+
 	to {
 		opacity: 0%;
 	}
@@ -124,6 +126,7 @@
 					background-color: rgba(0, 0, 0, 0.2);
 					color: $text-light;
 				}
+
 				&.selectedTab {
 					background-color: rgba(0, 0, 0, 0.2);
 					color: $text-light;
@@ -153,7 +156,7 @@
 				top: 0;
 				bottom: 0;
 				width: 100%;
-				right: 20%;
+				right: 15%;
 				background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.678));
 				opacity: 1;
 				transition: all 0.8s ease;
